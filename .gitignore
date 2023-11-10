@@ -104,6 +104,10 @@ web/firebase-config.j
 # Firebase configuration files
 ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
+**/firebase_options.dart
 
 # Visual Studio Code related
 .vscode/
+
+
+pubspec.lock
