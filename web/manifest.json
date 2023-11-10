@@ -1,0 +1,35 @@
+{
+    "name": "dialogix",
+    "short_name": "dialogix",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "Discover the art of meaningful conversations with Dialogix, a dynamic social platform crafted for engaging discussions and community building. Seamlessly navigate threads, share insights, and connect with like-minded individuals. Dive into a world where your voice matters, and ideas take center stage. Elevate your online dialogue experience with Dialogix – where conversation meets community, and connection is at the core",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
