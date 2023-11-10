@@ -1,4 +1,4 @@
-# dialogix
+# Dialogix
 
 Discover the art of meaningful conversations with Dialogix, a dynamic social platform crafted for engaging discussions and community building. Seamlessly navigate threads, share insights, and connect with like-minded individuals. Dive into a world where your voice matters, and ideas take center stage. Elevate your online dialogue experience with Dialogix – where conversation meets community, and connection is at the core
 
