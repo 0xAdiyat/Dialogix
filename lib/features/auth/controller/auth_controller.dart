@@ -2,21 +2,33 @@ import 'package:dialogix/features/auth/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/models/user_model.dart';
 import '../../../core/utils.dart';
 
-final authControllerProvider = Provider<AuthController>((ref) {
-  final authRepository = ref.read(authRepositoryProvider);
-  return AuthController(authRepository: authRepository);
+final authControllerProvider =
+    StateNotifierProvider<AuthController, bool>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthController(authRepository: authRepository, ref: ref);
 });
 
-class AuthController {
-  final AuthRepository _authRepository;
+final userStateProvider = StateProvider<UserModel?>((ref) => null);
 
-  AuthController({required AuthRepository authRepository})
-      : _authRepository = authRepository;
+class AuthController extends StateNotifier<bool> {
+  final AuthRepository _authRepository;
+  final Ref _ref;
+
+  AuthController({required AuthRepository authRepository, required Ref ref})
+      : _authRepository = authRepository,
+        _ref = ref,
+        super(false);
 
   void signInWithGoogle(BuildContext ctx) async {
+    state = true;
     final user = await _authRepository.signInWithGoogle();
-    user.fold((l) => showSnackBar(ctx, l.message), (r) => null);
+    state = false;
+    user.fold(
+        (l) => showSnackBar(ctx, l.message),
+        (userModel) =>
+            _ref.read(userStateProvider.notifier).update((state) => userModel));
   }
 }
