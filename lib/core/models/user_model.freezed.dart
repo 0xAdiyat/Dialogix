@@ -24,8 +24,7 @@ mixin _$UserModel {
   String get profilePic => throw _privateConstructorUsedError;
   String get banner => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
-  bool get isAuthenticated =>
-      throw _privateConstructorUsedError; // If guest or not
+  bool get isAuthenticated => throw _privateConstructorUsedError;
   int get karma => throw _privateConstructorUsedError;
   List<String> get awards => throw _privateConstructorUsedError;
 
@@ -201,7 +200,6 @@ class _$UserModelImpl extends _UserModel {
   final String uid;
   @override
   final bool isAuthenticated;
-// If guest or not
   @override
   final int karma;
   final List<String> _awards;
@@ -276,7 +274,7 @@ abstract class _UserModel extends UserModel {
   String get uid;
   @override
   bool get isAuthenticated;
-  @override // If guest or not
+  @override
   int get karma;
   @override
   List<String> get awards;
