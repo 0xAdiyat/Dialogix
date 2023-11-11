@@ -27,6 +27,7 @@ migrate_working_dir/
 /dev/docs/pubspec.yaml
 /packages/flutter/coverage/
 version
+pubspec.lock
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -87,7 +88,6 @@ app.*.map.json
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 **/ios/Flutter/flutter_export_environment.sh
-**/ios/Flutter/.last_build_id
 
 # web
 web/firebase-config.j
@@ -110,4 +110,3 @@ android/app/google-services.json
 .vscode/
 
 
-pubspec.lock
