@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/constants/route_paths.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +11,11 @@ class CommunityListDrawer extends ConsumerWidget {
   const CommunityListDrawer({super.key});
 
   void navigateToCreateCommunity(BuildContext ctx) {
-    Routemaster.of(ctx).push('/create-community');
+    Routemaster.of(ctx).push(RoutePaths.createCommunityScreen);
+  }
+
+  void navigateToCommunity(BuildContext ctx, String communityName) {
+    Routemaster.of(ctx).push("/r/$communityName");
   }
 
   @override
@@ -37,7 +42,7 @@ class CommunityListDrawer extends ConsumerWidget {
                                 CachedNetworkImageProvider(community.avatar),
                             radius: 15,
                           ),
-                          onTap: () {},
+                          onTap: () => navigateToCommunity(ctx, community.name),
                         );
                       },
                       itemCount: communities.length,

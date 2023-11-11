@@ -3,4 +3,5 @@ class RoutePaths {
   static const loginScreen = '/';
   static const homeScreen = '/';
   static const createCommunityScreen = '/create-community';
+  static const communityScreen = '/r/:name';
 }

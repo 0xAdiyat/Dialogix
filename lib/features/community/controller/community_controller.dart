@@ -8,6 +8,11 @@ import 'package:routemaster/routemaster.dart';
 
 import '../../../core/utils.dart';
 
+final getCommunityByNameProvider =
+    StreamProvider.family<CommunityModel, String>((ref, String name) {
+  final communityController = ref.read(communityControllerProvider.notifier);
+  return communityController.getCommunityByName(name);
+});
 final communityControllerProvider =
     StateNotifierProvider<CommunityController, bool>((ref) {
   final communityRepository = ref.watch(communityRepositoryProvider);
@@ -15,7 +20,8 @@ final communityControllerProvider =
       communityRepository: communityRepository, ref: ref);
 });
 final userCommunitiesProvider = StreamProvider<List<CommunityModel>>((ref) {
-  final communityController = ref.watch(communityControllerProvider.notifier);
+  final communityController = ref.watch(communityControllerProvider
+      .notifier); // bcz communityControllerProvider is a stateNotifier that's why here dot notifier is required
   return communityController.getUserCommunities();
 });
 
@@ -33,6 +39,9 @@ class CommunityController extends StateNotifier<bool> {
     final uid = _ref.read(userProvider)!.uid;
     return _communityRepository.getUserCommunities(uid);
   }
+
+  Stream<CommunityModel> getCommunityByName(String name) =>
+      _communityRepository.getCommunityByName(name.toLowerCase());
 
   void createCommunity(BuildContext ctx, String name) async {
     state = true;
