@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Pallete {
@@ -16,7 +17,11 @@ class Pallete {
     cardColor: greyColor,
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      titleTextStyle: TextStyle(
+          color: Pallete.whiteColor,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
       iconTheme: IconThemeData(
         color: whiteColor,
@@ -34,8 +39,12 @@ class Pallete {
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
     textTheme: GoogleFonts.latoTextTheme(),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
+      titleTextStyle: TextStyle(
+          color: Pallete.blackColor,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w500),
       elevation: 0,
       iconTheme: IconThemeData(
         color: blackColor,

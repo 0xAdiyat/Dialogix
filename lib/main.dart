@@ -1,7 +1,7 @@
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/loader.dart';
-import 'package:dialogix/core/models/user_model.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/models/user_model.dart';
 import 'package:dialogix/router.dart';
 import 'package:dialogix/theme/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,11 +34,9 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
     userModel = await ref
         .watch(authControllerProvider.notifier)
         .getUserData(data.uid)
-        .first; // bcz it's a stream, to convert it to future we have to use first
+        .first; // bcz it's a stream, so in order to convert it to future we have to use first
 
-    ref.read(userStateProvider.notifier).update((state) => userModel);
-
-    setState(() {});
+    ref.read(userProvider.notifier).update((state) => userModel);
   }
 
   @override
@@ -52,7 +50,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
             data: (data) => MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   title: 'Dialogix',
-                  theme: Pallete.darkModeAppTheme,
+                  theme: Pallete.lightModeAppTheme,
                   routerDelegate: RoutemasterDelegate(routesBuilder: (ctx) {
                     if (data != null) {
                       getData(ref, data);

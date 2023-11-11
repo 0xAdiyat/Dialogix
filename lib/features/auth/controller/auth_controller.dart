@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/models/user_model.dart';
 import '../../../core/utils.dart';
+import '../../../models/user_model.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, bool>((ref) {
@@ -12,7 +12,7 @@ final authControllerProvider =
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
-final userStateProvider = StateProvider<UserModel?>((ref) => null);
+final userProvider = StateProvider<UserModel?>((ref) => null);
 
 final authStateChangeProvider = StreamProvider<User?>((ref) {
   final authController = ref.watch(authControllerProvider.notifier);
@@ -43,6 +43,6 @@ class AuthController extends StateNotifier<bool> {
     user.fold(
         (l) => showSnackBar(ctx, l.message),
         (userModel) =>
-            _ref.read(userStateProvider.notifier).update((state) => userModel));
+            _ref.read(userProvider.notifier).update((state) => userModel));
   }
 }
