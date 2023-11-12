@@ -63,4 +63,26 @@ class CommunityRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  Stream<List<CommunityModel>> searchCommunity(String query) {
+    return _communities
+        .where('id',
+            isGreaterThanOrEqualTo: query.isEmpty ? 0 : query,
+            isLessThan: query.isEmpty
+                ? null
+                : query.substring(0, query.length - 1) +
+                    String.fromCharCode(
+                      query.codeUnitAt(query.length - 1) + 1,
+                    ))
+        .snapshots()
+        .map((event) {
+      List<CommunityModel> communities = [];
+
+      for (var community in event.docs) {
+        communities.add(
+            CommunityModel.fromMap(community.data() as Map<String, dynamic>));
+      }
+      return communities;
+    });
+  }
 }

@@ -12,7 +12,7 @@ import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
 final getCommunityByNameProvider =
-    StreamProvider.family<CommunityModel, String>((ref, String name) {
+    StreamProvider.family<CommunityModel, String>((ref, name) {
   final communityController = ref.read(communityControllerProvider.notifier);
   return communityController.getCommunityByName(name);
 });
@@ -29,6 +29,12 @@ final userCommunitiesProvider = StreamProvider<List<CommunityModel>>((ref) {
   final communityController = ref.watch(communityControllerProvider
       .notifier); // bcz communityControllerProvider is a stateNotifier that's why here dot notifier is required
   return communityController.getUserCommunities();
+});
+
+final searchCommunityProvider =
+    StreamProvider.family<List<CommunityModel>, String>((ref, query) {
+  final communityController = ref.watch(communityControllerProvider.notifier);
+  return communityController.searchCommunity(query);
 });
 
 class CommunityController extends StateNotifier<bool> {
@@ -49,6 +55,9 @@ class CommunityController extends StateNotifier<bool> {
     final uid = _ref.read(userProvider)!.uid;
     return _communityRepository.getUserCommunities(uid);
   }
+
+  Stream<List<CommunityModel>> searchCommunity(String query) =>
+      _communityRepository.searchCommunity(query);
 
   Stream<CommunityModel> getCommunityByName(String name) =>
       _communityRepository.getCommunityByName(name.toLowerCase());

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/features/home/delegates/search_community_delegate.dart';
 import 'package:dialogix/features/home/drawers/community_list_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void onPageChanged(int page) => setState(() => _page = page);
-
+  void communitySearch(BuildContext context) =>
+      showSearch(context: context, delegate: SearchCommunityDelegate(ref: ref));
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider)!;
@@ -34,10 +36,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: false,
         leading: Builder(
           builder: (ctx) => IconButton(
-              onPressed: () => displayDrawer(ctx), icon: const Icon(Icons.menu)),
+              onPressed: () => displayDrawer(ctx),
+              icon: const Icon(Icons.menu)),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () => communitySearch(context),
+              icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
           Builder(
             builder: (ctx) => IconButton(
