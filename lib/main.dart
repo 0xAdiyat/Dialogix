@@ -30,6 +30,7 @@ class DialogixApp extends ConsumerStatefulWidget {
 
 class _DialogixAppState extends ConsumerState<DialogixApp> {
   UserModel? userModel;
+  bool _isLoading = true;
   void getData(WidgetRef ref, User data) async {
     userModel = await ref
         .watch(authControllerProvider.notifier)
@@ -37,6 +38,9 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
         .first; // bcz it's a stream, so in order to convert it to future we have to use first
 
     ref.read(userProvider.notifier).update((state) => userModel);
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -58,12 +62,19 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
                         return loggedInRoute;
                       }
                     }
-                    return loggedOutRoute;
+                    if (_isLoading) {
+                      return loaderRoute;
+                    } else {
+                      return loggedOutRoute;
+                    }
                   }),
                   routeInformationParser: const RoutemasterParser(),
                 ),
             error: (err, stackTrace) => ErrorText(error: err.toString()),
-            loading: () => const Loader());
+            loading: () => MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: Pallete.lightModeAppTheme,
+                builder: (ctx, _) => const Scaffold(body: Loader())));
       },
     );
   }

@@ -8,6 +8,8 @@ import 'package:dialogix/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 
+import 'core/common/loader.dart';
+
 final loggedOutRoute = RouteMap(
   routes: {
     RoutePaths.loginScreen: (_) => const MaterialPage(child: LoginScreen()),
@@ -31,4 +33,7 @@ final loggedInRoute = RouteMap(
           communityName: route.pathParameters['community-name']!,
         )),
   },
+);
+final loaderRoute = RouteMap(
+  routes: {'/': (_) => const MaterialPage(child: Scaffold(body: Loader()))},
 );

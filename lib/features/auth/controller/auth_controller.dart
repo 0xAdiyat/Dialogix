@@ -45,4 +45,6 @@ class AuthController extends StateNotifier<bool> {
         (userModel) =>
             _ref.read(userProvider.notifier).update((state) => userModel));
   }
+
+  void logOut() => _authRepository.logOut();
 }

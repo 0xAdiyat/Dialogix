@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/home/delegates/search_community_delegate.dart';
 import 'package:dialogix/features/home/drawers/community_list_drawer.dart';
+import 'package:dialogix/features/home/drawers/profile_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
           Builder(
             builder: (ctx) => IconButton(
-                onPressed: () {},
+                onPressed: () => displayEndDrawer(ctx),
                 icon: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(user.profilePic),
                 )),
@@ -55,6 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Center(child: Text(user.name)),
       drawer: const CommunityListDrawer(),
+      endDrawer: const ProfileDrawer(),
     );
   }
 }
