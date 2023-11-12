@@ -5,18 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:routemaster/routemaster.dart';
 
 import '../../../core/common/loader.dart';
 
 class CommunityScreen extends ConsumerWidget {
-  final String dynamicRouteName;
-  const CommunityScreen({super.key, required this.dynamicRouteName});
+  final String communityName;
+  const CommunityScreen({super.key, required this.communityName});
 
+  void navigateToModScreen(BuildContext ctx) =>
+      Routemaster.of(ctx).push('/mod-tools/$communityName');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
     return Scaffold(
-      body: ref.watch(getCommunityByNameProvider(dynamicRouteName)).when(
+      body: ref.watch(getCommunityByNameProvider(communityName)).when(
             data: (community) => NestedScrollView(
               headerSliverBuilder: (ctx, innerBoxIsScrolled) => [
                 SliverAppBar(
@@ -34,7 +37,7 @@ class CommunityScreen extends ConsumerWidget {
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.all(16).w,
+                  padding: const EdgeInsets.all(16).w,
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       Align(
@@ -57,7 +60,9 @@ class CommunityScreen extends ConsumerWidget {
                             ),
                           ),
                           OutlinedButton(
-                            onPressed: () {},
+                            onPressed: community.mods.contains(user.uid)
+                                ? () => navigateToModScreen(context)
+                                : () {},
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                                 shape: RoundedRectangleBorder(
@@ -83,7 +88,7 @@ class CommunityScreen extends ConsumerWidget {
               body: ListView.builder(
                 itemBuilder: (ctx, index) {
                   return Container(
-                    child: Text("Displaying post"),
+                    child: const Text("Displaying post"),
                   );
                 },
                 itemCount: 1,
@@ -91,7 +96,7 @@ class CommunityScreen extends ConsumerWidget {
             ),
             error: (Object error, StackTrace stackTrace) =>
                 Text(error.toString()),
-            loading: () => Loader(),
+            loading: () => const Loader(),
           ),
     );
   }

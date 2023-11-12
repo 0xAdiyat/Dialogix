@@ -17,6 +17,9 @@ class Pallete {
     cardColor: greyColor,
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
+    // textTheme: Theme.of(context)
+    //     .textTheme
+    //     .apply(fontFamily: 'Gilroy'),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
           color: Pallete.whiteColor,
@@ -30,6 +33,7 @@ class Pallete {
     drawerTheme: const DrawerThemeData(
       backgroundColor: drawerColor,
     ),
+    useMaterial3: true,
     primaryColor: redColor,
     backgroundColor:
         drawerColor, // will be used as alternative background color
@@ -38,6 +42,7 @@ class Pallete {
   static var lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
+    useMaterial3: true,
     textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
@@ -46,7 +51,7 @@ class Pallete {
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       elevation: 0,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: blackColor,
       ),
     ),
@@ -54,6 +59,8 @@ class Pallete {
       backgroundColor: whiteColor,
     ),
     primaryColor: redColor,
-    backgroundColor: whiteColor,
+
+    // backgroundColor: whiteColor,
+    colorScheme: ColorScheme.fromSeed(seedColor: redColor),
   );
 }

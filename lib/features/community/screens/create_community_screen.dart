@@ -37,7 +37,7 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
         ),
       ),
       body: isLoading
-          ? Loader()
+          ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(

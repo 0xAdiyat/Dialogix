@@ -34,11 +34,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: false,
         leading: Builder(
           builder: (ctx) => IconButton(
-              onPressed: () => displayDrawer(ctx), icon: Icon(Icons.menu)),
+              onPressed: () => displayDrawer(ctx), icon: const Icon(Icons.menu)),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
           Builder(
             builder: (ctx) => IconButton(
                 onPressed: () {},

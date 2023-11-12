@@ -20,7 +20,7 @@ class LoginScreen extends ConsumerWidget {
           Constants.logoPath,
           height: 40.h,
         ),
-        actions: [TextButton(onPressed: () {}, child: Text("Skip"))],
+        actions: [TextButton(onPressed: () {}, child: const Text("Skip"))],
       ),
       body: Center(
         child: isLoading

@@ -3,5 +3,7 @@ class RoutePaths {
   static const loginScreen = '/';
   static const homeScreen = '/';
   static const createCommunityScreen = '/create-community';
-  static const communityScreen = '/r/:name';
+  static const communityScreen = '/r/:community-name';
+  static const modToolsScreen = '/mod-tools/:community-name';
+  static const editCommunityScreen = '/edit-community/:community-name';
 }
