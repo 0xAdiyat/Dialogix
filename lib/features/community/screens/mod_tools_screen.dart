@@ -6,6 +6,9 @@ class ModToolsScreen extends StatelessWidget {
   const ModToolsScreen({super.key, required this.communityName});
   void navigateToEditCommunityScreen(BuildContext ctx) =>
       Routemaster.of(ctx).push('/edit-community/$communityName');
+
+  void navigateToAddModsScreen(BuildContext ctx) =>
+      Routemaster.of(ctx).push('/add-mods/$communityName');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,7 @@ class ModToolsScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_moderator),
             title: const Text("Add Moderators"),
-            onTap: () {},
+            onTap: () => navigateToAddModsScreen(context),
           ),
           ListTile(
             leading: const Icon(Icons.edit),

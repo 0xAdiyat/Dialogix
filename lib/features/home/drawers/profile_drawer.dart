@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,11 +33,11 @@ class ProfileDrawer extends ConsumerWidget {
             const Divider(),
             ListTile(
                 title: const Text('My Profile'),
-                leading: const Icon(Icons.person),
+                leading: const Icon(CupertinoIcons.person_alt),
                 onTap: () {}),
             ListTile(
                 title: const Text('Log Out'),
-                leading: Icon(
+                leading: const Icon(
                   Icons.logout,
                   color: Pallete.redColor,
                 ),

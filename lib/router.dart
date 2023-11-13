@@ -1,5 +1,6 @@
 import 'package:dialogix/core/constants/route_paths.dart';
 import 'package:dialogix/features/auth/screens/login_screen.dart';
+import 'package:dialogix/features/community/screens/add_mods_screen.dart';
 import 'package:dialogix/features/community/screens/community_screen.dart';
 import 'package:dialogix/features/community/screens/create_community_screen.dart';
 import 'package:dialogix/features/community/screens/edit_community_screen.dart';
@@ -9,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'core/common/loader.dart';
+
+final loaderRoute = RouteMap(
+  routes: {'/': (_) => const MaterialPage(child: Scaffold(body: Loader()))},
+);
 
 final loggedOutRoute = RouteMap(
   routes: {
@@ -32,8 +37,9 @@ final loggedInRoute = RouteMap(
             child: EditCommunityScreen(
           communityName: route.pathParameters['community-name']!,
         )),
+    RoutePaths.addModsScreen: (route) => MaterialPage(
+            child: AddModsScreen(
+          communityName: route.pathParameters['community-name']!,
+        )),
   },
-);
-final loaderRoute = RouteMap(
-  routes: {'/': (_) => const MaterialPage(child: Scaffold(body: Loader()))},
 );

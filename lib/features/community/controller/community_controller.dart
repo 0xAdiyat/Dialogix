@@ -6,8 +6,10 @@ import 'package:dialogix/features/community/repository/community_repository.dart
 import 'package:dialogix/models/community_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
 
+import '../../../core/failure.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
@@ -50,6 +52,23 @@ class CommunityController extends StateNotifier<bool> {
         _ref = ref,
         _storageRepository = storageRepository,
         super(false);
+
+  void joinOrLeaveCommunity(CommunityModel community, BuildContext ctx) async {
+    final user = _ref.read(userProvider)!;
+    Either<Failure, void> res;
+    if (community.members.contains(user.uid)) {
+      res = await _communityRepository.leaveCommunity(community.id, user.uid);
+    } else {
+      res = await _communityRepository.joinCommunity(community.id, user.uid);
+    }
+    res.fold((l) => showSnackBar(ctx, l.message), (r) {
+      if (community.members.contains(user.uid)) {
+        showSnackBar(ctx, "You have left ${community.name}");
+      } else {
+        showSnackBar(ctx, "You have joined ${community.name}");
+      }
+    });
+  }
 
   Stream<List<CommunityModel>> getUserCommunities() {
     final uid = _ref.read(userProvider)!.uid;

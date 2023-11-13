@@ -66,7 +66,7 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
                 ],
               ),
               body: isLoading
-                  ? Loader()
+                  ? const Loader()
                   : Padding(
                       padding: const EdgeInsets.all(8.0).w,
                       child: Column(

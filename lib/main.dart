@@ -38,9 +38,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
         .first; // bcz it's a stream, so in order to convert it to future we have to use first
 
     ref.read(userProvider.notifier).update((state) => userModel);
-    setState(() {
-      _isLoading = false;
-    });
+    setState(() => _isLoading = false);
   }
 
   @override
