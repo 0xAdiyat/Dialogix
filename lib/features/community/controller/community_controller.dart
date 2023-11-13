@@ -90,16 +90,16 @@ class CommunityController extends StateNotifier<bool> {
 
   void editCommunity(
       {required CommunityModel community,
-      File? profileFile,
+      File? avatarFile,
       File? bannerFile,
       required BuildContext ctx}) async {
     state = true;
-    if (profileFile != null) {
+    if (avatarFile != null) {
       // communities/profile/community_id
       final res = await _storageRepository.storeFile(
         path: "communities/profile",
         id: community.id,
-        file: profileFile,
+        file: avatarFile,
       );
 
       res.fold((l) => showSnackBar(ctx, l.message),

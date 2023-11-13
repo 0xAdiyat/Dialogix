@@ -22,7 +22,7 @@ class EditCommunityScreen extends ConsumerStatefulWidget {
 
 class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
   File? _bannerFile;
-  File? _profileFile;
+  File? _avatarFile;
   void selectBannerImage() async {
     final res = await pickImage();
     if (res != null) {
@@ -36,7 +36,7 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
     final res = await pickImage();
     if (res != null) {
       setState(() {
-        _profileFile = File(res.files.first.path!);
+        _avatarFile = File(res.files.first.path!);
       });
     }
   }
@@ -45,7 +45,7 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
       ref.read(communityControllerProvider.notifier).editCommunity(
           community: community,
           ctx: ctx,
-          profileFile: _profileFile,
+          avatarFile: _avatarFile,
           bannerFile: _bannerFile);
 
   @override
@@ -115,10 +115,10 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
                                   left: 20,
                                   child: GestureDetector(
                                     onTap: selectProfileImage,
-                                    child: _profileFile != null
+                                    child: _avatarFile != null
                                         ? CircleAvatar(
                                             backgroundImage:
-                                                FileImage(_profileFile!),
+                                                FileImage(_avatarFile!),
                                             radius: 32,
                                           )
                                         : CircleAvatar(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:routemaster/routemaster.dart';
 
 import '../../../theme/pallete.dart';
 
@@ -13,6 +14,8 @@ class ProfileDrawer extends ConsumerWidget {
 
   void logOut(WidgetRef ref) =>
       ref.read(authControllerProvider.notifier).logOut();
+  void navigateToUserProfile(BuildContext ctx, String uid) =>
+      Routemaster.of(ctx).push('/u/$uid');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
@@ -34,7 +37,7 @@ class ProfileDrawer extends ConsumerWidget {
             ListTile(
                 title: const Text('My Profile'),
                 leading: const Icon(CupertinoIcons.person_alt),
-                onTap: () {}),
+                onTap: () => navigateToUserProfile(context, user.uid)),
             ListTile(
                 title: const Text('Log Out'),
                 leading: const Icon(

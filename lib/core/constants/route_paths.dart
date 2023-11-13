@@ -7,4 +7,6 @@ class RoutePaths {
   static const modToolsScreen = '/mod-tools/:community-name';
   static const editCommunityScreen = '/edit-community/:community-name';
   static const addModsScreen = '/add-mods/:community-name';
+  static const userProfileScreen = '/u/:uid';
+  static const editProfileScreen = '/edit-profile/:uid';
 }
