@@ -20,11 +20,16 @@ class _AddModsScreenState extends ConsumerState<AddModsScreen> {
       ref.read(selectedUidsProvider(uids)).addUid(uid);
   void removeUid(String uid, WidgetRef ref) =>
       ref.read(selectedUidsProvider(uids)).removeUid(uid);
+  void saveMods() => ref
+      .read(communityControllerProvider.notifier)
+      .addMods(widget.communityName, uids.toList(), context);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.done))],
+        actions: [
+          IconButton(onPressed: saveMods, icon: const Icon(Icons.done))
+        ],
       ),
       body: ref.watch(getCommunityByNameProvider(widget.communityName)).when(
           data: (community) => ListView.builder(

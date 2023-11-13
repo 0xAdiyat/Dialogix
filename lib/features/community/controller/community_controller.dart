@@ -80,6 +80,14 @@ class CommunityController extends StateNotifier<bool> {
 
   Stream<CommunityModel> getCommunityByName(String name) =>
       _communityRepository.getCommunityByName(name.toLowerCase());
+  void addMods(
+      String communityName, List<String> uids, BuildContext ctx) async {
+    final res =
+        await _communityRepository.addMods(communityName.toLowerCase(), uids);
+    res.fold((l) => showSnackBar(ctx, l.message),
+        ((r) => Routemaster.of(ctx).pop()));
+  }
+
   void editCommunity(
       {required CommunityModel community,
       File? profileFile,
