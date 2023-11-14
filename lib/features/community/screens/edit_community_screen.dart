@@ -32,7 +32,7 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
     }
   }
 
-  void selectProfileImage() async {
+  void selectAvatarImage() async {
     final res = await pickImage();
     if (res != null) {
       setState(() {
@@ -84,37 +84,40 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
                                       borderType: BorderType.RRect,
                                       color: Pallete.lightModeAppTheme.textTheme
                                           .bodyLarge!.color!,
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 120.h,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: _bannerFile != null
-                                            ? Image.file(
-                                                _bannerFile!,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : community.banner.isEmpty ||
-                                                    community.banner ==
-                                                        Constants.bannerDefault
-                                                ? const Center(
-                                                    child: Icon(
-                                                      Icons.camera_alt_outlined,
-                                                      size: 40,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          height: 120.h,
+                                          child: _bannerFile != null
+                                              ? Image.file(
+                                                  _bannerFile!,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : community.banner.isEmpty ||
+                                                      community.banner ==
+                                                          Constants
+                                                              .bannerDefault
+                                                  ? const Center(
+                                                      child: Icon(
+                                                        Icons
+                                                            .camera_alt_outlined,
+                                                        size: 40,
+                                                      ),
+                                                    )
+                                                  : CachedNetworkImage(
+                                                      imageUrl:
+                                                          community.banner,
+                                                      fit: BoxFit.cover,
                                                     ),
-                                                  )
-                                                : CachedNetworkImage(
-                                                    imageUrl: community.banner,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                        ),
                                       )),
                                 ),
                                 Positioned(
                                   bottom: 20,
                                   left: 20,
                                   child: GestureDetector(
-                                    onTap: selectProfileImage,
+                                    onTap: selectAvatarImage,
                                     child: _avatarFile != null
                                         ? CircleAvatar(
                                             backgroundImage:

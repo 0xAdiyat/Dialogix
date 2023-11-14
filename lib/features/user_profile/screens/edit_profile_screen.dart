@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +24,15 @@ class EditProfileScreen extends ConsumerStatefulWidget {
 class _EditProfileState extends ConsumerState<EditProfileScreen> {
   File? _bannerFile;
   File? _profileFile;
+
+  late TextEditingController _usernameController;
+  @override
+  void initState() {
+    _usernameController =
+        TextEditingController(text: ref.read(userProvider)!.name);
+    super.initState();
+  }
+
   void selectBannerImage() async {
     final res = await pickImage();
     if (res != null) {
@@ -41,9 +51,22 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
     }
   }
 
+  void save(BuildContext ctx) =>
+      ref.read(userProfileControllerProvider.notifier).editProfile(
+          ctx: ctx,
+          profileFile: _profileFile,
+          bannerFile: _bannerFile,
+          username: _usernameController.text.trim());
+
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(userProvider)!;
+    final isLoading = ref.watch(userProfileControllerProvider);
 
     return ref.watch(getUserDataProvider(widget.uid)).when(
         data: (user) => Scaffold(
@@ -53,77 +76,99 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                 centerTitle: false,
                 actions: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => save(context),
                     child: const Text("Save"),
                   )
                 ],
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0).w,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 160.h,
-                      child: Stack(
+              body: isLoading
+                  ? Loader()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0).w,
+                      child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: selectBannerImage,
-                            child: DottedBorder(
-                                radius: const Radius.circular(12),
-                                dashPattern: const [10, 4],
-                                strokeCap: StrokeCap.round,
-                                borderType: BorderType.RRect,
-                                color: Pallete.lightModeAppTheme.textTheme
-                                    .bodyLarge!.color!,
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 120.h,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: _bannerFile != null
-                                      ? Image.file(
-                                          _bannerFile!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : user.banner.isEmpty ||
-                                              user.banner ==
-                                                  Constants.bannerDefault
-                                          ? const Center(
-                                              child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                size: 40,
-                                              ),
-                                            )
-                                          : CachedNetworkImage(
-                                              imageUrl: user.banner,
-                                              fit: BoxFit.cover,
-                                            ),
-                                )),
-                          ),
-                          Positioned(
-                            bottom: 20,
-                            left: 20,
-                            child: GestureDetector(
-                              onTap: selectProfileImage,
-                              child: _profileFile != null
-                                  ? CircleAvatar(
-                                      backgroundImage: FileImage(_profileFile!),
-                                      radius: 32,
-                                    )
-                                  : CircleAvatar(
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              user.profilePic),
-                                      radius: 32,
-                                    ),
+                          SizedBox(
+                            height: 160.h,
+                            child: Stack(
+                              children: [
+                                GestureDetector(
+                                  onTap: selectBannerImage,
+                                  child: DottedBorder(
+                                      radius: const Radius.circular(12),
+                                      dashPattern: const [10, 4],
+                                      strokeCap: StrokeCap.round,
+                                      borderType: BorderType.RRect,
+                                      color: Pallete.lightModeAppTheme.textTheme
+                                          .bodyLarge!.color!,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          height: 120.h,
+                                          child: _bannerFile != null
+                                              ? Image.file(
+                                                  _bannerFile!,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : user.banner.isEmpty ||
+                                                      user.banner ==
+                                                          Constants
+                                                              .bannerDefault
+                                                  ? const Center(
+                                                      child: Icon(
+                                                        Icons
+                                                            .camera_alt_outlined,
+                                                        size: 40,
+                                                      ),
+                                                    )
+                                                  : CachedNetworkImage(
+                                                      imageUrl: user.banner,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                        ),
+                                      )),
+                                ),
+                                Positioned(
+                                  bottom: 20,
+                                  left: 20,
+                                  child: GestureDetector(
+                                    onTap: selectProfileImage,
+                                    child: _profileFile != null
+                                        ? CircleAvatar(
+                                            backgroundImage:
+                                                FileImage(_profileFile!),
+                                            radius: 32,
+                                          )
+                                        : CircleAvatar(
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    user.profilePic),
+                                            radius: 32,
+                                          ),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
+                          ),
+                          TextField(
+                            controller: _usernameController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              hintText: 'Name',
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Pallete.blueColor),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.all(16).w,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
         error: (error, stackTrace) => Text(error.toString()),
         loading: () => const Loader());

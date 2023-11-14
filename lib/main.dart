@@ -30,8 +30,9 @@ class DialogixApp extends ConsumerStatefulWidget {
 
 class _DialogixAppState extends ConsumerState<DialogixApp> {
   UserModel? userModel;
-  bool _isLoading = true;
+  bool _isLoading = false;
   void getData(WidgetRef ref, User data) async {
+    _isLoading = true;
     userModel = await ref
         .watch(authControllerProvider.notifier)
         .getUserData(data.uid)
