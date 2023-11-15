@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Pallete {
+final themeNotifierProvider =
+    StateNotifierProvider<ThemeNotifier, ThemeData>((ref) => ThemeNotifier());
+
+class Palette {
+  Palette._();
   // Colors
   static const blackColor = Color.fromRGBO(1, 1, 1, 1); // primary color
   static const greyColor = Color.fromRGBO(26, 39, 45, 1); // secondary color
@@ -22,7 +28,7 @@ class Pallete {
     //     .apply(fontFamily: 'Gilroy'),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-          color: Pallete.whiteColor,
+          color: Palette.whiteColor,
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
@@ -47,7 +53,7 @@ class Pallete {
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
       titleTextStyle: TextStyle(
-          color: Pallete.blackColor,
+          color: Palette.blackColor,
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       elevation: 0,
@@ -63,4 +69,41 @@ class Pallete {
     // backgroundColor: whiteColor,
     colorScheme: ColorScheme.fromSeed(seedColor: redColor),
   );
+}
+
+class ThemeNotifier extends StateNotifier<ThemeData> {
+  ThemeMode _mode;
+
+  ThemeNotifier({ThemeMode mode = ThemeMode.dark})
+      : _mode = mode,
+        super(Palette.darkModeAppTheme) {
+    getTheme();
+  }
+
+  ThemeMode get mode => _mode;
+  void getTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final theme = prefs.getString('theme');
+    if (theme == 'light') {
+      _mode = ThemeMode.light;
+      state = Palette.lightModeAppTheme;
+    } else {
+      _mode = ThemeMode.dark;
+      state = Palette.darkModeAppTheme;
+    }
+  }
+
+  void toggleTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (_mode == ThemeMode.dark) {
+      _mode = ThemeMode.light;
+      state = Palette.lightModeAppTheme;
+      prefs.setString('theme', 'light');
+    } else {
+      _mode = ThemeMode.dark;
+      state = Palette.darkModeAppTheme;
+      prefs.setString('theme', 'dark');
+    }
+  }
 }

@@ -53,7 +53,7 @@ class UserProfileScreen extends ConsumerWidget {
                             child: const Text("Edit Profile"),
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Pallete.whiteColor.withOpacity(0.5),
+                                    Palette.whiteColor.withOpacity(0.5),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)))),
                       )

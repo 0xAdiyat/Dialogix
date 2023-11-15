@@ -53,7 +53,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
             data: (data) => MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   title: 'Dialogix',
-                  theme: Pallete.lightModeAppTheme,
+                  theme: ref.watch(themeNotifierProvider),
                   routerDelegate: RoutemasterDelegate(routesBuilder: (ctx) {
                     if (data != null) {
                       getData(ref, data);
@@ -72,7 +72,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
             error: (err, stackTrace) => ErrorText(error: err.toString()),
             loading: () => MaterialApp(
                 debugShowCheckedModeBanner: false,
-                theme: Pallete.lightModeAppTheme,
+                theme: ref.watch(themeNotifierProvider),
                 builder: (ctx, _) => const Scaffold(body: Loader())));
       },
     );

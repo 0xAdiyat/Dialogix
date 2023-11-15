@@ -23,6 +23,7 @@ final loggedOutRoute = RouteMap(
   },
 );
 final loggedInRoute = RouteMap(
+  onUnknownRoute: (_) => const Redirect('/'),
   routes: {
     RoutePaths.homeScreen: (_) => const MaterialPage(child: HomeScreen()),
     RoutePaths.createCommunityScreen: (_) =>
