@@ -27,7 +27,7 @@ class AddPostScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 16,
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.image_outlined,
                   size: iconSize,
