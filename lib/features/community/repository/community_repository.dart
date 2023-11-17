@@ -26,7 +26,7 @@ class CommunityRepository {
       if (communityDoc.exists) {
         throw 'Community already exists';
       }
-      return right(_communities.doc(community.id).set(community.toMap()));
+      return right(_communities.doc(community.id).set(community.toJson()));
     } on FirebaseException catch (e) {
       return left(Failure(e.message!));
     } catch (e) {
@@ -36,7 +36,7 @@ class CommunityRepository {
 
   Stream<CommunityModel> getCommunityByName(String name) =>
       _communities.doc(name).snapshots().map((event) =>
-          CommunityModel.fromMap(event.data() as Map<String, dynamic>));
+          CommunityModel.fromJson(event.data() as Map<String, dynamic>));
 
   Stream<List<CommunityModel>> getUserCommunities(String uid) {
     return _communities
@@ -46,7 +46,7 @@ class CommunityRepository {
       List<CommunityModel> communities = [];
       for (var doc in event.docs) {
         communities
-            .add(CommunityModel.fromMap(doc.data() as Map<String, dynamic>));
+            .add(CommunityModel.fromJson(doc.data() as Map<String, dynamic>));
       }
       return communities;
     });
@@ -56,7 +56,7 @@ class CommunityRepository {
     try {
       return right(_communities
           .doc(community.name.toLowerCase())
-          .update(community.toMap()));
+          .update(community.toJson()));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
@@ -80,7 +80,7 @@ class CommunityRepository {
 
       for (var community in event.docs) {
         communities.add(
-            CommunityModel.fromMap(community.data() as Map<String, dynamic>));
+            CommunityModel.fromJson(community.data() as Map<String, dynamic>));
       }
       return communities;
     });

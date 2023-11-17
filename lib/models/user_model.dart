@@ -19,17 +19,17 @@ abstract class UserModel implements _$UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      name: map['name'] as String,
-      profilePic: map['profilePic'] as String,
-      banner: map['banner'] as String,
-      uid: map['uid'] as String,
-      isAuthenticated: map['isAuthenticated'] as bool,
-      karma: map['karma'] as int,
-      awards: (map['awards'] as List<dynamic>).cast<String>(),
-    );
-  }
+  // factory UserModel.fromMap(Map<String, dynamic> map) {
+  //   return UserModel(
+  //     name: map['name'] as String,
+  //     profilePic: map['profilePic'] as String,
+  //     banner: map['banner'] as String,
+  //     uid: map['uid'] as String,
+  //     isAuthenticated: map['isAuthenticated'] as bool,
+  //     karma: map['karma'] as int,
+  //     awards: (map['awards'] as List<dynamic>).cast<String>(),
+  //   );
+  // }
 
-  Map<String, dynamic> toMap() => toJson();
+  // Map<String, dynamic> toMap() => toJson();
 }
