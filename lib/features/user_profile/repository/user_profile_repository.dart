@@ -22,7 +22,7 @@ class UserProfileRepository {
 
   FutureVoid editProfile(UserModel user) async {
     try {
-      return right(_users.doc(user.uid).update(user.toMap()));
+      return right(_users.doc(user.uid).update(user.toJson()));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {

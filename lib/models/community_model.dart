@@ -18,16 +18,16 @@ abstract class CommunityModel implements _$CommunityModel {
   factory CommunityModel.fromJson(Map<String, dynamic> json) =>
       _$CommunityModelFromJson(json);
 
-  factory CommunityModel.fromMap(Map<String, dynamic> map) {
-    return CommunityModel(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      banner: map['banner'] as String,
-      avatar: map['avatar'] as String,
-      members: (map['members'] as List<dynamic>).cast<String>(),
-      mods: (map['mods'] as List<dynamic>).cast<String>(),
-    );
-  }
+  // factory CommunityModel.fromMap(Map<String, dynamic> map) {
+  //   return CommunityModel(
+  //     id: map['id'] as String,
+  //     name: map['name'] as String,
+  //     banner: map['banner'] as String,
+  //     avatar: map['avatar'] as String,
+  //     members: (map['members'] as List<dynamic>).cast<String>(),
+  //     mods: (map['mods'] as List<dynamic>).cast<String>(),
+  //   );
+  // }
 
-  Map<String, dynamic> toMap() => toJson();
+  // Map<String, dynamic> toMap() => toJson();
 }

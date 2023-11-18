@@ -69,7 +69,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
                   }),
                   routeInformationParser: const RoutemasterParser(),
                 ),
-            error: (err, stackTrace) => ErrorText(error: err.toString()),
+            error: (err, stackTrace) => ErrorText(err.toString()),
             loading: () => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 theme: ref.watch(themeNotifierProvider),

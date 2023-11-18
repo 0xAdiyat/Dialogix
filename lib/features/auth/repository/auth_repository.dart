@@ -75,7 +75,7 @@ class AuthRepository {
         );
 
         // Add the new user to the 'users' collection in Firestore
-        await _users.doc(userModel.uid).set(userModel.toMap());
+        await _users.doc(userModel.uid).set(userModel.toJson());
       } else {
         userModel = await getUserData(user.uid).first;
       }
@@ -91,7 +91,7 @@ class AuthRepository {
   Stream<UserModel> getUserData(String uid) => _users
       .doc(uid)
       .snapshots()
-      .map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+      .map((event) => UserModel.fromJson(event.data() as Map<String, dynamic>));
 
   void logOut() async {
     await _googleSignIn.signOut();
