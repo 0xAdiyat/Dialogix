@@ -6,6 +6,7 @@ import '../../../core/constants/firebase_constants.dart';
 import '../../../core/failure.dart';
 import '../../../core/providers/firebase_providers.dart';
 import '../../../core/type_defs.dart';
+import '../../../models/community_model.dart';
 import '../../../models/post_model.dart';
 
 final postRepositoryProvider = Provider<PostRepository>(
@@ -28,5 +29,16 @@ class PostRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<PostModel>> fetchUserPosts(List<CommunityModel> communities) {
+    return _posts
+        .where("communityName",
+            whereIn: communities.map((e) => e.name).toList())
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => PostModel.fromJson(e.data() as Map<String, dynamic>))
+            .toList());
   }
 }
