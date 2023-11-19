@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/user_profile/repository/user_profile_repository.dart';
+import 'package:dialogix/models/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -18,6 +19,10 @@ final userProfileControllerProvider =
       ref: ref,
       storageRepository: storageRepository);
 });
+
+final getUserPostsProvider = StreamProvider.family<List<PostModel>, String>(
+    (ref, uid) =>
+        ref.read(userProfileControllerProvider.notifier).getUserPosts(uid));
 
 class UserProfileController extends StateNotifier<bool> {
   final UserProfileRepository _profileRepository;
@@ -75,4 +80,7 @@ class UserProfileController extends StateNotifier<bool> {
       Routemaster.of(ctx).pop();
     });
   }
+
+  Stream<List<PostModel>> getUserPosts(String uid) =>
+      _profileRepository.getUserPosts(uid);
 }

@@ -21,6 +21,7 @@ class Palette {
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
+
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
     // textTheme: Theme.of(context)
@@ -32,23 +33,24 @@ class Palette {
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: whiteColor,
       ),
     ),
+
     drawerTheme: const DrawerThemeData(
       backgroundColor: drawerColor,
     ),
-    useMaterial3: true,
     primaryColor: redColor,
-    backgroundColor:
-        drawerColor, // will be used as alternative background color
+    backgroundColor: drawerColor,
+    // colorScheme: const ColorScheme(
+    //     background:
+    //         drawerColor),
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
-    useMaterial3: true,
     textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dialogix/models/post_model.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -19,6 +20,8 @@ class UserProfileRepository {
 
   CollectionReference get _users =>
       _firestore.collection(FirebaseConstants.usersCollection);
+  CollectionReference get _posts =>
+      _firestore.collection(FirebaseConstants.postsCollection);
 
   FutureVoid editProfile(UserModel user) async {
     try {
@@ -28,5 +31,15 @@ class UserProfileRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<PostModel>> getUserPosts(String uid) {
+    return _posts
+        .where("uid", isEqualTo: uid)
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => PostModel.fromJson(e.data() as Map<String, dynamic>))
+            .toList());
   }
 }

@@ -18,7 +18,9 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
         postRepository: ref.read(postRepositoryProvider),
         ref: ref,
         storageRepository: ref.read(storageRepositoryProvider)));
-
+final getPostByIdProvider = StreamProvider.family<PostModel, String>(
+    (ref, postId) =>
+        ref.read(postControllerProvider.notifier).getPostById(postId));
 final userPostsProvider =
     StreamProvider.family<List<PostModel>, List<CommunityModel>>(
         (ref, List<CommunityModel> communities) {
@@ -164,4 +166,7 @@ class PostController extends StateNotifier<bool> {
     final uid = _ref.read(userProvider)!.uid;
     _postRepository.downvote(post, uid);
   }
+
+  Stream<PostModel> getPostById(String postId) =>
+      _postRepository.getPostById(postId);
 }

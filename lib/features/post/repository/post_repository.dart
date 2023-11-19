@@ -68,7 +68,8 @@ class PostRepository {
       });
     }
   }
-    void downvote(PostModel post, String userId) {
+
+  void downvote(PostModel post, String userId) {
     if (post.upvotes.contains(userId)) {
       _posts.doc(post.id).update({
         "upvotes": FieldValue.arrayRemove([userId])
@@ -84,4 +85,9 @@ class PostRepository {
       });
     }
   }
+
+  Stream<PostModel> getPostById(String postId) => _posts
+      .doc(postId)
+      .snapshots()
+      .map((event) => PostModel.fromJson(event.data() as Map<String, dynamic>));
 }

@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/common/error_text.dart';
+import 'package:dialogix/core/common/post_card.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
 import 'package:dialogix/models/community_model.dart';
@@ -107,21 +109,21 @@ class CommunityScreen extends ConsumerWidget {
                         ),
                       ),
                       Gap(10.h),
-                      Divider(
+                      const Divider(
                         thickness: 2,
                       ),
                     ]),
                   ),
                 )
               ],
-              body: ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return Container(
-                    child: const Text("Displaying post"),
-                  );
-                },
-                itemCount: 1,
-              ),
+              body: ref.watch(getCommunityPostsProvider(communityName)).when(
+                  data: (posts) => ListView.builder(
+                        itemBuilder: (ctx, index) =>
+                            PostCard(post: posts[index]),
+                        itemCount: posts.length,
+                      ),
+                  error: (err, trace) => ErrorText(err.toString()),
+                  loading: () => const Loader()),
             ),
             error: (Object error, StackTrace stackTrace) =>
                 Text(error.toString()),

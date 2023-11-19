@@ -3,6 +3,7 @@ import 'package:dialogix/core/constants/firebase_constants.dart';
 import 'package:dialogix/core/failure.dart';
 import 'package:dialogix/core/providers/firebase_providers.dart';
 import 'package:dialogix/core/type_defs.dart';
+import 'package:dialogix/models/post_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -19,6 +20,8 @@ class CommunityRepository {
 
   CollectionReference get _communities =>
       _firestore.collection(FirebaseConstants.communitiesCollection);
+  CollectionReference get _posts =>
+      _firestore.collection(FirebaseConstants.postsCollection);
 
   FutureVoid createCommunity(CommunityModel community) async {
     try {
@@ -118,5 +121,15 @@ class CommunityRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<PostModel>> getCommunityPosts(String name) {
+    return _posts
+        .where("communityName", isEqualTo: name)
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => PostModel.fromJson(e.data() as Map<String, dynamic>))
+            .toList());
   }
 }
