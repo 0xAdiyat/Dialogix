@@ -149,4 +149,19 @@ class PostController extends StateNotifier<bool> {
     }
     return Stream.value([]);
   }
+
+  void deletePost(PostModel post) async {
+    final res = await _postRepository.deletePost(post);
+    res.fold((l) => null, (r) => null);
+  }
+
+  void upvote(PostModel post) {
+    final uid = _ref.read(userProvider)!.uid;
+    _postRepository.upvote(post, uid);
+  }
+
+  void downvote(PostModel post) {
+    final uid = _ref.read(userProvider)!.uid;
+    _postRepository.downvote(post, uid);
+  }
 }
