@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/post/repository/post_repository.dart';
+import 'package:dialogix/models/comment_model.dart';
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,11 @@ final userPostsProvider =
         (ref, List<CommunityModel> communities) {
   final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchUserPosts(communities);
+});
+
+final getPostCommentsProvider = StreamProvider.family((ref, String postId) {
+  final postController = ref.watch(postControllerProvider.notifier);
+  return postController.fetchPostComments(postId);
 });
 
 class PostController extends StateNotifier<bool> {
@@ -169,4 +175,27 @@ class PostController extends StateNotifier<bool> {
 
   Stream<PostModel> getPostById(String postId) =>
       _postRepository.getPostById(postId);
+
+  void addComment({
+    required BuildContext ctx,
+    required String text,
+    required PostModel post,
+  }) async {
+    final user = _ref.read(userProvider)!;
+    String commentId = const Uuid().v1();
+    final comment = CommentModel(
+        id: commentId,
+        text: text,
+        createdAt: DateTime.now(),
+        postId: post.id,
+        username: user.name,
+        profilePic: user.profilePic);
+
+    final res = await _postRepository.addComment(comment);
+    res.fold((l) => showSnackBar(ctx, l.message), (r) => null);
+  }
+
+  Stream<List<CommentModel>> fetchPostComments(String postId) {
+    return _postRepository.getCommentsOfPost(postId);
+  }
 }

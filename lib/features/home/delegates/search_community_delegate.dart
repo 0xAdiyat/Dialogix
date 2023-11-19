@@ -40,7 +40,7 @@ class SearchCommunityDelegate extends SearchDelegate {
                 final community = communities[index];
                 return ListTile(
                   title: Text(
-                    "r/${community.name}",
+                    "d/${community.name}",
                   ),
                   leading: CircleAvatar(
                     backgroundImage:
