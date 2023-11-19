@@ -5,7 +5,7 @@ import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
 import 'package:dialogix/features/post/controller/post_controller.dart';
 import 'package:dialogix/models/post_model.dart';
-import 'package:dialogix/theme/pallete.dart';
+import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

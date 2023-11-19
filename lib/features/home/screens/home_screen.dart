@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/features/feed/widgets/category_tabs.dart';
 import 'package:dialogix/features/home/delegates/search_community_delegate.dart';
 import 'package:dialogix/features/home/drawers/community_list_drawer.dart';
 import 'package:dialogix/features/home/drawers/profile_drawer.dart';
-import 'package:dialogix/theme/pallete.dart';
+import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,9 +33,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final currentTheme = ref.watch(themeNotifierProvider);
+    final currentMode = ref.watch(themeNotifierProvider.notifier).mode;
+
     final user = ref.watch(userProvider)!;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: const Text(
           'Home',
         ),
@@ -58,7 +63,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           )
         ],
       ),
-      body: Constants.tabWidgets[_page],
+      body: Column(
+        children: [
+          CategoryTabs(currentMode: currentMode),
+          Expanded(child: Constants.tabWidgets[_page]),
+        ],
+      ),
       drawer: const CommunityListDrawer(),
       endDrawer: const ProfileDrawer(),
       bottomNavigationBar: _buildBottomNavigationBar(currentTheme),

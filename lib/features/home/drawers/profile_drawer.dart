@@ -7,18 +7,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:routemaster/routemaster.dart';
 
-import '../../../theme/pallete.dart';
+import '../../../theme/palette.dart';
 
 class ProfileDrawer extends ConsumerWidget {
   const ProfileDrawer({super.key});
 
   void logOut(WidgetRef ref) =>
       ref.read(authControllerProvider.notifier).logOut();
+
   void navigateToUserProfile(BuildContext ctx, String uid) =>
       Routemaster.of(ctx).push('/u/$uid');
 
   void toggleTheme(WidgetRef ref) =>
       ref.read(themeNotifierProvider.notifier).toggleTheme();
+      
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;

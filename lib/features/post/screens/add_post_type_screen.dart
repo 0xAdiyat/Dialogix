@@ -12,7 +12,7 @@ import 'package:gap/gap.dart';
 
 import '../../../core/utils.dart';
 import '../../../models/community_model.dart';
-import '../../../theme/pallete.dart';
+import '../../../theme/palette.dart';
 
 class AddPostTypeScreen extends ConsumerStatefulWidget {
   final String type;

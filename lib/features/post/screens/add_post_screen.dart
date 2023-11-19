@@ -1,4 +1,3 @@
-import 'package:dialogix/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -12,7 +11,6 @@ class AddPostScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const cardHeightWidth = 120.0;
     const iconSize = 60.0;
-    final currentTheme = ref.watch(themeNotifierProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +44,7 @@ class AddPostScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 16,
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.font_download_outlined,
                   size: iconSize,
@@ -65,7 +63,7 @@ class AddPostScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 16,
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.link_outlined,
                   size: iconSize,

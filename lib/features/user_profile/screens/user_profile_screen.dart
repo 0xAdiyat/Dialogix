@@ -3,7 +3,7 @@ import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/post_card.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
-import 'package:dialogix/theme/pallete.dart';
+import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

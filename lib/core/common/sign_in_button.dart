@@ -1,5 +1,5 @@
 import 'package:dialogix/core/constants/constants.dart';
-import 'package:dialogix/theme/pallete.dart';
+import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +15,7 @@ class SignInButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    
     return Padding(
       padding: const EdgeInsets.all(18.0).w,
       child: ElevatedButton.icon(

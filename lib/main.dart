@@ -3,7 +3,7 @@ import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:dialogix/router.dart';
-import 'package:dialogix/theme/pallete.dart';
+import 'package:dialogix/theme/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
