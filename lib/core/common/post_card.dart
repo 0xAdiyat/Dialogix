@@ -1,10 +1,15 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/common/error_text.dart';
+import 'package:dialogix/core/common/loader.dart';
+import 'package:dialogix/features/community/controller/community_controller.dart';
+import 'package:dialogix/features/post/controller/post_controller.dart';
 import 'package:dialogix/models/post_model.dart';
 import 'package:dialogix/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../../features/auth/controller/auth_controller.dart';
@@ -28,6 +33,18 @@ class PostCard extends ConsumerWidget {
     Routemaster.of(context).push('/post/${post.id}/comments');
   }
 
+  void deletePost(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).deletePost(post);
+  }
+
+  void upvote(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).upvote(post);
+  }
+
+  void downvote(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).downvote(post);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTypeImage = post.type == 'image';
@@ -37,7 +54,7 @@ class PostCard extends ConsumerWidget {
     return Column(
       children: [
         Container(
-            padding: EdgeInsets.symmetric(vertical: 12).w,
+            padding: const EdgeInsets.symmetric(vertical: 12).w,
             child: Row(
               children: [
                 Expanded(
@@ -46,8 +63,6 @@ class PostCard extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 16)
-                            .w
-                            .copyWith(right: 0)
                             .w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,14 +72,17 @@ class PostCard extends ConsumerWidget {
                               children: [
                                 Row(
                                   children: [
-                                    CircleAvatar(
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              post.communityProfilePic),
-                                      radius: 20,
+                                    GestureDetector(
+                                      onTap: () => navigateToCommunity(context),
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                post.communityProfilePic),
+                                        radius: 20,
+                                      ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(left: 8).w,
+                                      padding: const EdgeInsets.only(left: 8).w,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -73,10 +91,14 @@ class PostCard extends ConsumerWidget {
                                               style: TextStyle(
                                                   fontSize: 16.sp,
                                                   fontWeight: FontWeight.bold)),
-                                          Text("u/${post.username}",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                              )),
+                                          GestureDetector(
+                                            onTap: () =>
+                                                navigateToUser(context),
+                                            child: Text("u/${post.username}",
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                )),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -84,8 +106,8 @@ class PostCard extends ConsumerWidget {
                                 ),
                                 if (post.uid == user.uid)
                                   IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.delete_outline,
+                                      onPressed: () => deletePost(ref),
+                                      icon: const Icon(Icons.delete_outline,
                                           color: Palette.redColor))
                               ],
                             ),
@@ -100,18 +122,22 @@ class PostCard extends ConsumerWidget {
                               ),
                             ),
                             if (isTypeImage)
-                              SizedBox(
-                                height: ScreenUtil().screenHeight * 0.35,
-                                width: double.infinity,
-                                child: CachedNetworkImage(
-                                  imageUrl: post.link!,
-                                  fit: BoxFit.cover,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: SizedBox(
+                                  height: ScreenUtil().screenHeight * 0.35,
+                                  width: double.infinity,
+                                  child: CachedNetworkImage(
+                                    imageUrl: post.link!,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             if (isTypeLink)
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 18),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
                                 child: AnyLinkPreview(
                                   displayDirection:
                                       UIDirection.uiDirectionHorizontal,
@@ -122,7 +148,8 @@ class PostCard extends ConsumerWidget {
                               Container(
                                 alignment: Alignment.bottomLeft,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                  horizontal: 16.0,
+                                ).w,
                                 child: Text(
                                   post.description!,
                                   style: const TextStyle(
@@ -130,6 +157,80 @@ class PostCard extends ConsumerWidget {
                                   ),
                                 ),
                               ),
+                            Gap(5.h),
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.grey[300]!,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () => upvote(ref),
+                                          icon: Icon(
+                                              Icons.arrow_upward_outlined,
+                                              size: 30,
+                                              color: post.upvotes
+                                                      .contains(user.uid)
+                                                  ? Palette.redColor
+                                                  : null)),
+                                      Text(
+                                        '${post.upvotes.length - post.downvotes.length == 0 ? 'Vote' : post.upvotes.length - post.downvotes.length}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      IconButton(
+                                          onPressed: () => downvote(ref),
+                                          icon: Icon(
+                                              Icons.arrow_downward_outlined,
+                                              size: 30,
+                                              color: post.downvotes
+                                                      .contains(user.uid)
+                                                  ? Palette.blueColor
+                                                  : null)),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () =>
+                                          navigateToComments(context),
+                                      icon: const Icon(
+                                        Icons.comment_outlined,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${post.commentCount == 0 ? 'Comment' : post.commentCount}',
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                                ref
+                                    .watch(getCommunityByNameProvider(
+                                        post.communityName))
+                                    .when(
+                                        data: (community) {
+                                          if (community.mods
+                                              .contains(user.uid)) {
+                                            return IconButton(
+                                              onPressed: () => deletePost(ref),
+                                              icon: const Icon(
+                                                Icons
+                                                    .admin_panel_settings_outlined,
+                                              ),
+                                            );
+                                          }
+                                          return const SizedBox();
+                                        },
+                                        error: (err, stack) =>
+                                            ErrorText(err.toString()),
+                                        loading: () => const Loader()),
+                              ],
+                            )
                           ],
                         ),
                       ),

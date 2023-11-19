@@ -42,13 +42,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         leading: Builder(
           builder: (ctx) => IconButton(
               onPressed: () => displayDrawer(ctx),
-              icon: const Icon(Icons.menu)),
+              icon: const Icon(Icons.menu_outlined)),
         ),
         actions: [
           IconButton(
               onPressed: () => communitySearch(context),
-              icon: const Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+              icon: const Icon(Icons.search_outlined)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add_outlined)),
           Builder(
             builder: (ctx) => IconButton(
                 onPressed: () => displayEndDrawer(ctx),
@@ -70,10 +70,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       activeColor: currentTheme.iconTheme.color,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home_outlined),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add),
+          icon: Icon(Icons.add_outlined),
         ),
       ],
       onTap: onPageChanged,
