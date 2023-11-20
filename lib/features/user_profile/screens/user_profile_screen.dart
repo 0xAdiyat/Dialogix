@@ -84,7 +84,7 @@ class UserProfileScreen extends ConsumerWidget {
                           '${user.karma} karma',
                         ),
                       ),
-                      Gap(10.h),
+                      Gap(12.h),
                       const Divider(
                         thickness: 2,
                       ),

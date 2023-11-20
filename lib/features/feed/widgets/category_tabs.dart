@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+//TODO: improve code quality and code logics
 class CategoryTabs extends StatelessWidget {
   final ThemeMode currentMode;
   const CategoryTabs({super.key, required this.currentMode});
@@ -12,12 +13,12 @@ class CategoryTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 12).w,
+      width: 184.w,
       decoration: BoxDecoration(
         color: currentMode == ThemeMode.light
             ? Palette.glassWhite
             : Palette.glassBlack,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: DefaultTabController(
           length: 2,
@@ -49,9 +50,9 @@ class CategoryTabs extends StatelessWidget {
                       children: [
                         const Icon(CupertinoIcons.flame,
                             color: Palette.whiteColor),
-                        Gap(2.w),
+                        Gap(4.w),
                         const Text(
-                          "Best Post",
+                          "Trending Now",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Palette.whiteColor),
@@ -61,7 +62,6 @@ class CategoryTabs extends StatelessWidget {
                   ),
                 ),
                 const Tab(
-                  height: 46,
                   text: "Hot",
                 ),
               ])),

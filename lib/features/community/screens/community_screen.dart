@@ -57,7 +57,7 @@ class CommunityScreen extends ConsumerWidget {
                           radius: 35,
                         ),
                       ),
-                      Gap(5.h),
+                      Gap(4.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -108,7 +108,7 @@ class CommunityScreen extends ConsumerWidget {
                           '${community.members.length} members',
                         ),
                       ),
-                      Gap(10.h),
+                      Gap(12.h),
                       const Divider(
                         thickness: 2,
                       ),

@@ -95,7 +95,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
         ],
       ),
       body: isLoading
-          ? Loader()
+          ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(8.0).w,
               child: Column(children: [
@@ -109,7 +109,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                   ),
                   maxLength: 30,
                 ),
-                Gap(10.h),
+                Gap(12.h),
                 if (isTypeImage)
                   GestureDetector(
                     onTap: selectBannerImage,
@@ -189,7 +189,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                               setState(() => _selectedCommunity = val));
                     },
                     error: (err, trace) => Text(err.toString()),
-                    loading: () => Loader())
+                    loading: () => const Loader())
               ]),
             ),
     );
