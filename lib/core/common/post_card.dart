@@ -27,6 +27,19 @@ class PostCard extends ConsumerWidget {
     required this.post,
   });
 
+  static const double kBorderRadiusValue = 12.0;
+  static const double kTwelveValue = 12.0;
+  static const double kPostPaddingValue = 16.0;
+  static const double kPostPaddingHalfValue = kPostPaddingValue / 2;
+  static const double avatarRadius = 20.0;
+  static const double kCardOpacityAboveBlurredEffect = 0.65;
+  static const double blurredImageHeightFactor = 0.12;
+  static const double blurredImageWidthFactor = 0.76;
+  static const double blurredImageSizeFactor = 0.20;
+  static const double actionButtonHeight = 30.0;
+  static const double kFontSizeValue = 16.0;
+  static const double kSigmaXY = 24.0;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTypeImage = post.type == 'image';
@@ -35,37 +48,44 @@ class PostCard extends ConsumerWidget {
     final currentTheme = ref.watch(themeNotifierProvider);
 
     return Padding(
-      padding: const EdgeInsets.all(12.0).w,
+      padding: const EdgeInsets.all(kTwelveValue).w,
       child: Stack(
         children: [
           if (isTypeImage) _buildBlurredImage(post.link!),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8).w,
+            padding: const EdgeInsets.symmetric(
+                    vertical: kPostPaddingValue,
+                    horizontal: kPostPaddingHalfValue)
+                .w,
             decoration: BoxDecoration(
               color: _getBackgroundColor(mode),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(kBorderRadiusValue),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16).w,
+                    padding: const EdgeInsets.symmetric(
+                            horizontal: kPostPaddingValue)
+                        .w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildUserInfo(post, user, context, ref),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0).w,
+                          padding: const EdgeInsets.symmetric(
+                                  vertical: kPostPaddingHalfValue)
+                              .w,
                           child: Text(
                             post.title,
                             style: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: kFontSizeValue.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         _buildPostContent(post, mode, currentTheme),
-                        Gap(12.h),
+                        Gap(kTwelveValue.h),
                         _buildPostActions(post, user, ref, context),
                       ],
                     ),
@@ -87,10 +107,10 @@ class PostCard extends ConsumerWidget {
       child: Stack(
         children: [
           Container(
-            height: ScreenUtil().screenHeight * 0.12,
-            width: ScreenUtil().screenWidth * 0.76,
+            height: ScreenUtil().screenHeight * blurredImageHeightFactor,
+            width: ScreenUtil().screenWidth * blurredImageWidthFactor,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(kTwelveValue),
               image: DecorationImage(
                 image: CachedNetworkImageProvider(imageUrl),
                 fit: BoxFit.cover,
@@ -99,11 +119,11 @@ class PostCard extends ConsumerWidget {
           ),
           BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: 24,
-              sigmaY: 24,
+              sigmaX: kSigmaXY,
+              sigmaY: kSigmaXY,
             ),
             child: Container(
-              height: ScreenUtil().screenHeight * 0.20,
+              height: ScreenUtil().screenHeight * blurredImageSizeFactor,
             ),
           ),
         ],
@@ -113,8 +133,8 @@ class PostCard extends ConsumerWidget {
 
   Color _getBackgroundColor(ThemeMode mode) {
     return mode == ThemeMode.light
-        ? Colors.white.withOpacity(0.7)
-        : Palette.glassBlack.withOpacity(0.7);
+        ? Colors.white.withOpacity(kCardOpacityAboveBlurredEffect)
+        : Palette.glassBlack.withOpacity(kCardOpacityAboveBlurredEffect);
   }
 
   Widget _buildUserInfo(
@@ -132,7 +152,7 @@ class PostCard extends ConsumerWidget {
                   child: CircleAvatar(
                     backgroundImage:
                         CachedNetworkImageProvider(post.communityProfilePic),
-                    radius: 20,
+                    radius: avatarRadius,
                   ),
                 ),
                 Padding(
@@ -174,9 +194,9 @@ class PostCard extends ConsumerWidget {
       PostModel post, ThemeMode mode, ThemeData currentTheme) {
     if (post.type == 'image') {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(kTwelveValue),
         child: SizedBox(
-          height: ScreenUtil().screenHeight * 0.20,
+          height: ScreenUtil().screenHeight * blurredImageSizeFactor,
           width: double.infinity,
           child: CachedNetworkImage(
             imageUrl: post.link!,
@@ -186,7 +206,9 @@ class PostCard extends ConsumerWidget {
       );
     } else if (post.type == 'link') {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8.0).w,
+        padding: const EdgeInsets.symmetric(
+                horizontal: kTwelveValue, vertical: kPostPaddingHalfValue)
+            .w,
         child: Card(
           child: AnyLinkPreview(
             removeElevation: true,
@@ -201,7 +223,9 @@ class PostCard extends ConsumerWidget {
     } else if (post.type == 'text') {
       return Container(
         alignment: Alignment.bottomLeft,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0).w,
+        padding: const EdgeInsets.symmetric(
+                horizontal: kPostPaddingValue, vertical: kPostPaddingHalfValue)
+            .w,
         child: Text(
           post.description!,
           style: const TextStyle(
@@ -210,7 +234,7 @@ class PostCard extends ConsumerWidget {
         ),
       );
     } else {
-      return const SizedBox(); // Handle other post types if needed
+      return const SizedBox();
     }
   }
 
@@ -220,7 +244,7 @@ class PostCard extends ConsumerWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(kTwelveValue),
             border: Border.all(
               color: Colors.grey[300]!,
             ),
@@ -230,7 +254,7 @@ class PostCard extends ConsumerWidget {
               IconButton(
                 onPressed: () => upvote(ref),
                 icon: SvgPicture.asset(
-                  height: 30,
+                  height: actionButtonHeight,
                   Constants.arrowUpIcon,
                   colorFilter: ColorFilter.mode(
                       post.upvotes.contains(user.uid)
@@ -241,12 +265,12 @@ class PostCard extends ConsumerWidget {
               ),
               Text(
                 '${post.upvotes.length - post.downvotes.length == 0 ? 'Vote' : post.upvotes.length - post.downvotes.length}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: kFontSizeValue),
               ),
               IconButton(
                 onPressed: () => downvote(ref),
                 icon: SvgPicture.asset(
-                  height: 30,
+                  height: actionButtonHeight,
                   Constants.arrowBottomIcon,
                   colorFilter: ColorFilter.mode(
                       post.downvotes.contains(user.uid)
@@ -270,7 +294,7 @@ class PostCard extends ConsumerWidget {
             ),
             Text(
               '${post.commentCount == 0 ? 'Comment' : post.commentCount}',
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: kFontSizeValue),
             ),
           ],
         ),
