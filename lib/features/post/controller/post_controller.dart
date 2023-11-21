@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dialogix/core/enums/enums.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/post/repository/post_repository.dart';
+import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
 import 'package:dialogix/models/comment_model.dart';
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
@@ -73,6 +75,9 @@ class PostController extends StateNotifier<bool> {
         description: description);
 
     final res = await _postRepository.addPost(post);
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKama(UserKarma.textPost);
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
@@ -105,6 +110,9 @@ class PostController extends StateNotifier<bool> {
         link: link);
 
     final res = await _postRepository.addPost(post);
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKama(UserKarma.linkPost);
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
@@ -143,6 +151,9 @@ class PostController extends StateNotifier<bool> {
         link: imageUrl,
       );
       final res = await _postRepository.addPost(post);
+      _ref
+          .read(userProfileControllerProvider.notifier)
+          .updateUserKama(UserKarma.imagePost);
       state = false;
       res.fold((l) => showSnackBar(ctx, l.message), (r) {
         showSnackBar(ctx, 'Posted successfully!');
@@ -160,6 +171,9 @@ class PostController extends StateNotifier<bool> {
 
   void deletePost(PostModel post) async {
     final res = await _postRepository.deletePost(post);
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKama(UserKarma.deletePost);
     res.fold((l) => null, (r) => null);
   }
 
@@ -192,6 +206,9 @@ class PostController extends StateNotifier<bool> {
         profilePic: user.profilePic);
 
     final res = await _postRepository.addComment(comment);
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKama(UserKarma.comment);
     res.fold((l) => showSnackBar(ctx, l.message), (r) => null);
   }
 

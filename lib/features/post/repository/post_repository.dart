@@ -94,6 +94,7 @@ class PostRepository {
       .snapshots()
       .map((event) => PostModel.fromJson(event.data() as Map<String, dynamic>));
 
+  // TODO: On remove comment gotta decrement
   FutureVoid addComment(CommentModel comment) async {
     try {
       await _comments.doc(comment.id).set(comment.toJson());
