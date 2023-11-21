@@ -4,6 +4,7 @@ import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/community/repository/community_repository.dart';
 import 'package:dialogix/models/community_model.dart';
+import 'package:dialogix/models/post_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -12,6 +13,10 @@ import 'package:routemaster/routemaster.dart';
 import '../../../core/failure.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
+
+final getCommunityPostsProvider =
+    StreamProvider.family<List<PostModel>, String>((ref, name) =>
+        ref.read(communityControllerProvider.notifier).getCommunityPosts(name));
 
 final getCommunityByNameProvider =
     StreamProvider.family<CommunityModel, String>((ref, name) {
@@ -144,4 +149,7 @@ class CommunityController extends StateNotifier<bool> {
       showSnackBar(ctx, "Community created successfully!");
     });
   }
+
+  Stream<List<PostModel>> getCommunityPosts(String name) =>
+      _communityRepository.getCommunityPosts(name);
 }

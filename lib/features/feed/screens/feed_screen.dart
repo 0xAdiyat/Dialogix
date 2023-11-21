@@ -6,15 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/common/loader.dart';
 import '../../../core/common/post_card.dart';
-import '../../auth/controller/auth_controller.dart';
 
 class FeedScreen extends ConsumerWidget {
   const FeedScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider)!;
-
     return ref.watch(userCommunitiesProvider).when(
           data: (communities) => ref.watch(userPostsProvider(communities)).when(
                 data: (posts) {

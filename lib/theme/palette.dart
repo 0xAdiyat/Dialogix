@@ -17,10 +17,14 @@ class Palette {
   static const redColor = Color(0xffff4500);
   static const blueColor = Color(0xff0079d3);
 
+  static const glassWhite = Color(0xffF1F1F1);
+  static const glassBlack = Color(0xff0E0E0E);
+
   // Themes
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
+
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
     // textTheme: Theme.of(context)
@@ -32,23 +36,24 @@ class Palette {
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: whiteColor,
       ),
     ),
+
     drawerTheme: const DrawerThemeData(
       backgroundColor: drawerColor,
     ),
-    useMaterial3: true,
     primaryColor: redColor,
-    backgroundColor:
-        drawerColor, // will be used as alternative background color
+    backgroundColor: drawerColor,
+    // colorScheme: const ColorScheme(
+    //     background:
+    //         drawerColor),
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
-    useMaterial3: true,
     textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
@@ -77,11 +82,12 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   ThemeNotifier({ThemeMode mode = ThemeMode.dark})
       : _mode = mode,
         super(Palette.darkModeAppTheme) {
-    getTheme();
+    _getTheme();
   }
 
   ThemeMode get mode => _mode;
-  void getTheme() async {
+
+  void _getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final theme = prefs.getString('theme');
     if (theme == 'light') {
@@ -96,14 +102,15 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   void toggleTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    
     if (_mode == ThemeMode.dark) {
       _mode = ThemeMode.light;
       state = Palette.lightModeAppTheme;
-      prefs.setString('theme', 'light');
+       prefs.setString('theme', 'light');
     } else {
       _mode = ThemeMode.dark;
       state = Palette.darkModeAppTheme;
-      prefs.setString('theme', 'dark');
+       prefs.setString('theme', 'dark');
     }
   }
 }

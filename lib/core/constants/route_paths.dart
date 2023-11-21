@@ -10,4 +10,5 @@ class RoutePaths {
   static const userProfileScreen = '/u/:uid';
   static const editProfileScreen = '/edit-profile/:uid';
   static const addPostTypeScreen = '/add-post/:type';
+  static const commentsScreen = '/post/:postId/comments';
 }

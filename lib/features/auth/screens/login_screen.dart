@@ -29,12 +29,12 @@ class LoginScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Gap(30.h),
+                  Gap(28.h),
                   Text(
                     "Dive into anything",
                     style: TextStyle(letterSpacing: 0.5.sp, fontSize: 24.sp),
                   ),
-                  Gap(30.h),
+                  Gap(28.h),
                   Padding(
                     padding: const EdgeInsets.all(8.0).w,
                     child: Image.asset(

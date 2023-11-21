@@ -46,7 +46,7 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
                     alignment: Alignment.topLeft,
                     child: Text('Community name'),
                   ),
-                  Gap(10.h),
+                  Gap(12.h),
                   TextField(
                     controller: communityNameController,
                     decoration: const InputDecoration(
@@ -57,7 +57,7 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
                     ),
                     maxLength: 21,
                   ),
-                  Gap(30.h),
+                  Gap(28.h),
                   ElevatedButton(
                     onPressed: () => createCommunity(ref, context),
                     style: ElevatedButton.styleFrom(

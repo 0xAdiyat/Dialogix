@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dialogix/models/comment_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -20,6 +21,8 @@ class PostRepository {
 
   CollectionReference get _posts =>
       _firestore.collection(FirebaseConstants.postsCollection);
+  CollectionReference get _comments =>
+      _firestore.collection(FirebaseConstants.commentsCollection);
 
   FutureVoid addPost(PostModel post) async {
     try {
@@ -68,7 +71,8 @@ class PostRepository {
       });
     }
   }
-    void downvote(PostModel post, String userId) {
+
+  void downvote(PostModel post, String userId) {
     if (post.upvotes.contains(userId)) {
       _posts.doc(post.id).update({
         "upvotes": FieldValue.arrayRemove([userId])
@@ -84,4 +88,31 @@ class PostRepository {
       });
     }
   }
+
+  Stream<PostModel> getPostById(String postId) => _posts
+      .doc(postId)
+      .snapshots()
+      .map((event) => PostModel.fromJson(event.data() as Map<String, dynamic>));
+
+  // TODO: On remove comment gotta decrement
+  FutureVoid addComment(CommentModel comment) async {
+    try {
+      await _comments.doc(comment.id).set(comment.toJson());
+      return right(_posts
+          .doc(comment.postId)
+          .update({'commentCount': FieldValue.increment(1)}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  Stream<List<CommentModel>> getCommentsOfPost(String postId) => _comments
+      .where('postId', isEqualTo: postId)
+      .orderBy('createdAt', descending: true)
+      .snapshots()
+      .map((event) => event.docs
+          .map((e) => CommentModel.fromJson(e.data() as Map<String, dynamic>))
+          .toList());
 }
