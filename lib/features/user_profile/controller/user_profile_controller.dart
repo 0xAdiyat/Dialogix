@@ -86,10 +86,10 @@ class UserProfileController extends StateNotifier<bool> {
   Stream<List<PostModel>> getUserPosts(String uid) =>
       _profileRepository.getUserPosts(uid);
 
-  void updateUserKama(UserKarma karma) async {
+  void updateUserKarma(UserKarma karma) async {
     UserModel user = _ref.read(userProvider)!;
 
-    user = user.copyWith(karma: karma.karma);
+    user = user.copyWith(karma: user.karma + karma.karma);
     final res = await _profileRepository.updateUserKarma(user);
 
     res.fold((l) => null,

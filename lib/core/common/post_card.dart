@@ -72,6 +72,23 @@ class PostCard extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildUserInfo(post, user, context, ref),
+                        if (post.awards.isNotEmpty) ...[
+                          Gap(4.h),
+                          SizedBox(
+                            height: 24.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: post.awards.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final award = post.awards[index];
+                                return Image.asset(
+                                  Constants.awards[award]!,
+                                  height: 20,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                         Padding(
                           padding: const EdgeInsets.symmetric(
                                   vertical: kPostPaddingHalfValue)
@@ -241,6 +258,7 @@ class PostCard extends ConsumerWidget {
   Widget _buildPostActions(
       PostModel post, UserModel user, WidgetRef ref, BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           decoration: BoxDecoration(
@@ -298,6 +316,7 @@ class PostCard extends ConsumerWidget {
             ),
           ],
         ),
+        // TODO: Add mods button as more options
         ref.watch(getCommunityByNameProvider(post.communityName)).when(
             data: (community) {
               if (community.mods.contains(user.uid)) {
@@ -314,6 +333,43 @@ class PostCard extends ConsumerWidget {
             },
             error: (err, stack) => ErrorText(err.toString()),
             loading: () => const Loader()),
+        Flexible(
+          child: IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) => Dialog(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20).w,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                      ),
+                      itemCount: user.awards.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final award = user.awards[index];
+
+                        return GestureDetector(
+                          onTap: () => awardPost(ref, award, context),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0).w,
+                            child: Image.asset(Constants.awards[award]!),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              );
+            },
+            icon: SvgPicture.asset(
+              Constants.giftIcon,
+              colorFilter: ColorFilter.mode(Colors.grey[300]!, BlendMode.srcIn),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -341,4 +397,8 @@ class PostCard extends ConsumerWidget {
   void downvote(WidgetRef ref) {
     ref.read(postControllerProvider.notifier).downvote(post);
   }
+
+  void awardPost(WidgetRef ref, String award, BuildContext ctx) => ref
+      .read(postControllerProvider.notifier)
+      .awardPost(post: post, award: award, ctx: ctx);
 }
