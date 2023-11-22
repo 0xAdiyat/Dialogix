@@ -48,6 +48,16 @@ class PostRepository {
             .toList());
   }
 
+  Stream<List<PostModel>> fetchGuestPosts() {
+    return _posts
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => PostModel.fromJson(e.data() as Map<String, dynamic>))
+            .toList());
+  }
+
   FutureVoid deletePost(PostModel post) async {
     try {
       return right(_posts.doc(post.id).delete());

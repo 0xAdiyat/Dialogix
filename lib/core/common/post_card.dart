@@ -46,7 +46,8 @@ class PostCard extends ConsumerWidget {
     final user = ref.watch(userProvider)!;
     final mode = ref.watch(themeNotifierProvider.notifier).mode;
     final currentTheme = ref.watch(themeNotifierProvider);
-
+    final isGuest = !user.isAuthenticated;
+    
     return Padding(
       padding: const EdgeInsets.all(kTwelveValue).w,
       child: Stack(
@@ -103,7 +104,7 @@ class PostCard extends ConsumerWidget {
                         ),
                         _buildPostContent(post, mode, currentTheme),
                         Gap(kTwelveValue.h),
-                        _buildPostActions(post, user, ref, context),
+                        _buildPostActions(post, user, ref, context, isGuest),
                       ],
                     ),
                   ),
@@ -255,8 +256,8 @@ class PostCard extends ConsumerWidget {
     }
   }
 
-  Widget _buildPostActions(
-      PostModel post, UserModel user, WidgetRef ref, BuildContext context) {
+  Widget _buildPostActions(PostModel post, UserModel user, WidgetRef ref,
+      BuildContext context, bool isGuest) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -270,7 +271,7 @@ class PostCard extends ConsumerWidget {
           child: Row(
             children: [
               IconButton(
-                onPressed: () => upvote(ref),
+                onPressed: isGuest ? () {} : () => upvote(ref),
                 icon: SvgPicture.asset(
                   height: actionButtonHeight,
                   Constants.arrowUpIcon,
@@ -286,7 +287,7 @@ class PostCard extends ConsumerWidget {
                 style: const TextStyle(fontSize: kFontSizeValue),
               ),
               IconButton(
-                onPressed: () => downvote(ref),
+                onPressed: isGuest ? () {} : () => downvote(ref),
                 icon: SvgPicture.asset(
                   height: actionButtonHeight,
                   Constants.arrowBottomIcon,
@@ -335,35 +336,37 @@ class PostCard extends ConsumerWidget {
             loading: () => const Loader()),
         Flexible(
           child: IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (ctx) => Dialog(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20).w,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                      ),
-                      itemCount: user.awards.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final award = user.awards[index];
+            onPressed: isGuest
+                ? () {}
+                : () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => Dialog(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20).w,
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                            ),
+                            itemCount: user.awards.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final award = user.awards[index];
 
-                        return GestureDetector(
-                          onTap: () => awardPost(ref, award, context),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0).w,
-                            child: Image.asset(Constants.awards[award]!),
+                              return GestureDetector(
+                                onTap: () => awardPost(ref, award, context),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0).w,
+                                  child: Image.asset(Constants.awards[award]!),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              );
-            },
+                        ),
+                      ),
+                    );
+                  },
             icon: SvgPicture.asset(
               Constants.giftIcon,
               colorFilter: ColorFilter.mode(Colors.grey[300]!, BlendMode.srcIn),

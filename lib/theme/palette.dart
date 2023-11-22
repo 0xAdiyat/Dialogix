@@ -14,7 +14,10 @@ class Palette {
   static const greyColor = Color.fromRGBO(26, 39, 45, 1); // secondary color
   static const drawerColor = Color.fromRGBO(18, 18, 18, 1);
   static const whiteColor = Color(0xfff8f8f8);
-  static const redColor = Color(0xffff4500);
+  // static const redColor = Color(0xffff4500);
+    static const redColor = Color(0xffFE1723);
+        // static const redColor = Color(0xff951758);
+
   static const blueColor = Color(0xff0079d3);
 
   static const glassWhite = Color(0xffF1F1F1);

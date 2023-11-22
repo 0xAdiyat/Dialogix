@@ -10,6 +10,9 @@ import 'package:gap/gap.dart';
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
+  void signInAsGuest(WidgetRef ref, BuildContext ctx) =>
+      ref.read(authControllerProvider.notifier).signInAsGuest(ctx);
+
   @override
   Widget build(BuildContext context, ref) {
     final isLoading = ref.watch(authControllerProvider);
@@ -20,7 +23,11 @@ class LoginScreen extends ConsumerWidget {
           Constants.logoPath,
           height: 40.h,
         ),
-        actions: [TextButton(onPressed: () {}, child: const Text("Skip"))],
+        actions: [
+          TextButton(
+              onPressed: () => signInAsGuest(ref, context),
+              child: const Text("Skip"))
+        ],
       ),
       body: Center(
         child: isLoading

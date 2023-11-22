@@ -27,6 +27,7 @@ class CommunityScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
     return Scaffold(
       body: ref.watch(getCommunityByNameProvider(communityName)).when(
             data: (community) => NestedScrollView(
@@ -68,21 +69,23 @@ class CommunityScreen extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          OutlinedButton(
-                            onPressed: community.mods.contains(user.uid)
-                                ? () => navigateToModScreen(context)
-                                : () =>
-                                    joinOrLeaveCommunity(ref, community, ctx),
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12))),
-                            child: Text(community.mods.contains(user.uid)
-                                ? "Mod Tools"
-                                : community.members.contains(user.uid)
-                                    ? "Joined"
-                                    : "Join"),
-                          ),
+                          if (!isGuest)
+                            OutlinedButton(
+                              onPressed: community.mods.contains(user.uid)
+                                  ? () => navigateToModScreen(context)
+                                  : () =>
+                                      joinOrLeaveCommunity(ref, community, ctx),
+                              style: ElevatedButton.styleFrom(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.w),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12))),
+                              child: Text(community.mods.contains(user.uid)
+                                  ? "Mod Tools"
+                                  : community.members.contains(user.uid)
+                                      ? "Joined"
+                                      : "Join"),
+                            ),
                           //TODO: User id from mods list will be removed as well (if the user leaves)
                           /*           if (community.members.contains(user.uid))
                                 OutlinedButton(

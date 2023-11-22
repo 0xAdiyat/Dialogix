@@ -39,6 +39,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final currentMode = ref.watch(themeNotifierProvider.notifier).mode;
 
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -67,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 icon: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(user.profilePic),
                 )),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -80,8 +82,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
       drawer: const CommunityListDrawer(),
-      endDrawer: const ProfileDrawer(),
-      bottomNavigationBar: _buildBottomNavigationBar(currentTheme, currentMode),
+      endDrawer: isGuest ? null : const ProfileDrawer(),
+      bottomNavigationBar:
+          isGuest ? null : _buildBottomNavigationBar(currentTheme, currentMode),
     );
   }
 

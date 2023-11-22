@@ -33,6 +33,9 @@ final userPostsProvider =
   return postController.fetchUserPosts(communities);
 });
 
+final guestPostsProvider = StreamProvider(
+    (ref) => ref.read(postControllerProvider.notifier).fetchGuestPosts());
+
 final getPostCommentsProvider = StreamProvider.family((ref, String postId) {
   final postController = ref.watch(postControllerProvider.notifier);
   return postController.fetchPostComments(postId);
@@ -170,6 +173,9 @@ class PostController extends StateNotifier<bool> {
     }
     return Stream.value([]);
   }
+
+  Stream<List<PostModel>> fetchGuestPosts() =>
+      _postRepository.fetchGuestPosts();
 
   void deletePost(PostModel post) async {
     final res = await _postRepository.deletePost(post);

@@ -44,7 +44,7 @@ class AuthRepository {
 
   // Method to sign in using Google credentials
   //   Future<Either<String, UserModel>>
-  FutureEither<UserModel> signInWithGoogle() async {
+  FutureEither<UserModel> signInWithGoogle(bool isFromLogin) async {
     try {
       // Sign in with Google
       final googleUser = await _googleSignIn.signIn();
@@ -55,10 +55,34 @@ class AuthRepository {
       );
 
       // Get user credentials
-      final userCredential = await _auth.signInWithCredential(credential);
+      UserCredential userCredential;
 
       // Extract user information
-      final user = userCredential.user!;
+      User user;
+
+      if (isFromLogin) {
+        userCredential = await _auth.signInWithCredential(credential);
+
+        user = userCredential.user!;
+      } else {
+        try {
+          userCredential =
+              await _auth.currentUser!.linkWithCredential(credential);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'credential-already-in-use') {
+            // Google account is already linked, handle accordingly
+
+            //  extras: we can give the user option to unlink the old account
+            return left(Failure('Google account is already linked.'));
+          } else {
+            // Re-throw other FirebaseAuthExceptions
+            rethrow;
+          }
+        }
+
+        user = userCredential.user!;
+      }
+
       final UserModel userModel;
 
       // Check if the user is a new user
@@ -88,6 +112,37 @@ class AuthRepository {
       } else {
         userModel = await getUserData(user.uid).first;
       }
+      return right(userModel);
+    } on FirebaseException catch (e) {
+      return left(Failure(e.toString()));
+
+      // throw e
+      //     .message!; // by throwing it, it will make sure that it goes to the next catch block  which will catch it over next catch block and return left
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureEither<UserModel> signInAsGuest() async {
+    try {
+      final userCredential = await _auth.signInAnonymously();
+      // Extract user information
+      final user = userCredential.user!;
+
+      // Create a UserModel for the new user
+      final userModel = UserModel(
+        name: 'Guest',
+        profilePic: Constants.avatarDefault,
+        banner: Constants.bannerDefault,
+        uid: user.uid,
+        isAuthenticated: false,
+        karma: 0,
+        awards: [],
+      );
+
+      // Add the new user to the 'users' collection in Firestore
+      await _users.doc(userModel.uid).set(userModel.toJson());
+
       return right(userModel);
     } on FirebaseException catch (e) {
       throw e
