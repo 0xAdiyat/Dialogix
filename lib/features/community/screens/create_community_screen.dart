@@ -1,5 +1,6 @@
 import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
+import 'package:dialogix/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,41 +39,43 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
       ),
       body: isLoading
           ? const Loader()
-          : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Community name'),
-                  ),
-                  Gap(12.h),
-                  TextField(
-                    controller: communityNameController,
-                    decoration: const InputDecoration(
-                      hintText: 'r/Community_name',
-                      filled: true,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(18),
+          : Responsive(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Community name'),
                     ),
-                    maxLength: 21,
-                  ),
-                  Gap(28.h),
-                  ElevatedButton(
-                    onPressed: () => createCommunity(ref, context),
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        )),
-                    child: Text(
-                      'Create community',
-                      style: TextStyle(
-                        fontSize: 17.sp,
+                    Gap(12.h),
+                    TextField(
+                      controller: communityNameController,
+                      decoration: const InputDecoration(
+                        hintText: 'r/Community_name',
+                        filled: true,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(18),
+                      ),
+                      maxLength: 21,
+                    ),
+                    Gap(28.h),
+                    ElevatedButton(
+                      onPressed: () => createCommunity(ref, context),
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          )),
+                      child: Text(
+                        'Create community',
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
     );

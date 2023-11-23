@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -137,7 +136,10 @@ class PostController extends StateNotifier<bool> {
     final user = _ref.read(userProvider)!;
 
     final imageRes = await _storageRepository.storeFile(
-        path: 'posts/${selectedCommunity.name}', id: postId, file: file);
+        path: 'posts/${selectedCommunity.name}',
+        id: postId,
+        file: file,
+        webFile: webFile);
 
     imageRes.fold((l) => showSnackBar(ctx, l.message), (imageUrl) async {
       final post = PostModel(

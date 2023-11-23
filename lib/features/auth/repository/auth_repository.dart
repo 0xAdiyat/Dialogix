@@ -6,6 +6,7 @@ import 'package:dialogix/core/providers/firebase_providers.dart';
 import 'package:dialogix/core/type_defs.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -46,44 +47,51 @@ class AuthRepository {
   //   Future<Either<String, UserModel>>
   FutureEither<UserModel> signInWithGoogle(bool isFromLogin) async {
     try {
-      // Sign in with Google
-      final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth?.idToken,
-        accessToken: googleAuth?.accessToken,
-      );
-
       // Get user credentials
       UserCredential userCredential;
-
-      // Extract user information
+      // Extract user info
       User user;
 
-      if (isFromLogin) {
-        userCredential = await _auth.signInWithCredential(credential);
+      if (kIsWeb) {
+        final googleProvider = GoogleAuthProvider();
+        googleProvider
+            .addScope('https://www.googleapis.com/auth/contacts.readonly');
+        userCredential = await _auth.signInWithPopup(googleProvider);
+      }
+      {
+        // Sign in with Google
+        final googleUser = await _googleSignIn.signIn();
+        final googleAuth = await googleUser?.authentication;
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken,
+          accessToken: googleAuth?.accessToken,
+        );
 
-        user = userCredential.user!;
-      } else {
-        try {
-          userCredential =
-              await _auth.currentUser!.linkWithCredential(credential);
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'credential-already-in-use') {
-            // Google account is already linked, handle accordingly
+        if (isFromLogin) {
+          userCredential = await _auth.signInWithCredential(credential);
 
-            //  extras: we can give the user option to unlink the old account
-            return left(Failure('Google account is already linked.'));
-          } else {
-            // Re-throw other FirebaseAuthExceptions
-            rethrow;
+          user = userCredential.user!;
+        } else {
+          try {
+            userCredential =
+                await _auth.currentUser!.linkWithCredential(credential);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'credential-already-in-use') {
+              // Google account is already linked, handle accordingly
+
+              //  extras: we can give the user option to unlink the old account
+              return left(Failure('Google account is already linked.'));
+            } else {
+              // Re-throw other FirebaseAuthExceptions
+              rethrow;
+            }
           }
-        }
 
-        user = userCredential.user!;
+          user = userCredential.user!;
+        }
       }
 
-      final UserModel userModel;
+      UserModel userModel;
 
       // Check if the user is a new user
       if (userCredential.additionalUserInfo!.isNewUser) {

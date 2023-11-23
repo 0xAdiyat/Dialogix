@@ -2,6 +2,7 @@ import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/core/common/sign_in_button.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,7 +51,7 @@ class LoginScreen extends ConsumerWidget {
                     ),
                   ),
                   Gap(20.h),
-                  const SignInButton(),
+                  const Flexible(child: Responsive(child: SignInButton())),
                 ],
               ),
       ),

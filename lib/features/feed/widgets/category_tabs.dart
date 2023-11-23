@@ -77,6 +77,8 @@ class CategoryTabs extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0).w,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
               Icon(icon, color: color),
