@@ -8,6 +8,7 @@ import 'package:dialogix/features/user_profile/controller/user_profile_controlle
 import 'package:dialogix/models/comment_model.dart';
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
+import 'package:dialogix/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -30,6 +31,9 @@ final userPostsProvider =
   final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchUserPosts(communities);
 });
+
+final guestPostsProvider = StreamProvider(
+    (ref) => ref.read(postControllerProvider.notifier).fetchGuestPosts());
 
 final getPostCommentsProvider = StreamProvider.family((ref, String postId) {
   final postController = ref.watch(postControllerProvider.notifier);
@@ -77,7 +81,7 @@ class PostController extends StateNotifier<bool> {
     final res = await _postRepository.addPost(post);
     _ref
         .read(userProfileControllerProvider.notifier)
-        .updateUserKama(UserKarma.textPost);
+        .updateUserKarma(UserKarma.textPost);
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
@@ -112,7 +116,7 @@ class PostController extends StateNotifier<bool> {
     final res = await _postRepository.addPost(post);
     _ref
         .read(userProfileControllerProvider.notifier)
-        .updateUserKama(UserKarma.linkPost);
+        .updateUserKarma(UserKarma.linkPost);
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
@@ -132,7 +136,10 @@ class PostController extends StateNotifier<bool> {
     final user = _ref.read(userProvider)!;
 
     final imageRes = await _storageRepository.storeFile(
-        path: 'posts/${selectedCommunity.name}', id: postId, file: file);
+        path: 'posts/${selectedCommunity.name}',
+        id: postId,
+        file: file,
+        webFile: webFile);
 
     imageRes.fold((l) => showSnackBar(ctx, l.message), (imageUrl) async {
       final post = PostModel(
@@ -153,7 +160,7 @@ class PostController extends StateNotifier<bool> {
       final res = await _postRepository.addPost(post);
       _ref
           .read(userProfileControllerProvider.notifier)
-          .updateUserKama(UserKarma.imagePost);
+          .updateUserKarma(UserKarma.imagePost);
       state = false;
       res.fold((l) => showSnackBar(ctx, l.message), (r) {
         showSnackBar(ctx, 'Posted successfully!');
@@ -169,11 +176,14 @@ class PostController extends StateNotifier<bool> {
     return Stream.value([]);
   }
 
+  Stream<List<PostModel>> fetchGuestPosts() =>
+      _postRepository.fetchGuestPosts();
+
   void deletePost(PostModel post) async {
     final res = await _postRepository.deletePost(post);
     _ref
         .read(userProfileControllerProvider.notifier)
-        .updateUserKama(UserKarma.deletePost);
+        .updateUserKarma(UserKarma.deletePost);
     res.fold((l) => null, (r) => null);
   }
 
@@ -208,11 +218,42 @@ class PostController extends StateNotifier<bool> {
     final res = await _postRepository.addComment(comment);
     _ref
         .read(userProfileControllerProvider.notifier)
-        .updateUserKama(UserKarma.comment);
+        .updateUserKarma(UserKarma.comment);
     res.fold((l) => showSnackBar(ctx, l.message), (r) => null);
   }
 
   Stream<List<CommentModel>> fetchPostComments(String postId) {
     return _postRepository.getCommentsOfPost(postId);
+  }
+
+  void awardPost(
+      {required PostModel post,
+      required String award,
+      required BuildContext ctx}) async {
+    UserModel user = _ref.read(userProvider)!;
+    final res = await _postRepository.awardPost(post, award, user.uid);
+
+    res.fold((l) => showSnackBar(ctx, l.message), (r) {
+      _ref
+          .read(userProfileControllerProvider.notifier)
+          .updateUserKarma(UserKarma.awardPost);
+      _ref.read(userProvider.notifier).update((state) {
+        if (state != null) {
+          // To resolve Unsupported operation: Cannot remove from an unmodifiable list
+
+          // We created a new list
+          final updatedAwards = List<String>.from(state.awards);
+
+          updatedAwards.remove(award);
+
+          // Create a new UserModel instance with the updated awards list
+          final updatedUser = state.copyWith(awards: updatedAwards);
+
+          return updatedUser;
+        }
+        return null;
+      });
+      Routemaster.of(ctx).pop();
+    });
   }
 }

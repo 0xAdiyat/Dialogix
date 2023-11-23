@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +27,9 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
   File? _bannerFile;
   File? _profileFile;
 
+  Uint8List? _bannerWebFile;
+  Uint8List? _profileWebFile;
+
   late TextEditingController _usernameController;
   @override
   void initState() {
@@ -36,18 +41,30 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
   void selectBannerImage() async {
     final res = await pickImage();
     if (res != null) {
-      setState(() {
-        _bannerFile = File(res.files.first.path!);
-      });
+      if (kIsWeb) {
+        setState(() {
+          _bannerWebFile = res.files.first.bytes;
+        });
+      } else {
+        setState(() {
+          _bannerFile = File(res.files.first.path!);
+        });
+      }
     }
   }
 
   void selectProfileImage() async {
     final res = await pickImage();
     if (res != null) {
-      setState(() {
-        _profileFile = File(res.files.first.path!);
-      });
+      if (kIsWeb) {
+        setState(() {
+          _profileWebFile = res.files.first.bytes;
+        });
+      } else {
+        setState(() {
+          _profileFile = File(res.files.first.path!);
+        });
+      }
     }
   }
 
@@ -56,6 +73,8 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
           ctx: ctx,
           profileFile: _profileFile,
           bannerFile: _bannerFile,
+          profileWebFile: _profileWebFile,
+          bannerWebFile: _bannerWebFile,
           username: _usernameController.text.trim());
 
   @override
@@ -82,7 +101,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                 ],
               ),
               body: isLoading
-                  ? Loader()
+                  ? const Loader()
                   : Padding(
                       padding: const EdgeInsets.all(8.0).w,
                       child: Column(
@@ -105,26 +124,31 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                                         child: SizedBox(
                                           width: double.infinity,
                                           height: 120.h,
-                                          child: _bannerFile != null
-                                              ? Image.file(
-                                                  _bannerFile!,
+                                          child: _bannerWebFile != null
+                                              ? Image.memory(
+                                                  _bannerWebFile!,
                                                   fit: BoxFit.cover,
                                                 )
-                                              : user.banner.isEmpty ||
-                                                      user.banner ==
-                                                          Constants
-                                                              .bannerDefault
-                                                  ? const Center(
-                                                      child: Icon(
-                                                        Icons
-                                                            .camera_alt_outlined,
-                                                        size: 40,
-                                                      ),
-                                                    )
-                                                  : CachedNetworkImage(
-                                                      imageUrl: user.banner,
+                                              : _bannerFile != null
+                                                  ? Image.file(
+                                                      _bannerFile!,
                                                       fit: BoxFit.cover,
-                                                    ),
+                                                    )
+                                                  : user.banner.isEmpty ||
+                                                          user.banner ==
+                                                              Constants
+                                                                  .bannerDefault
+                                                      ? const Center(
+                                                          child: Icon(
+                                                            Icons
+                                                                .camera_alt_outlined,
+                                                            size: 40,
+                                                          ),
+                                                        )
+                                                      : CachedNetworkImage(
+                                                          imageUrl: user.banner,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                         ),
                                       )),
                                 ),
@@ -133,18 +157,24 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                                   left: 20,
                                   child: GestureDetector(
                                     onTap: selectProfileImage,
-                                    child: _profileFile != null
+                                    child: _profileWebFile != null
                                         ? CircleAvatar(
                                             backgroundImage:
-                                                FileImage(_profileFile!),
+                                                MemoryImage(_profileWebFile!),
                                             radius: 32,
                                           )
-                                        : CircleAvatar(
-                                            backgroundImage:
-                                                CachedNetworkImageProvider(
-                                                    user.profilePic),
-                                            radius: 32,
-                                          ),
+                                        : _profileFile != null
+                                            ? CircleAvatar(
+                                                backgroundImage:
+                                                    FileImage(_profileFile!),
+                                                radius: 32,
+                                              )
+                                            : CircleAvatar(
+                                                backgroundImage:
+                                                    CachedNetworkImageProvider(
+                                                        user.profilePic),
+                                                radius: 32,
+                                              ),
                                   ),
                                 )
                               ],

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dialogix/core/enums/enums.dart';
 import 'package:dialogix/models/post_model.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

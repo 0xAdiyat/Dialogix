@@ -6,6 +6,7 @@ import 'package:dialogix/features/community/repository/community_repository.dart
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
@@ -97,25 +98,29 @@ class CommunityController extends StateNotifier<bool> {
       {required CommunityModel community,
       File? avatarFile,
       File? bannerFile,
+      Uint8List? avatarWebFile,
+      Uint8List? bannerWebFile,
       required BuildContext ctx}) async {
     state = true;
-    if (avatarFile != null) {
+    if (avatarFile != null || avatarWebFile != null) {
       // communities/profile/community_id
       final res = await _storageRepository.storeFile(
         path: "communities/profile",
         id: community.id,
         file: avatarFile,
+        webFile: avatarWebFile,
       );
 
       res.fold((l) => showSnackBar(ctx, l.message),
           (r) => community = community.copyWith(avatar: r));
     }
-    if (bannerFile != null) {
+    if (bannerFile != null || bannerWebFile != null) {
       // communities/banner/community_id
       final res = await _storageRepository.storeFile(
         path: "communities/banner",
         id: community.id,
         file: bannerFile,
+        webFile: bannerWebFile,
       );
 
       res.fold((l) => showSnackBar(ctx, l.message),

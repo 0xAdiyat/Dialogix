@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/core/constants/constants.dart';
+import 'package:dialogix/core/constants/route_paths.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/feed/widgets/category_tabs.dart';
 import 'package:dialogix/features/home/delegates/search_community_delegate.dart';
@@ -7,11 +8,13 @@ import 'package:dialogix/features/home/drawers/community_list_drawer.dart';
 import 'package:dialogix/features/home/drawers/profile_drawer.dart';
 import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:routemaster/routemaster.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -33,12 +36,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void onPageChanged(int page) => setState(() => _page = page);
   void communitySearch(BuildContext context) =>
       showSearch(context: context, delegate: SearchCommunityDelegate(ref: ref));
+
+  void navigateToAddPostScreen(BuildContext ctx) =>
+      Routemaster.of(ctx).push(RoutePaths.addPostScreen);
+
   @override
   Widget build(BuildContext context) {
     final currentTheme = ref.watch(themeNotifierProvider);
     final currentMode = ref.watch(themeNotifierProvider.notifier).mode;
 
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -60,14 +69,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 colorFilter: ColorFilter.mode(
                     currentTheme.iconTheme.color!, BlendMode.srcIn),
               )),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add_outlined)),
+          if (kIsWeb)
+            IconButton(
+                onPressed: () => navigateToAddPostScreen(context),
+                icon: const Icon(Icons.add_outlined)),
           Builder(
             builder: (ctx) => IconButton(
                 onPressed: () => displayEndDrawer(ctx),
                 icon: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(user.profilePic),
                 )),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -80,8 +92,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
       drawer: const CommunityListDrawer(),
-      endDrawer: const ProfileDrawer(),
-      bottomNavigationBar: _buildBottomNavigationBar(currentTheme, currentMode),
+      endDrawer: isGuest ? null : const ProfileDrawer(),
+      bottomNavigationBar: isGuest || kIsWeb
+          ? null
+          : _buildBottomNavigationBar(currentTheme, currentMode),
     );
   }
 
