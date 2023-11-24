@@ -15,32 +15,33 @@ import '../../../core/failure.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
-final getCommunityPostsProvider =
-    StreamProvider.family<List<PostModel>, String>((ref, name) =>
+final getCommunityPostsProvider = StreamProvider.family
+    .autoDispose<List<PostModel>, String>((ref, name) =>
         ref.read(communityControllerProvider.notifier).getCommunityPosts(name));
 
 final getCommunityByNameProvider =
-    StreamProvider.family<CommunityModel, String>((ref, name) {
+    StreamProvider.family.autoDispose<CommunityModel, String>((ref, name) {
   final communityController = ref.read(communityControllerProvider.notifier);
   return communityController.getCommunityByName(name);
 });
 final communityControllerProvider =
-    StateNotifierProvider<CommunityController, bool>((ref) {
-  final communityRepository = ref.read(communityRepositoryProvider);
+    StateNotifierProvider.autoDispose<CommunityController, bool>((ref) {
+  final communityRepository = ref.watch(communityRepositoryProvider);
   final storageRepository = ref.read(storageRepositoryProvider);
   return CommunityController(
       communityRepository: communityRepository,
       ref: ref,
       storageRepository: storageRepository);
 });
-final userCommunitiesProvider = StreamProvider<List<CommunityModel>>((ref) {
+final userCommunitiesProvider =
+    StreamProvider.autoDispose<List<CommunityModel>>((ref) {
   final communityController = ref.watch(communityControllerProvider
       .notifier); // bcz communityControllerProvider is a stateNotifier that's why here dot notifier is required
   return communityController.getUserCommunities();
 });
 
-final searchCommunityProvider =
-    StreamProvider.family<List<CommunityModel>, String>((ref, query) {
+final searchCommunityProvider = StreamProvider.family
+    .autoDispose<List<CommunityModel>, String>((ref, query) {
   final communityController = ref.watch(communityControllerProvider.notifier);
   return communityController.searchCommunity(query);
 });

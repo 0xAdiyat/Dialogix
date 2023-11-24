@@ -14,7 +14,7 @@ import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
 final userProfileControllerProvider =
-    StateNotifierProvider<UserProfileController, bool>((ref) {
+    StateNotifierProvider.autoDispose<UserProfileController, bool>((ref) {
   final profileRepository = ref.read(userProfileRepositoryProvider);
   final storageRepository = ref.read(storageRepositoryProvider);
   return UserProfileController(
@@ -23,7 +23,7 @@ final userProfileControllerProvider =
       storageRepository: storageRepository);
 });
 
-final getUserPostsProvider = StreamProvider.family<List<PostModel>, String>(
+final getUserPostsProvider = StreamProvider.family.autoDispose<List<PostModel>, String>(
     (ref, uid) =>
         ref.read(userProfileControllerProvider.notifier).getUserPosts(uid));
 

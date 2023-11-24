@@ -12,7 +12,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // Provider for the AuthRepository
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
+final authRepositoryProvider = Provider.autoDispose<AuthRepository>((ref) {
   final firestore = ref.read(firestoreProvider);
   final auth = ref.read(authProvider);
   final googleSignIn = ref.read(googleSignInProvider);
@@ -168,5 +168,6 @@ class AuthRepository {
   void logOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+    
   }
 }

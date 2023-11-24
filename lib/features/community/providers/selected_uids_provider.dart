@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final selectedUidsProvider =
-    Provider.family<SelectedUids, Set<String>>((ref, uids) {
+    Provider.family.autoDispose<SelectedUids, Set<String>>((ref, uids) {
   return SelectedUids(uids: uids);
 });
 

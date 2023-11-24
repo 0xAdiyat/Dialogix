@@ -17,26 +17,27 @@ import 'package:uuid/uuid.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
-final postControllerProvider = StateNotifierProvider<PostController, bool>(
-    (ref) => PostController(
-        postRepository: ref.read(postRepositoryProvider),
-        ref: ref,
-        storageRepository: ref.read(storageRepositoryProvider)));
-final getPostByIdProvider = StreamProvider.family<PostModel, String>(
-    (ref, postId) =>
+final postControllerProvider =
+    StateNotifierProvider.autoDispose<PostController, bool>((ref) =>
+        PostController(
+            postRepository: ref.read(postRepositoryProvider),
+            ref: ref,
+            storageRepository: ref.read(storageRepositoryProvider)));
+final getPostByIdProvider = StreamProvider.family
+    .autoDispose<PostModel, String>((ref, postId) =>
         ref.read(postControllerProvider.notifier).getPostById(postId));
 final userPostsProvider =
-    StreamProvider.family<List<PostModel>, List<CommunityModel>>(
-        (ref, List<CommunityModel> communities) {
+    StreamProvider.family.autoDispose((ref, List<CommunityModel> communities) {
   final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchUserPosts(communities);
 });
 
-final guestPostsProvider = StreamProvider(
+final guestPostsProvider = StreamProvider.autoDispose(
     (ref) => ref.read(postControllerProvider.notifier).fetchGuestPosts());
 
-final getPostCommentsProvider = StreamProvider.family((ref, String postId) {
-  final postController = ref.watch(postControllerProvider.notifier);
+final getPostCommentsProvider =
+    StreamProvider.family.autoDispose((ref, String postId) {
+  final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchPostComments(postId);
 });
 

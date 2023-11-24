@@ -9,7 +9,7 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../models/community_model.dart';
 
-final communityRepositoryProvider = Provider<CommunityRepository>(
+final communityRepositoryProvider = Provider.autoDispose<CommunityRepository>(
     (ref) => CommunityRepository(firestore: ref.read(firestoreProvider)));
 
 class CommunityRepository {
@@ -47,6 +47,7 @@ class CommunityRepository {
         .snapshots()
         .map((event) {
       List<CommunityModel> communities = [];
+
       for (var doc in event.docs) {
         communities
             .add(CommunityModel.fromJson(doc.data() as Map<String, dynamic>));
