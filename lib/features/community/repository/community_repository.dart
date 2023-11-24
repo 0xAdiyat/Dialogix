@@ -4,6 +4,7 @@ import 'package:dialogix/core/failure.dart';
 import 'package:dialogix/core/providers/firebase_providers.dart';
 import 'package:dialogix/core/type_defs.dart';
 import 'package:dialogix/models/post_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -42,6 +43,7 @@ class CommunityRepository {
           CommunityModel.fromJson(event.data() as Map<String, dynamic>));
 
   Stream<List<CommunityModel>> getUserCommunities(String uid) {
+    debugPrint("UID: $uid");
     return _communities
         .where('members', arrayContains: uid)
         .snapshots()

@@ -15,7 +15,6 @@ final authControllerProvider =
 
 final userProvider = StateProvider<UserModel?>((ref) => null);
 
-
 final authStateChangeProvider = StreamProvider.autoDispose<User?>(
     (ref) => ref.watch(authControllerProvider.notifier).authStateChange);
 
@@ -58,13 +57,13 @@ class AuthController extends StateNotifier<bool> {
   }
 
   void logOut() {
-    // _ref.invalidate(userCommunitiesProvider);
-    if (_ref.read(userProvider.notifier).state != null) {
-      _ref.read(userProvider.notifier).update((state) => null);
-    }
+    _ref.invalidate(userProvider);
+    // if (_ref.read(userProvider.notifier).state != null) {
+    //   _ref.read(userProvider.notifier).update((state) => null);
+    // }
     _authRepository.logOut();
-    if (_ref.read(userProvider.notifier).state != null) {
-      _ref.read(userProvider.notifier).update((state) => null);
-    }
+    // if (_ref.read(userProvider.notifier).state != null) {
+    //   _ref.read(userProvider.notifier).update((state) => null);
+    // }
   }
 }

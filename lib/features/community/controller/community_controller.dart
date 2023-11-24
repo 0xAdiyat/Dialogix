@@ -5,8 +5,8 @@ import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/community/repository/community_repository.dart';
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
@@ -79,6 +79,7 @@ class CommunityController extends StateNotifier<bool> {
 
   Stream<List<CommunityModel>> getUserCommunities() {
     final uid = _ref.read(userProvider)!.uid;
+    debugPrint("IS UID CHANGING : $uid ");
     return _communityRepository.getUserCommunities(uid);
   }
 
