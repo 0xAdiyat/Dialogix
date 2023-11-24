@@ -38,7 +38,7 @@ class CommunityListDrawer extends ConsumerWidget {
                     onTap: () => navigateToCreateCommunity(context),
                   ),
             if (!isGuest)
-              ref.watch(userCommunitiesProvider).when(
+              ref.watch(userCommunitiesProvider(user.uid)).when(
                   data: (communities) {
                     return Expanded(
                       child: ListView.builder(

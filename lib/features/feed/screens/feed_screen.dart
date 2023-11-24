@@ -22,7 +22,7 @@ class FeedScreen extends ConsumerWidget {
 
     // TODO: Fix error user community provider is not being called during account switch requiring
     if (!isGuest) {
-      return ref.watch(userCommunitiesProvider).when(
+      return ref.watch(userCommunitiesProvider(user.uid)).when(
             data: (communities) {
               return ref.watch(userPostsProvider(communities)).when(
                     data: (posts) {

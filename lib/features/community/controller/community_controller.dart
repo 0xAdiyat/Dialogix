@@ -34,10 +34,10 @@ final communityControllerProvider =
       storageRepository: storageRepository);
 });
 final userCommunitiesProvider =
-    StreamProvider.autoDispose<List<CommunityModel>>((ref) {
+    StreamProvider.family.autoDispose<List<CommunityModel>, String>((ref, uid) {
   final communityController = ref.watch(communityControllerProvider
       .notifier); // bcz communityControllerProvider is a stateNotifier that's why here dot notifier is required
-  return communityController.getUserCommunities();
+  return communityController.getUserCommunities(uid);
 });
 
 final searchCommunityProvider = StreamProvider.family
@@ -77,8 +77,8 @@ class CommunityController extends StateNotifier<bool> {
     });
   }
 
-  Stream<List<CommunityModel>> getUserCommunities() {
-    final uid = _ref.read(userProvider)!.uid;
+  Stream<List<CommunityModel>> getUserCommunities(String uid) {
+    // final uid = _ref.read(userProvider)!.uid;
     debugPrint("IS UID CHANGING : $uid ");
     return _communityRepository.getUserCommunities(uid);
   }

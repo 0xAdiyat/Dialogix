@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dialogix/core/common/loader.dart';
+import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
 import 'package:dialogix/features/post/controller/post_controller.dart';
 import 'package:dialogix/responsive/responsive.dart';
@@ -93,9 +94,21 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
     final currentTheme = ref.watch(themeNotifierProvider);
     final isLoading = ref.watch(postControllerProvider);
 
+    final uid = ref.read(userProvider)!.uid;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Post ${widget.type}"),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           TextButton(
             onPressed: sharePost,
@@ -178,7 +191,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                       'Select Community',
                     ),
                   ),
-                  ref.watch(userCommunitiesProvider).when(
+                  ref.watch(userCommunitiesProvider(uid)).when(
                       data: (data) {
                         _communities = data;
                         if (data.isEmpty) {
