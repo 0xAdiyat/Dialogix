@@ -14,7 +14,7 @@ class Constants {
 
   static const tabWidgets = [FeedScreen(), AddPostScreen()];
   static const awardsPath = 'assets/images/awards';
-  static const iconsPath = 'assets/icons/';
+  static const iconsPath = 'assets/icons';
 
   static const archiveAddIcon = '$iconsPath/archive-add.svg';
   static const arrowBottomIcon = '$iconsPath/arrow-bottom.svg';
