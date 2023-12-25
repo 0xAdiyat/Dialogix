@@ -28,7 +28,7 @@ class Constants {
   static const moreIcon = '$iconsPath/more.svg';
   static const searchIcon = '$iconsPath/search-normal.svg';
   static const modIcon = '$iconsPath/security-user.svg';
-  static const settingIcon = '$iconsPath/setting.svg';
+  static const settingsIcon = '$iconsPath/setting.svg';
   static const textBlockIcon = '$iconsPath/text-block.svg';
   static const trashIcon = '$iconsPath/trash.svg';
   static const userOctagonIcon = '$iconsPath/user-octagon.svg';

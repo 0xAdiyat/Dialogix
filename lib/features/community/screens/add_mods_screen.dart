@@ -56,12 +56,12 @@ class _AddModsScreenState extends ConsumerState<AddModsScreen> {
                         );
                       },
                       error: (err, trace) => Text(err.toString()),
-                      loading: () => Loader());
+                      loading: () => const Loader());
                 },
                 itemCount: community.members.length,
               ),
           error: (err, trace) => Text(err.toString()),
-          loading: () => Loader()),
+          loading: () => const Loader()),
     );
   }
 }

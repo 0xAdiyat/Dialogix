@@ -10,7 +10,7 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../models/community_model.dart';
 
-final communityRepositoryProvider = Provider.autoDispose<CommunityRepository>(
+final communityRepositoryProvider = Provider<CommunityRepository>(
     (ref) => CommunityRepository(firestore: ref.read(firestoreProvider)));
 
 class CommunityRepository {

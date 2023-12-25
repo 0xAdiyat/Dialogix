@@ -86,8 +86,8 @@ class PostController extends StateNotifier<bool> {
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
-
-      Routemaster.of(ctx).pop();
+      Navigator.of(ctx).pop();
+      Navigator.of(ctx).pop();
     });
   }
 
@@ -122,7 +122,8 @@ class PostController extends StateNotifier<bool> {
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
-      Routemaster.of(ctx).pop();
+      Navigator.of(ctx).pop();
+      Navigator.of(ctx).pop();
     });
   }
 
@@ -166,7 +167,8 @@ class PostController extends StateNotifier<bool> {
       state = false;
       res.fold((l) => showSnackBar(ctx, l.message), (r) {
         showSnackBar(ctx, 'Posted successfully!');
-        Routemaster.of(ctx).pop();
+        Navigator.of(ctx).pop();
+        Navigator.of(ctx).pop();
       });
     });
   }

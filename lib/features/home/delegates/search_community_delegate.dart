@@ -17,7 +17,7 @@ class SearchCommunityDelegate extends SearchDelegate {
         onPressed: () {
           query = '';
         },
-        icon: Icon(Icons.close),
+        icon: const Icon(Icons.close),
       )
     ];
   }
@@ -34,26 +34,28 @@ class SearchCommunityDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return ref.watch(searchCommunityProvider(query.toLowerCase())).when(
-        data: (communities) => ListView.builder(
-              itemBuilder: (ctx, index) {
-                final community = communities[index];
-                return ListTile(
-                  title: Text(
-                    "d/${community.name}",
-                  ),
-                  leading: CircleAvatar(
-                    backgroundImage:
-                        CachedNetworkImageProvider(community.avatar),
-                    radius: 15,
-                  ),
-                  onTap: () => navigateToCommunity(ctx, community.name),
-                );
-              },
-              itemCount: communities.length,
-            ),
-        error: (err, stackTrace) => Text(err.toString()),
-        loading: () => Loader());
+    return query.isEmpty
+        ? const Center(child: Text("Start searching for communities"))
+        : ref.watch(searchCommunityProvider(query.toLowerCase())).when(
+            data: (communities) => ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    final community = communities[index];
+                    return ListTile(
+                      title: Text(
+                        "d/${community.name}",
+                      ),
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            CachedNetworkImageProvider(community.avatar),
+                        radius: 16,
+                      ),
+                      onTap: () => navigateToCommunity(ctx, community.name),
+                    );
+                  },
+                  itemCount: communities.length,
+                ),
+            error: (err, stackTrace) => Text(err.toString()),
+            loading: () => const Loader());
   }
 
   void navigateToCommunity(BuildContext ctx, String communityName) {

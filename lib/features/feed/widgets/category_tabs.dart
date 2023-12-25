@@ -20,7 +20,7 @@ class CategoryTabs extends StatelessWidget {
           bottom: 0,
           child: Container(
             margin: const EdgeInsets.only(left: 12).w,
-            width: 208.w,
+            width: 244.w,
             decoration: BoxDecoration(
               color: currentMode == ThemeMode.light
                   ? Palette.glassWhite
@@ -29,42 +29,49 @@ class CategoryTabs extends StatelessWidget {
             ),
           ),
         ),
-        DefaultTabController(
-          length: 2,
-          child: TabBar(
-            padding: const EdgeInsets.all(8).w,
-            indicatorWeight: 0,
-            dividerHeight: 0,
-            indicator: BoxDecoration(
-              color: Palette.redColor,
-              boxShadow: const [
-                BoxShadow(
-                  blurRadius: 100,
-                  spreadRadius: 2,
-                  color: Palette.redColor,
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0),
+          child: DefaultTabController(
+            length: 2,
+            child: TabBar(
+              padding: const EdgeInsets.all(8).w,
+              indicatorWeight: 0,
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[300]!,
+              ),
+              dividerHeight: 0,
+              indicator: BoxDecoration(
+                color: Palette.redColor,
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 100,
+                    spreadRadius: 2,
+                    color: Palette.redColor,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              unselectedLabelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[300]!,
+              ),
+              tabAlignment: TabAlignment.start,
+              isScrollable: true,
+              indicatorColor: Colors.transparent,
+              onTap: (selectedTabIndex) {},
+              tabs: [
+                _buildTab(
+                  icon: CupertinoIcons.flame,
+                  label: "Trending Now",
+                  color: Palette.whiteColor,
+                ),
+                _buildTab(
+                  label: "Featured",
+                  color: Palette.whiteColor, // Change the color as needed
                 ),
               ],
-              borderRadius: BorderRadius.circular(12),
             ),
-            unselectedLabelStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[300]!,
-            ),
-            tabAlignment: TabAlignment.start,
-            isScrollable: true,
-            indicatorColor: Colors.transparent,
-            onTap: (selectedTabIndex) {},
-            tabs: [
-              _buildTab(
-                icon: CupertinoIcons.flame,
-                label: "Trending Now",
-                color: Palette.whiteColor,
-              ),
-              _buildTab(
-                label: "Hot",
-                color: Palette.whiteColor, // Change the color as needed
-              ),
-            ],
           ),
         ),
       ],

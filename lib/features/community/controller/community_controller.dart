@@ -25,7 +25,7 @@ final getCommunityByNameProvider =
   return communityController.getCommunityByName(name);
 });
 final communityControllerProvider =
-    StateNotifierProvider.autoDispose<CommunityController, bool>((ref) {
+    StateNotifierProvider<CommunityController, bool>((ref) {
   final communityRepository = ref.watch(communityRepositoryProvider);
   final storageRepository = ref.read(storageRepositoryProvider);
   return CommunityController(
@@ -40,8 +40,8 @@ final userCommunitiesProvider =
   return communityController.getUserCommunities(uid);
 });
 
-final searchCommunityProvider = StreamProvider.family
-    .autoDispose<List<CommunityModel>, String>((ref, query) {
+final searchCommunityProvider =
+    StreamProvider.family<List<CommunityModel>, String>((ref, query) {
   final communityController = ref.watch(communityControllerProvider.notifier);
   return communityController.searchCommunity(query);
 });

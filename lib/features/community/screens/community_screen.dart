@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/common/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/post_card.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
@@ -39,10 +40,8 @@ class CommunityScreen extends ConsumerWidget {
                   flexibleSpace: Stack(
                     children: [
                       Positioned.fill(
-                          child: CachedNetworkImage(
-                        imageUrl: community.banner,
-                        fit: BoxFit.cover,
-                      ))
+                          child: DialogixCachedNetworkImage(
+                              imgUrl: community.banner))
                     ],
                   ),
                 ),

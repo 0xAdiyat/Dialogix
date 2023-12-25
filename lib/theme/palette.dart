@@ -15,8 +15,8 @@ class Palette {
   static const drawerColor = Color.fromRGBO(18, 18, 18, 1);
   static const whiteColor = Color(0xfff8f8f8);
   // static const redColor = Color(0xffff4500);
-    static const redColor = Color(0xffFE1723);
-        // static const redColor = Color(0xff951758);
+  static const redColor = Color(0xffFE1723);
+  // static const redColor = Color(0xff951758);
 
   static const blueColor = Color(0xff0079d3);
 
@@ -105,15 +105,14 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   void toggleTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    
     if (_mode == ThemeMode.dark) {
       _mode = ThemeMode.light;
       state = Palette.lightModeAppTheme;
-       prefs.setString('theme', 'light');
+      prefs.setString('theme', 'light');
     } else {
       _mode = ThemeMode.dark;
       state = Palette.darkModeAppTheme;
-       prefs.setString('theme', 'dark');
+      prefs.setString('theme', 'dark');
     }
   }
 }

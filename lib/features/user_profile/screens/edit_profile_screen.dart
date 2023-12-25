@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/common/dialogix_cached_network_image.dart';
 import '../../../core/common/loader.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/utils.dart';
@@ -145,9 +145,8 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                                                             size: 40,
                                                           ),
                                                         )
-                                                      : CachedNetworkImage(
-                                                          imageUrl: user.banner,
-                                                          fit: BoxFit.cover,
+                                                      : DialogixCachedNetworkImage(
+                                                          imgUrl: user.banner,
                                                         ),
                                         ),
                                       )),

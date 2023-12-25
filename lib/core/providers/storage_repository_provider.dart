@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dialogix/core/failure.dart';
 import 'package:dialogix/core/providers/firebase_providers.dart';
