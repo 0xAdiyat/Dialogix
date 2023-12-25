@@ -1,106 +1,83 @@
 name: dialogix
-description: Discover the art of meaningful conversations with Dialogix, a dynamic social platform crafted for engaging discussions and community building. Seamlessly navigate threads, share insights, and connect with like-minded individuals. Dive into a world where your voice matters, and ideas take center stage. Elevate your online dialogue experience with Dialogix – where conversation meets community, and connection is at the core
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+description: >
+  Discover the art of meaningful conversations with Dialogix, a dynamic social platform crafted for engaging discussions and community building. Seamlessly navigate threads, share insights, and connect with like-minded individuals. Dive into a world where your voice matters, and ideas take center stage. Elevate your online dialogue experience with Dialogix – where conversation meets community, and connection is at the core.
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
+publish_to: "none"
+
 version: 1.0.0+1
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+
 dependencies:
+  # Flutter SDK
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # UI and Styling
   cupertino_icons: ^1.0.6
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
   flutter_screenutil: ^5.9.0
   gap: ^3.0.1
   google_fonts: ^6.1.0
+  cached_network_image: ^3.3.0
+  flutter_svg: ^2.0.9
+  dotted_border: ^2.1.0
+
+  # Firebase Services
   firebase_core: ^2.24.2
   firebase_storage: ^11.5.6
   cloud_firestore: ^4.13.6
   firebase_auth: ^4.15.3
   google_sign_in: ^6.2.1
+
+  # State Management
   freezed: ^2.4.6
   freezed_annotation: ^2.4.1
+  riverpod_generator: ^2.3.9
+
+  # JSON Serialization
   json_annotation: ^4.8.1
+  json_serializable: ^6.7.1
+
+  # Functional Programming
   fpdart: ^1.1.0
+
+  # Navigation
   routemaster: ^1.0.1
-  cached_network_image: ^3.3.0
+
+  # Other
   uuid: ^4.2.2
-  dotted_border: ^2.1.0
   file_picker: ^6.1.1
   shared_preferences: ^2.2.2
   any_link_preview: ^3.0.1
-  flutter_svg: ^2.0.9
 
 dev_dependencies:
+  # Testing
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  # Linting and Code Quality
   flutter_lints: ^3.0.1
-  riverpod_generator: ^2.3.9
-  build_runner: ^2.4.7
   custom_lint: ^0.5.7
   riverpod_lint: ^2.3.7
-  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  # Design
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
+  # Assets
   assets:
     - assets/images/google.png
     - assets/images/loginEmote.png
     - assets/images/logo.png
     - assets/images/awards/
     - assets/icons/
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
+  # Fonts
   fonts:
     - family: Gilroy
       fonts:
