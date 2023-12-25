@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/common/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/core/utils.dart';
@@ -129,11 +130,9 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
                                                               size: 40,
                                                             ),
                                                           )
-                                                        : CachedNetworkImage(
-                                                            imageUrl: community
-                                                                .banner,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                        : DialogixCachedNetworkImage(
+                                                            imgUrl: community
+                                                                .banner),
                                           ),
                                         )),
                                   ),

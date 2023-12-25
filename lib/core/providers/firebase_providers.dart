@@ -4,11 +4,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-final firestoreProvider =
-    Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
+final firestoreProvider = Provider.autoDispose<FirebaseFirestore>(
+    (ref) => FirebaseFirestore.instance);
 
-final authProvider = Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
+final authProvider =
+    Provider.autoDispose<FirebaseAuth>((ref) => FirebaseAuth.instance);
 final storageProvider =
     Provider<FirebaseStorage>((ref) => FirebaseStorage.instance);
 
-final googleSignInProvider = Provider<GoogleSignIn>((ref) => GoogleSignIn());
+final googleSignInProvider =
+    Provider.autoDispose<GoogleSignIn>((ref) => GoogleSignIn());

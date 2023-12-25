@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dialogix/core/common/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/core/constants/constants.dart';
@@ -39,7 +40,7 @@ class PostCard extends ConsumerWidget {
   static const double blurredImageSizeFactor = 0.20;
   static const double actionButtonHeight = 30.0;
   static const double kFontSizeValue = 16.0;
-static const double kSigmaXY = 24.0;
+  static const double kSigmaXY = 24.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -219,9 +220,8 @@ static const double kSigmaXY = 24.0;
         child: SizedBox(
           height: ScreenUtil().screenHeight * blurredImageSizeFactor,
           width: double.infinity,
-          child: CachedNetworkImage(
-            imageUrl: post.link!,
-            fit: BoxFit.cover,
+          child: DialogixCachedNetworkImage(
+            imgUrl: post.link!,
           ),
         ),
       );

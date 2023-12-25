@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dialogix/core/failure.dart';
 import 'package:dialogix/core/providers/firebase_providers.dart';
@@ -9,7 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
-final storageRepositoryProvider = Provider<StorageRepository>((ref) {
+final storageRepositoryProvider =
+    Provider.autoDispose<StorageRepository>((ref) {
   final storage = ref.read(storageProvider);
   return StorageRepository(firebaseStorage: storage);
 });
@@ -30,7 +30,7 @@ class StorageRepository {
       final ref = _firebaseStorage.ref().child(path).child(id);
       final UploadTask uploadTask;
       if (kIsWeb) {
-        uploadTask = ref.putData(webFile!); 
+        uploadTask = ref.putData(webFile!);
       } else {
         uploadTask = ref.putFile(file!);
       }

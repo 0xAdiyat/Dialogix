@@ -33,12 +33,14 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
   bool _isLoading = false;
   void getData(WidgetRef ref, User data) async {
     _isLoading = true;
+
     userModel = await ref
-        .watch(authControllerProvider.notifier)
+        .read(authControllerProvider.notifier)
         .getUserData(data.uid)
         .first; // bcz it's a stream, so in order to convert it to future we have to use first
 
     ref.read(userProvider.notifier).update((state) => userModel);
+
     setState(() => _isLoading = false);
   }
 
@@ -57,7 +59,7 @@ class _DialogixAppState extends ConsumerState<DialogixApp> {
                   routerDelegate: RoutemasterDelegate(routesBuilder: (ctx) {
                     if (data != null) {
                       getData(ref, data);
-                      if (userModel != null) {
+                      if (userModel != null && ref.read(userProvider) != null) {
                         return loggedInRoute;
                       }
                     }

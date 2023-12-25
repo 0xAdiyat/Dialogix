@@ -9,7 +9,7 @@ import '../../../core/failure.dart';
 import '../../../core/providers/firebase_providers.dart';
 import '../../../core/type_defs.dart';
 
-final userProfileRepositoryProvider = Provider<UserProfileRepository>(
+final userProfileRepositoryProvider = Provider.autoDispose<UserProfileRepository>(
     (ref) => UserProfileRepository(firestore: ref.read(firestoreProvider)));
 
 class UserProfileRepository {

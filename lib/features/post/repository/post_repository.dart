@@ -10,7 +10,7 @@ import '../../../core/type_defs.dart';
 import '../../../models/community_model.dart';
 import '../../../models/post_model.dart';
 
-final postRepositoryProvider = Provider<PostRepository>(
+final postRepositoryProvider = Provider.autoDispose<PostRepository>(
     (ref) => PostRepository(firestore: ref.read(firestoreProvider)));
 
 class PostRepository {

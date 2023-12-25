@@ -1,4 +1,5 @@
 import 'package:dialogix/features/auth/repository/auth_repository.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,23 +8,19 @@ import '../../../core/utils.dart';
 import '../../../models/user_model.dart';
 
 final authControllerProvider =
-    StateNotifierProvider<AuthController, bool>((ref) {
+    StateNotifierProvider.autoDispose<AuthController, bool>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
 final userProvider = StateProvider<UserModel?>((ref) => null);
 
-final authStateChangeProvider = StreamProvider<User?>((ref) {
-  final authController = ref.watch(authControllerProvider.notifier);
-  return authController.authStateChange;
-});
+final authStateChangeProvider = StreamProvider.autoDispose<User?>(
+    (ref) => ref.watch(authControllerProvider.notifier).authStateChange);
 
-final getUserDataProvider =
-    StreamProvider.family<UserModel, String>((ref, String uid) {
-  final authController = ref.watch(authControllerProvider.notifier);
-  return authController.getUserData(uid);
-});
+final getUserDataProvider = StreamProvider.family
+    .autoDispose<UserModel, String>((ref, String uid) =>
+        ref.watch(authControllerProvider.notifier).getUserData(uid));
 
 class AuthController extends StateNotifier<bool> {
   final AuthRepository _authRepository;
@@ -35,6 +32,7 @@ class AuthController extends StateNotifier<bool> {
         super(false);
 
   Stream<User?> get authStateChange => _authRepository.authStateChange;
+
   Stream<UserModel> getUserData(String uid) => _authRepository.getUserData(uid);
 
   void signInWithGoogle(BuildContext ctx, bool isFromLogin) async {
@@ -58,5 +56,7 @@ class AuthController extends StateNotifier<bool> {
             _ref.read(userProvider.notifier).update((state) => userModel));
   }
 
-  void logOut() => _authRepository.logOut();
+  void logOut() {
+    _authRepository.logOut();
+  }
 }

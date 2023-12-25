@@ -5,8 +5,8 @@ import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/community/repository/community_repository.dart';
 import 'package:dialogix/models/community_model.dart';
 import 'package:dialogix/models/post_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
@@ -15,28 +15,29 @@ import '../../../core/failure.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
-final getCommunityPostsProvider =
-    StreamProvider.family<List<PostModel>, String>((ref, name) =>
+final getCommunityPostsProvider = StreamProvider.family
+    .autoDispose<List<PostModel>, String>((ref, name) =>
         ref.read(communityControllerProvider.notifier).getCommunityPosts(name));
 
 final getCommunityByNameProvider =
-    StreamProvider.family<CommunityModel, String>((ref, name) {
+    StreamProvider.family.autoDispose<CommunityModel, String>((ref, name) {
   final communityController = ref.read(communityControllerProvider.notifier);
   return communityController.getCommunityByName(name);
 });
 final communityControllerProvider =
     StateNotifierProvider<CommunityController, bool>((ref) {
-  final communityRepository = ref.read(communityRepositoryProvider);
+  final communityRepository = ref.watch(communityRepositoryProvider);
   final storageRepository = ref.read(storageRepositoryProvider);
   return CommunityController(
       communityRepository: communityRepository,
       ref: ref,
       storageRepository: storageRepository);
 });
-final userCommunitiesProvider = StreamProvider<List<CommunityModel>>((ref) {
+final userCommunitiesProvider =
+    StreamProvider.family.autoDispose<List<CommunityModel>, String>((ref, uid) {
   final communityController = ref.watch(communityControllerProvider
       .notifier); // bcz communityControllerProvider is a stateNotifier that's why here dot notifier is required
-  return communityController.getUserCommunities();
+  return communityController.getUserCommunities(uid);
 });
 
 final searchCommunityProvider =
@@ -76,8 +77,9 @@ class CommunityController extends StateNotifier<bool> {
     });
   }
 
-  Stream<List<CommunityModel>> getUserCommunities() {
-    final uid = _ref.read(userProvider)!.uid;
+  Stream<List<CommunityModel>> getUserCommunities(String uid) {
+    // final uid = _ref.read(userProvider)!.uid;
+    debugPrint("IS UID CHANGING : $uid ");
     return _communityRepository.getUserCommunities(uid);
   }
 
