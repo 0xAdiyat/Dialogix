@@ -1,0 +1,21 @@
+flutter_native_splash:
+
+  color: "#ffffff"
+  image: assets/images/native/dialogix_splash_logo.png
+
+  color_dark: "#ffffff"
+  image_dark: assets/images/native/dialogix_splash_logo.png
+
+  android_12:
+
+    image: assets/images/native/dialogix_splash_logo.png
+    image_dark: assets/images/native/dialogix_splash_logo.png
+    color: "#ffffff"
+    color_dark: "#ffffff"
+#    icon_background_color: "#ffffff"
+
+  # The android, ios and web parameters can be used to disable generating a splash screen on a given
+  # platform.
+  #android: false
+  #ios: false
+  web: false

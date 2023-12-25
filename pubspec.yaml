@@ -65,6 +65,17 @@ dev_dependencies:
   riverpod_lint: ^2.3.7
   build_runner: ^2.4.7
 
+  # Native
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.8
+
+# Flutter launcher icons config
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/native/dialogix_logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 2
+
 flutter:
   # Design
   uses-material-design: true
@@ -76,6 +87,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/awards/
     - assets/icons/
+    - assets/images/native/
 
   # Fonts
   fonts:

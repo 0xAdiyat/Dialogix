@@ -46,6 +46,23 @@ class Assets {
       'assets/fonts/Gilroy-UltraLight.ttf';
   static const String fontsGilroyUltraLightItalic =
       'assets/fonts/Gilroy-UltraLightItalic.ttf';
+  static const String iconsArchiveAdd = 'assets/icons/archive-add.svg';
+  static const String iconsArrowBottom = 'assets/icons/arrow-bottom.svg';
+  static const String iconsArrowUp = 'assets/icons/arrow-up.svg';
+  static const String iconsGift = 'assets/icons/gift.svg';
+  static const String iconsHome = 'assets/icons/home.svg';
+  static const String iconsImage = 'assets/icons/image.svg';
+  static const String iconsLink = 'assets/icons/link.svg';
+  static const String iconsLogout = 'assets/icons/logout.svg';
+  static const String iconsMessageText = 'assets/icons/message-text.svg';
+  static const String iconsMore = 'assets/icons/more.svg';
+  static const String iconsSearchNormal = 'assets/icons/search-normal.svg';
+  static const String iconsSecurityUser = 'assets/icons/security-user.svg';
+  static const String iconsSetting = 'assets/icons/setting.svg';
+  static const String iconsTextBlock = 'assets/icons/text-block.svg';
+  static const String iconsTrash = 'assets/icons/trash.svg';
+  static const String iconsUserOctagon = 'assets/icons/user-octagon.svg';
+  static const String iconsVerify = 'assets/icons/verify.svg';
   static const String imagesGoogle = 'assets/images/google.png';
   static const String imagesLoginEmote = 'assets/images/loginEmote.png';
   static const String imagesLogo = 'assets/images/logo.png';
