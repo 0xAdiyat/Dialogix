@@ -26,9 +26,10 @@ class SignInButton extends ConsumerWidget {
           Constants.googlePath,
           width: 35.w,
         ),
-        label: const Text(
+        label: Text(
           "Continue with Google",
-          style: TextStyle(fontSize: 18),
+          style:
+              TextStyle(fontSize: 18, color: Theme.of(context).iconTheme.color),
         ),
         style: ElevatedButton.styleFrom(
             backgroundColor: Palette.greyColor,

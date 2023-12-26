@@ -125,9 +125,13 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                   TextField(
                     controller: _titleController,
                     decoration: InputDecoration(
-                      filled: true,
-                      hintText: 'Enter Title here',
-                      border: InputBorder.none,
+                      filled: false,
+                      labelText: 'Title',
+                      hintText: "Enter your title",
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       contentPadding: const EdgeInsets.all(20).w,
                     ),
                     maxLength: 30,
@@ -167,9 +171,13 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                     TextField(
                       controller: _descriptionController,
                       decoration: InputDecoration(
-                        filled: true,
-                        hintText: 'Enter Description here',
-                        border: InputBorder.none,
+                        filled: false,
+                        hintText: 'body text (optional)',
+                        labelText: "Description",
+                        alignLabelWithHint: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         contentPadding: const EdgeInsets.all(20).w,
                       ),
                       maxLines: 5,
@@ -197,22 +205,27 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                         if (data.isEmpty) {
                           return const SizedBox();
                         }
-                        return DropdownButton(
-                            value: _selectedCommunity ?? data[0],
-                            alignment: Alignment.centerRight,
-                            style: TextStyle(
-                                color:
-                                    currentTheme.textTheme.bodyMedium!.color!),
-                            items: data
-                                .map((e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(
-                                        e.name,
-                                      ),
-                                    ))
-                                .toList(),
-                            onChanged: (val) =>
-                                setState(() => _selectedCommunity = val));
+                        return Align(
+                          alignment: Alignment.centerRight,
+                          child: DropdownButton(
+                              underline: Container(),
+                              borderRadius: BorderRadius.circular(12.0),
+                              value: _selectedCommunity ?? data[0],
+                              alignment: Alignment.center,
+                              style: TextStyle(
+                                  color: currentTheme
+                                      .textTheme.bodyMedium!.color!),
+                              items: data
+                                  .map((e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(
+                                          e.name,
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (val) =>
+                                  setState(() => _selectedCommunity = val)),
+                        );
                       },
                       error: (err, trace) => Text(err.toString()),
                       loading: () => const Loader())

@@ -27,7 +27,11 @@ class Palette {
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
-    progressIndicatorTheme: ProgressIndicatorThemeData(color: whiteColor),
+    // textButtonTheme: const TextButtonThemeData(
+    //     style: ButtonStyle(
+    //         textStyle: MaterialStatePropertyAll<TextStyle>(
+    //             TextStyle(color: whiteColor)))),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(color: whiteColor),
 
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
@@ -36,31 +40,29 @@ class Palette {
     //     .apply(fontFamily: 'Gilroy'),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-          color: Palette.whiteColor,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w500),
+          color: whiteColor, fontSize: 16.sp, fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
     ),
     iconTheme: const IconThemeData(
       color: whiteColor,
     ),
-    drawerTheme: DrawerThemeData(
+
+    drawerTheme: const DrawerThemeData(
       backgroundColor: drawerColor,
       surfaceTintColor: drawerColor,
     ),
-    bottomSheetTheme: BottomSheetThemeData(
+    bottomSheetTheme: const BottomSheetThemeData(
         surfaceTintColor: drawerColor, backgroundColor: drawerColor),
     primaryColor: redColor,
-    backgroundColor: drawerColor,
-    // colorScheme: const ColorScheme(
-    //     background:
-    //         drawerColor),
+    // backgroundColor: blackColor,
+    colorScheme:
+        ColorScheme.fromSeed(seedColor: redColor, brightness: Brightness.dark),
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
-    progressIndicatorTheme: ProgressIndicatorThemeData(color: blackColor),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(color: blackColor),
     textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
@@ -70,11 +72,17 @@ class Palette {
           fontWeight: FontWeight.w500),
       elevation: 0,
     ),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        surfaceTintColor: MaterialStatePropertyAll<Color>(whiteColor),
+        backgroundColor: MaterialStatePropertyAll<Color>(whiteColor),
+      ),
+    ),
     drawerTheme: const DrawerThemeData(
       backgroundColor: whiteColor,
       surfaceTintColor: whiteColor,
     ),
-    bottomSheetTheme: BottomSheetThemeData(
+    bottomSheetTheme: const BottomSheetThemeData(
         surfaceTintColor: whiteColor, backgroundColor: whiteColor),
     primaryColor: redColor,
     iconTheme: const IconThemeData(
