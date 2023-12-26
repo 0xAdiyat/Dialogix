@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialogix/core/enums/enums.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/post/repository/post_repository.dart';
@@ -26,10 +27,16 @@ final postControllerProvider =
 final getPostByIdProvider = StreamProvider.family
     .autoDispose<PostModel, String>((ref, postId) =>
         ref.read(postControllerProvider.notifier).getPostById(postId));
+
 final userPostsProvider =
     StreamProvider.family.autoDispose((ref, List<CommunityModel> communities) {
   final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchUserPosts(communities);
+});
+
+final userPostsPaginationQueryProvider = Provider.family((ref, List<CommunityModel> communities) {
+  final postController = ref.read(postControllerProvider.notifier);
+  return postController.fetchUserPostsPaginationQuery(communities);
 });
 
 final guestPostsProvider = StreamProvider.autoDispose(
@@ -178,6 +185,13 @@ class PostController extends StateNotifier<bool> {
       return _postRepository.fetchUserPosts(communities);
     }
     return Stream.value([]);
+  }
+
+  Query<PostModel> fetchUserPostsPaginationQuery(List<CommunityModel> communities) {
+    // TODO: GOTTA GIVE A CHECK FOR NULL CHECK ERRROR
+    // if (communities.isNotEmpty) {
+    return _postRepository.fetchUserPostsPaginationQuery(communities);
+    // }
   }
 
   Stream<List<PostModel>> fetchGuestPosts() =>

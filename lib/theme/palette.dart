@@ -27,6 +27,7 @@ class Palette {
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
+    progressIndicatorTheme: ProgressIndicatorThemeData(color: whiteColor),
 
     textTheme: GoogleFonts.latoTextTheme()
         .apply(displayColor: whiteColor, bodyColor: whiteColor),
@@ -39,14 +40,16 @@ class Palette {
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       backgroundColor: drawerColor,
-      iconTheme: const IconThemeData(
-        color: whiteColor,
-      ),
     ),
-
-    drawerTheme: const DrawerThemeData(
+    iconTheme: const IconThemeData(
+      color: whiteColor,
+    ),
+    drawerTheme: DrawerThemeData(
       backgroundColor: drawerColor,
+      surfaceTintColor: drawerColor,
     ),
+    bottomSheetTheme: BottomSheetThemeData(
+        surfaceTintColor: drawerColor, backgroundColor: drawerColor),
     primaryColor: redColor,
     backgroundColor: drawerColor,
     // colorScheme: const ColorScheme(
@@ -57,6 +60,7 @@ class Palette {
   static var lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
+    progressIndicatorTheme: ProgressIndicatorThemeData(color: blackColor),
     textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
@@ -65,15 +69,17 @@ class Palette {
           fontSize: 16.sp,
           fontWeight: FontWeight.w500),
       elevation: 0,
-      iconTheme: const IconThemeData(
-        color: blackColor,
-      ),
     ),
     drawerTheme: const DrawerThemeData(
       backgroundColor: whiteColor,
+      surfaceTintColor: whiteColor,
     ),
+    bottomSheetTheme: BottomSheetThemeData(
+        surfaceTintColor: whiteColor, backgroundColor: whiteColor),
     primaryColor: redColor,
-
+    iconTheme: const IconThemeData(
+      color: blackColor,
+    ),
     // backgroundColor: whiteColor,
     colorScheme: ColorScheme.fromSeed(seedColor: redColor),
   );

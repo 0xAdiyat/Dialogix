@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:routemaster/routemaster.dart';
 
-import '../../../core/common/dialogix_cached_network_image.dart';
+import '../../../core/common/widgets/dialogix_cached_network_image.dart';
 import '../../../core/common/loader.dart';
 
 class UserProfileScreen extends ConsumerWidget {

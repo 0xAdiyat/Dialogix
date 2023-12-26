@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dialogix/core/common/error_text.dart';
+import 'package:dialogix/features/auth/controller/auth_controller.dart';
+import 'package:dialogix/features/post/controller/post_controller.dart';
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:dialogix/core/common/error_text.dart';
-import 'package:dialogix/features/auth/controller/auth_controller.dart';
-import 'package:dialogix/features/community/controller/community_controller.dart';
-import 'package:dialogix/features/post/controller/post_controller.dart';
-
 import '../../../core/common/loader.dart';
 import '../../../core/common/post_card.dart';
+import '../../community/controller/community_controller.dart';
 
 class FeedScreen extends ConsumerWidget {
   const FeedScreen({
@@ -20,25 +20,22 @@ class FeedScreen extends ConsumerWidget {
     final user = ref.watch(userProvider)!;
     final isGuest = !user.isAuthenticated;
 
-    // TODO: Fix error user community provider is not being called during account switch requiring
     if (!isGuest) {
       return ref.watch(userCommunitiesProvider(user.uid)).when(
             data: (communities) {
-              return ref.watch(userPostsProvider(communities)).when(
-                    data: (posts) {
-                      return ListView.builder(
-                        itemCount: posts.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final post = posts[index];
-                          return PostCard(post: post);
-                        },
-                      );
-                    },
-                    error: (error, stackTrace) => ErrorText(
-                      error.toString(),
-                    ),
-                    loading: () => const Loader(),
-                  );
+              return FirestoreListView(
+                pageSize: 5,
+                query: ref.read(userPostsPaginationQueryProvider(communities)),
+                emptyBuilder: (context) => const Text('No data'),
+                errorBuilder: (context, error, stackTrace) =>
+                    Text(error.toString()),
+                loadingBuilder: (context) => const Loader(),
+                itemBuilder: (context, doc) {
+                  final post = doc.data();
+
+                  return PostCard(post: post);
+                },
+              );
             },
             error: (error, stackTrace) => ErrorText(
               error.toString(),

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dialogix/core/common/dialogix_cached_network_image.dart';
+import 'package:dialogix/core/common/widgets/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/post_card.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
