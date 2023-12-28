@@ -198,15 +198,14 @@ class PostCard extends ConsumerWidget {
                 ),
               ],
             ),
-            if (post.uid == user.uid)
-              IconButton(
-                onPressed: () => showBottomDrawerMenu(context, ref),
-                icon: SvgPicture.asset(
-                  Constants.moreIcon,
-                  colorFilter:
-                      const ColorFilter.mode(Palette.redColor, BlendMode.srcIn),
-                ),
-              )
+            IconButton(
+              onPressed: () => showBottomDrawerMenu(context, ref),
+              icon: SvgPicture.asset(
+                Constants.moreIcon,
+                colorFilter:
+                    const ColorFilter.mode(Palette.redColor, BlendMode.srcIn),
+              ),
+            )
           ],
         ),
       ],
@@ -409,12 +408,18 @@ class PostCard extends ConsumerWidget {
       .read(postControllerProvider.notifier)
       .awardPost(post: post, award: award, ctx: ctx);
 
+  void createDynamicPostLink(BuildContext ctx, WidgetRef ref) async {
+    await ref
+        .read(postControllerProvider.notifier)
+        .createPostDynamicLink(ctx, post);
+  }
+
   showBottomDrawerMenu(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: ScreenUtil().screenHeight * 0.5,
+            height: ScreenUtil().screenHeight * 0.6,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12.0),
@@ -428,7 +433,7 @@ class PostCard extends ConsumerWidget {
                 Container(
                     height: 4,
                     width: 40.w,
-                    margin: EdgeInsets.only(top: 24, bottom: 16).w,
+                    margin: const EdgeInsets.only(top: 24, bottom: 16).w,
                     decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(16))),
@@ -436,66 +441,67 @@ class PostCard extends ConsumerWidget {
                     child: Column(
                   children: [
                     Container(
-                        padding: EdgeInsets.all(12).w,
-                        margin: EdgeInsets.all(12).w,
+                        padding: const EdgeInsets.all(12).w,
+                        margin: const EdgeInsets.all(12).w,
                         decoration: BoxDecoration(
                             color: Colors.black12,
                             borderRadius: BorderRadius.circular(16)),
                         child: Column(children: [
                           ListTile(
-                            title: Text(
+                            title: const Text(
                               "Edit Post",
                               style: TextStyle(color: Colors.white),
                             ),
-                            leading: Icon(
+                            leading: const Icon(
                               CupertinoIcons.pen,
                               color: Colors.white,
                             ),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: Text(
+                            title: const Text(
                               "Bookmark post to profile",
                               style: TextStyle(color: Colors.white),
                             ),
-                            leading: Icon(
+                            leading: const Icon(
                               CupertinoIcons.bookmark,
                               color: Colors.white,
                             ),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: Text(
+                            title: const Text(
                               "Move to trash",
                               style: TextStyle(color: Colors.white),
                             ),
-                            leading: Icon(
+                            leading: const Icon(
                               CupertinoIcons.trash,
                             ),
                             onTap: () => deletePost(ref),
                           ),
                         ])),
                     Container(
-                        padding: EdgeInsets.all(12).w,
-                        margin: EdgeInsets.all(12).w,
+                        padding: const EdgeInsets.all(12).w,
+                        margin: const EdgeInsets.all(12).w,
                         decoration: BoxDecoration(
                             color: Colors.black12,
                             borderRadius: BorderRadius.circular(16)),
                         child: Column(children: [
                           ListTile(
-                            title: Text(
+                            title: const Text(
                               "Copy link",
                               style: TextStyle(color: Colors.white),
                             ),
-                            leading: Icon(CupertinoIcons.doc_on_clipboard_fill),
-                            onTap: () {},
+                            leading: const Icon(
+                                CupertinoIcons.doc_on_clipboard_fill),
+                            onTap: () => createDynamicPostLink(context, ref),
                           ),
                           ListTile(
-                            title: Text(
+                            title: const Text(
                               "Share post",
                               style: TextStyle(color: Colors.white),
                             ),
-                            leading: Icon(
+                            leading: const Icon(
                               CupertinoIcons.share,
                               color: Colors.white,
                             ),

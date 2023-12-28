@@ -8,22 +8,24 @@ import 'package:dialogix/features/post/repository/post_repository.dart';
 import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
 import 'package:dialogix/models/comment_model.dart';
 import 'package:dialogix/models/community_model.dart';
+import 'package:dialogix/models/dynamic_link_query_model.dart';
 import 'package:dialogix/models/post_model.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/providers/firebase_dynamic_link_repository_provider.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
-final postControllerProvider =
-    StateNotifierProvider.autoDispose<PostController, bool>((ref) =>
-        PostController(
-            postRepository: ref.read(postRepositoryProvider),
-            ref: ref,
-            storageRepository: ref.read(storageRepositoryProvider)));
+final postControllerProvider = StateNotifierProvider<PostController, bool>(
+    (ref) => PostController(
+        postRepository: ref.read(postRepositoryProvider),
+        ref: ref,
+        storageRepository: ref.read(storageRepositoryProvider)));
 final getPostByIdProvider = StreamProvider.family
     .autoDispose<PostModel, String>((ref, postId) =>
         ref.read(postControllerProvider.notifier).getPostById(postId));
@@ -34,7 +36,8 @@ final userPostsProvider =
   return postController.fetchUserPosts(communities);
 });
 
-final userPostsPaginationQueryProvider = Provider.family((ref, List<CommunityModel> communities) {
+final userPostsPaginationQueryProvider =
+    Provider.family((ref, List<CommunityModel> communities) {
   final postController = ref.read(postControllerProvider.notifier);
   return postController.fetchUserPostsPaginationQuery(communities);
 });
@@ -187,7 +190,8 @@ class PostController extends StateNotifier<bool> {
     return Stream.value([]);
   }
 
-  Query<PostModel> fetchUserPostsPaginationQuery(List<CommunityModel> communities) {
+  Query<PostModel> fetchUserPostsPaginationQuery(
+      List<CommunityModel> communities) {
     // TODO: GOTTA GIVE A CHECK FOR NULL CHECK ERRROR
     // if (communities.isNotEmpty) {
     return _postRepository.fetchUserPostsPaginationQuery(communities);
@@ -272,6 +276,30 @@ class PostController extends StateNotifier<bool> {
         return null;
       });
       Routemaster.of(ctx).pop();
+    });
+  }
+
+  Future<void> createPostDynamicLink(BuildContext ctx, PostModel post) async {
+    state = true;
+    final res = await _ref
+        .read(firebaseDynamicLinkRepositoryProvider(
+            queries: [DynamicLinkQuery(key: "postId", value: post.id)],
+            path: "post",
+            postfixPath: "comments"))
+        .createDynamicLink(true);
+
+    state = false;
+
+    return res.fold((l) {
+      Routemaster.of(ctx).pop();
+      showSnackBar(ctx, l.message);
+    }, (r) async {
+      await Clipboard.setData(ClipboardData(text: r));
+
+      Routemaster.of(ctx).pop();
+
+      showSnackBar(ctx, "Copied to clipboard");
+
     });
   }
 }

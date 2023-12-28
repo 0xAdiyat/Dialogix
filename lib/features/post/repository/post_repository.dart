@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialogix/models/comment_model.dart';
+import 'package:dialogix/models/dynamic_link_query_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -158,4 +159,5 @@ class PostRepository {
       return left(Failure(e.toString()));
     }
   }
+
 }
