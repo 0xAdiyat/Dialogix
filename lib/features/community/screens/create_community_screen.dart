@@ -44,18 +44,17 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('Community name'),
-                    ),
-                    Gap(12.h),
                     TextField(
+                      keyboardType: TextInputType.name,
                       controller: communityNameController,
-                      decoration: const InputDecoration(
-                        hintText: 'r/Community_name',
-                        filled: true,
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(18),
+                      decoration: InputDecoration(
+                        hintText: "d/community_name",
+                        labelText: "Name",
+                        filled: false,
+                        contentPadding: const EdgeInsets.all(20).w,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       maxLength: 21,
                     ),
@@ -63,14 +62,14 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
                     ElevatedButton(
                       onPressed: () => createCommunity(ref, context),
                       style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 50),
+                          minimumSize: const Size(double.infinity, 56),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           )),
                       child: Text(
-                        'Create community',
+                        'Create Community',
                         style: TextStyle(
-                          fontSize: 17.sp,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),

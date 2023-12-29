@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/core/constants/route_paths.dart';
+import 'package:dialogix/core/controller/dynamic_link_controller.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/feed/widgets/category_tabs.dart';
 import 'package:dialogix/features/home/delegates/search_community_delegate.dart';
@@ -39,6 +40,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void navigateToAddPostScreen(BuildContext ctx) =>
       Routemaster.of(ctx).push(RoutePaths.addPostScreen);
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(dynamicLinkControllerProvider.notifier).initDynamicLink(context);
+  }
 
   @override
   Widget build(BuildContext context) {

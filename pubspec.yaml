@@ -32,6 +32,8 @@ dependencies:
   cloud_firestore: ^4.13.6
   firebase_auth: ^4.15.3
   google_sign_in: ^6.2.1
+  firebase_ui_firestore: ^1.5.15
+  firebase_dynamic_links: ^5.4.8
 
   # State Management
   freezed: ^2.4.6

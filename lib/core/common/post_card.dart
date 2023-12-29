@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dialogix/core/common/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/loader.dart';
+import 'package:dialogix/core/common/widgets/dialogix_cached_network_image.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
 import 'package:dialogix/features/post/controller/post_controller.dart';
@@ -12,6 +12,7 @@ import 'package:dialogix/models/post_model.dart';
 import 'package:dialogix/models/user_model.dart';
 import 'package:dialogix/responsive/responsive.dart';
 import 'package:dialogix/theme/palette.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -197,15 +198,14 @@ class PostCard extends ConsumerWidget {
                 ),
               ],
             ),
-            if (post.uid == user.uid)
-              IconButton(
-                onPressed: () => deletePost(ref),
-                icon: SvgPicture.asset(
-                  Constants.moreIcon,
-                  colorFilter:
-                      const ColorFilter.mode(Palette.redColor, BlendMode.srcIn),
-                ),
-              )
+            IconButton(
+              onPressed: () => showBottomDrawerMenu(context, ref),
+              icon: SvgPicture.asset(
+                Constants.moreIcon,
+                colorFilter:
+                    const ColorFilter.mode(Palette.redColor, BlendMode.srcIn),
+              ),
+            )
           ],
         ),
       ],
@@ -407,4 +407,110 @@ class PostCard extends ConsumerWidget {
   void awardPost(WidgetRef ref, String award, BuildContext ctx) => ref
       .read(postControllerProvider.notifier)
       .awardPost(post: post, award: award, ctx: ctx);
+
+  void createDynamicPostLink(BuildContext ctx, WidgetRef ref) => ref
+      .read(postControllerProvider.notifier)
+      .createPostDynamicLink(ctx, post);
+
+  showBottomDrawerMenu(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: ScreenUtil().screenHeight * 0.6,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12.0),
+                topRight: Radius.circular(12.0),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    height: 4,
+                    width: 40.w,
+                    margin: const EdgeInsets.only(top: 24, bottom: 16).w,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(16))),
+                Expanded(
+                    child: Column(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12).w,
+                        margin: const EdgeInsets.all(12).w,
+                        decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Column(children: [
+                          ListTile(
+                            title: const Text(
+                              "Edit Post",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: const Icon(
+                              CupertinoIcons.pen,
+                              color: Colors.white,
+                            ),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: const Text(
+                              "Bookmark post to profile",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: const Icon(
+                              CupertinoIcons.bookmark,
+                              color: Colors.white,
+                            ),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: const Text(
+                              "Move to trash",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: const Icon(
+                              CupertinoIcons.trash,
+                            ),
+                            onTap: () => deletePost(ref),
+                          ),
+                        ])),
+                    Container(
+                        padding: const EdgeInsets.all(12).w,
+                        margin: const EdgeInsets.all(12).w,
+                        decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Column(children: [
+                          ListTile(
+                            title: const Text(
+                              "Copy link",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: const Icon(
+                                CupertinoIcons.doc_on_clipboard_fill),
+                            onTap: () => createDynamicPostLink(context, ref),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              "Share post",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: const Icon(
+                              CupertinoIcons.share,
+                              color: Colors.white,
+                            ),
+                            onTap: () {},
+                          ),
+                        ])),
+                  ],
+                ))
+              ],
+            ),
+          );
+        });
+  }
 }

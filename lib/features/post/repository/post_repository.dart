@@ -48,6 +48,18 @@ class PostRepository {
             .toList());
   }
 
+  Query<PostModel> fetchUserPostsPaginationQuery(
+      List<CommunityModel> communities) {
+    return _posts
+        .where("communityName",
+            whereIn: communities.map((e) => e.name).toList())
+        .orderBy('createdAt', descending: true)
+        .withConverter(
+            fromFirestore: (snapshot, _) =>
+                PostModel.fromJson(snapshot.data()!),
+            toFirestore: (post, _) => post.toJson());
+  }
+
   Stream<List<PostModel>> fetchGuestPosts() {
     return _posts
         .orderBy('createdAt', descending: true)
@@ -146,4 +158,5 @@ class PostRepository {
       return left(Failure(e.toString()));
     }
   }
+
 }

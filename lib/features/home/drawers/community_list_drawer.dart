@@ -34,6 +34,8 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
     Routemaster.of(ctx).push("/r/$communityName");
   }
 
+  void navigateToUserProfile(BuildContext ctx, String uid) =>
+      Routemaster.of(ctx).push('/u/$uid');
   Widget _buildDrawerIcons(BuildContext context) {
     return Column(
       children: [
@@ -67,21 +69,28 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
         ),
         Gap(iconGap.h),
         IconButton(
-          icon: SvgPicture.asset(
-            Constants.userOctagonIcon,
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).iconTheme.color!,
-              BlendMode.srcIn,
+            icon: SvgPicture.asset(
+              Constants.userOctagonIcon,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).iconTheme.color!,
+                BlendMode.srcIn,
+              ),
+              height: iconSize,
+              width: iconSize,
             ),
-            height: iconSize,
-            width: iconSize,
-          ),
-          onPressed: () {
-            // Handle onPressed
-          },
-        ),
-        Gap(24.h),
+            onPressed: () =>
+                navigateToUserProfile(context, ref.watch(userProvider)!.uid)),
+        Gap(iconGap.h),
         _buildUserAvatar(),
+        Gap(iconGap.h),
+        IconButton(
+          icon: Icon(
+            Icons.add,
+            size: iconSize,
+            color: Theme.of(context).iconTheme.color!.withOpacity(0.4),
+          ),
+          onPressed: () => navigateToCreateCommunity(context),
+        ),
         const Spacer(),
         _buildActionIcons(context),
       ],
@@ -155,9 +164,12 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
           color: Palette.redColor,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: const Text(
+        child: Text(
           "D",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: Palette.whiteColor),
         ),
       ),
     );
@@ -192,7 +204,7 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
     final isGuest = !user.isAuthenticated;
 
     return Drawer(
-      width: ScreenUtil().screenWidth * 0.8,
+      width: ScreenUtil().screenWidth,
       child: SafeArea(
         child: Row(
           children: [

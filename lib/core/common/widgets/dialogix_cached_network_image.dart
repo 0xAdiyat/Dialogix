@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/palette.dart';
+import '../../../theme/palette.dart';
 
 class DialogixCachedNetworkImage extends StatelessWidget {
   final String imgUrl;
