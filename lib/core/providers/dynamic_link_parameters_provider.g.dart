@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dynamic_link_parameters_provider.dart';
+part of 'dynamic_link/dynamic_link_parameters_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$dynamicLinkParametersHash() =>
-    r'14ef0259191abb242853951b5cba632d71205031';
+    r'b242f210e482e8953d442b2a0f81c0040a0fa8f7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -44,11 +44,13 @@ class DynamicLinkParametersFamily extends Family<DynamicLinkParameters> {
     required List<DynamicLinkQuery> queries,
     String? path,
     String? postfixPath,
+    String? title,
   }) {
     return DynamicLinkParametersProvider(
       queries: queries,
       path: path,
       postfixPath: postfixPath,
+      title: title,
     );
   }
 
@@ -60,6 +62,7 @@ class DynamicLinkParametersFamily extends Family<DynamicLinkParameters> {
       queries: provider.queries,
       path: provider.path,
       postfixPath: provider.postfixPath,
+      title: provider.title,
     );
   }
 
@@ -86,12 +89,14 @@ class DynamicLinkParametersProvider
     required List<DynamicLinkQuery> queries,
     String? path,
     String? postfixPath,
+    String? title,
   }) : this._internal(
           (ref) => dynamicLinkParameters(
             ref as DynamicLinkParametersRef,
             queries: queries,
             path: path,
             postfixPath: postfixPath,
+            title: title,
           ),
           from: dynamicLinkParametersProvider,
           name: r'dynamicLinkParametersProvider',
@@ -105,6 +110,7 @@ class DynamicLinkParametersProvider
           queries: queries,
           path: path,
           postfixPath: postfixPath,
+          title: title,
         );
 
   DynamicLinkParametersProvider._internal(
@@ -117,11 +123,13 @@ class DynamicLinkParametersProvider
     required this.queries,
     required this.path,
     required this.postfixPath,
+    required this.title,
   }) : super.internal();
 
   final List<DynamicLinkQuery> queries;
   final String? path;
   final String? postfixPath;
+  final String? title;
 
   @override
   Override overrideWith(
@@ -139,6 +147,7 @@ class DynamicLinkParametersProvider
         queries: queries,
         path: path,
         postfixPath: postfixPath,
+        title: title,
       ),
     );
   }
@@ -153,7 +162,8 @@ class DynamicLinkParametersProvider
     return other is DynamicLinkParametersProvider &&
         other.queries == queries &&
         other.path == path &&
-        other.postfixPath == postfixPath;
+        other.postfixPath == postfixPath &&
+        other.title == title;
   }
 
   @override
@@ -162,6 +172,7 @@ class DynamicLinkParametersProvider
     hash = _SystemHash.combine(hash, queries.hashCode);
     hash = _SystemHash.combine(hash, path.hashCode);
     hash = _SystemHash.combine(hash, postfixPath.hashCode);
+    hash = _SystemHash.combine(hash, title.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -177,6 +188,9 @@ mixin DynamicLinkParametersRef
 
   /// The parameter `postfixPath` of this provider.
   String? get postfixPath;
+
+  /// The parameter `title` of this provider.
+  String? get title;
 }
 
 class _DynamicLinkParametersProviderElement
@@ -192,6 +206,8 @@ class _DynamicLinkParametersProviderElement
   @override
   String? get postfixPath =>
       (origin as DynamicLinkParametersProvider).postfixPath;
+  @override
+  String? get title => (origin as DynamicLinkParametersProvider).title;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

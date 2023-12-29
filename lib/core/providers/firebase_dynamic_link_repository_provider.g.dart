@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'firebase_dynamic_link_repository_provider.dart';
+part of 'dynamic_link/firebase_dynamic_link_repository_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$firebaseDynamicLinkRepositoryHash() =>
-    r'0d91b2a2613408fc8e3f407d027bedfdc518e051';
+String _$firebaseDynamicLinkHash() =>
+    r'4c6a49c677184fdf41d10f1c29ff3b391f3fcd96';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,38 +30,30 @@ class _SystemHash {
   }
 }
 
-/// See also [firebaseDynamicLinkRepository].
-@ProviderFor(firebaseDynamicLinkRepository)
-const firebaseDynamicLinkRepositoryProvider =
-    FirebaseDynamicLinkRepositoryFamily();
+/// See also [firebaseDynamicLink].
+@ProviderFor(firebaseDynamicLink)
+const firebaseDynamicLinkProvider = FirebaseDynamicLinkFamily();
 
-/// See also [firebaseDynamicLinkRepository].
-class FirebaseDynamicLinkRepositoryFamily
-    extends Family<FirebaseDynamicLinkRepository> {
-  /// See also [firebaseDynamicLinkRepository].
-  const FirebaseDynamicLinkRepositoryFamily();
+/// See also [firebaseDynamicLink].
+class FirebaseDynamicLinkFamily extends Family<FirebaseDynamicLinkRepository> {
+  /// See also [firebaseDynamicLink].
+  const FirebaseDynamicLinkFamily();
 
-  /// See also [firebaseDynamicLinkRepository].
-  FirebaseDynamicLinkRepositoryProvider call({
-    required List<DynamicLinkQuery> queries,
-    String? path,
-    String? postfixPath,
+  /// See also [firebaseDynamicLink].
+  FirebaseDynamicLinkProvider call({
+    required DynamicLinkParameters parameters,
   }) {
-    return FirebaseDynamicLinkRepositoryProvider(
-      queries: queries,
-      path: path,
-      postfixPath: postfixPath,
+    return FirebaseDynamicLinkProvider(
+      parameters: parameters,
     );
   }
 
   @override
-  FirebaseDynamicLinkRepositoryProvider getProviderOverride(
-    covariant FirebaseDynamicLinkRepositoryProvider provider,
+  FirebaseDynamicLinkProvider getProviderOverride(
+    covariant FirebaseDynamicLinkProvider provider,
   ) {
     return call(
-      queries: provider.queries,
-      path: provider.path,
-      postfixPath: provider.postfixPath,
+      parameters: provider.parameters,
     );
   }
 
@@ -77,125 +69,116 @@ class FirebaseDynamicLinkRepositoryFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'firebaseDynamicLinkRepositoryProvider';
+  String? get name => r'firebaseDynamicLinkProvider';
 }
 
-/// See also [firebaseDynamicLinkRepository].
-class FirebaseDynamicLinkRepositoryProvider
+/// See also [firebaseDynamicLink].
+class FirebaseDynamicLinkProvider
     extends AutoDisposeProvider<FirebaseDynamicLinkRepository> {
-  /// See also [firebaseDynamicLinkRepository].
-  FirebaseDynamicLinkRepositoryProvider({
-    required List<DynamicLinkQuery> queries,
-    String? path,
-    String? postfixPath,
+  /// See also [firebaseDynamicLink].
+  FirebaseDynamicLinkProvider({
+    required DynamicLinkParameters parameters,
   }) : this._internal(
-          (ref) => firebaseDynamicLinkRepository(
-            ref as FirebaseDynamicLinkRepositoryRef,
-            queries: queries,
-            path: path,
-            postfixPath: postfixPath,
+          (ref) => firebaseDynamicLink(
+            ref as FirebaseDynamicLinkRef,
+            parameters: parameters,
           ),
-          from: firebaseDynamicLinkRepositoryProvider,
-          name: r'firebaseDynamicLinkRepositoryProvider',
+          from: firebaseDynamicLinkProvider,
+          name: r'firebaseDynamicLinkProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$firebaseDynamicLinkRepositoryHash,
-          dependencies: FirebaseDynamicLinkRepositoryFamily._dependencies,
+                  : _$firebaseDynamicLinkHash,
+          dependencies: FirebaseDynamicLinkFamily._dependencies,
           allTransitiveDependencies:
-              FirebaseDynamicLinkRepositoryFamily._allTransitiveDependencies,
-          queries: queries,
-          path: path,
-          postfixPath: postfixPath,
+              FirebaseDynamicLinkFamily._allTransitiveDependencies,
+          parameters: parameters,
         );
 
-  FirebaseDynamicLinkRepositoryProvider._internal(
+  FirebaseDynamicLinkProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.queries,
-    required this.path,
-    required this.postfixPath,
+    required this.parameters,
   }) : super.internal();
 
-  final List<DynamicLinkQuery> queries;
-  final String? path;
-  final String? postfixPath;
+  final DynamicLinkParameters parameters;
 
   @override
   Override overrideWith(
-    FirebaseDynamicLinkRepository Function(
-            FirebaseDynamicLinkRepositoryRef provider)
+    FirebaseDynamicLinkRepository Function(FirebaseDynamicLinkRef provider)
         create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: FirebaseDynamicLinkRepositoryProvider._internal(
-        (ref) => create(ref as FirebaseDynamicLinkRepositoryRef),
+      override: FirebaseDynamicLinkProvider._internal(
+        (ref) => create(ref as FirebaseDynamicLinkRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        queries: queries,
-        path: path,
-        postfixPath: postfixPath,
+        parameters: parameters,
       ),
     );
   }
 
   @override
   AutoDisposeProviderElement<FirebaseDynamicLinkRepository> createElement() {
-    return _FirebaseDynamicLinkRepositoryProviderElement(this);
+    return _FirebaseDynamicLinkProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FirebaseDynamicLinkRepositoryProvider &&
-        other.queries == queries &&
-        other.path == path &&
-        other.postfixPath == postfixPath;
+    return other is FirebaseDynamicLinkProvider &&
+        other.parameters == parameters;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, queries.hashCode);
-    hash = _SystemHash.combine(hash, path.hashCode);
-    hash = _SystemHash.combine(hash, postfixPath.hashCode);
+    hash = _SystemHash.combine(hash, parameters.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin FirebaseDynamicLinkRepositoryRef
+mixin FirebaseDynamicLinkRef
     on AutoDisposeProviderRef<FirebaseDynamicLinkRepository> {
-  /// The parameter `queries` of this provider.
-  List<DynamicLinkQuery> get queries;
-
-  /// The parameter `path` of this provider.
-  String? get path;
-
-  /// The parameter `postfixPath` of this provider.
-  String? get postfixPath;
+  /// The parameter `parameters` of this provider.
+  DynamicLinkParameters get parameters;
 }
 
-class _FirebaseDynamicLinkRepositoryProviderElement
+class _FirebaseDynamicLinkProviderElement
     extends AutoDisposeProviderElement<FirebaseDynamicLinkRepository>
-    with FirebaseDynamicLinkRepositoryRef {
-  _FirebaseDynamicLinkRepositoryProviderElement(super.provider);
+    with FirebaseDynamicLinkRef {
+  _FirebaseDynamicLinkProviderElement(super.provider);
 
   @override
-  List<DynamicLinkQuery> get queries =>
-      (origin as FirebaseDynamicLinkRepositoryProvider).queries;
-  @override
-  String? get path => (origin as FirebaseDynamicLinkRepositoryProvider).path;
-  @override
-  String? get postfixPath =>
-      (origin as FirebaseDynamicLinkRepositoryProvider).postfixPath;
+  DynamicLinkParameters get parameters =>
+      (origin as FirebaseDynamicLinkProvider).parameters;
 }
+
+String _$firebaseDynamicLinkRepositoryHash() =>
+    r'84ab7e6cdd560d184cf2d60648f9ac9670907a5c';
+
+/// See also [firebaseDynamicLinkRepository].
+@ProviderFor(firebaseDynamicLinkRepository)
+final firebaseDynamicLinkRepositoryProvider =
+    AutoDisposeProvider<FirebaseDynamicLinkRepository>.internal(
+  firebaseDynamicLinkRepository,
+  name: r'firebaseDynamicLinkRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$firebaseDynamicLinkRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FirebaseDynamicLinkRepositoryRef
+    = AutoDisposeProviderRef<FirebaseDynamicLinkRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

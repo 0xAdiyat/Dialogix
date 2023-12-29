@@ -408,11 +408,9 @@ class PostCard extends ConsumerWidget {
       .read(postControllerProvider.notifier)
       .awardPost(post: post, award: award, ctx: ctx);
 
-  void createDynamicPostLink(BuildContext ctx, WidgetRef ref) async {
-    await ref
-        .read(postControllerProvider.notifier)
-        .createPostDynamicLink(ctx, post);
-  }
+  void createDynamicPostLink(BuildContext ctx, WidgetRef ref) => ref
+      .read(postControllerProvider.notifier)
+      .createPostDynamicLink(ctx, post);
 
   showBottomDrawerMenu(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(

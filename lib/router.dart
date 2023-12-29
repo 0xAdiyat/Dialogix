@@ -5,6 +5,7 @@ import 'package:dialogix/features/community/screens/community_screen.dart';
 import 'package:dialogix/features/community/screens/create_community_screen.dart';
 import 'package:dialogix/features/community/screens/edit_community_screen.dart';
 import 'package:dialogix/features/community/screens/mod_tools_screen.dart';
+import 'package:dialogix/features/error/screens/error_screen.dart';
 import 'package:dialogix/features/home/screens/home_screen.dart';
 import 'package:dialogix/features/post/screens/add_post_screen.dart';
 import 'package:dialogix/features/post/screens/add_post_type_screen.dart';
@@ -64,5 +65,6 @@ final loggedInRoute = RouteMap(
           postId: route.pathParameters['postId']!,
         )),
     RoutePaths.addPostScreen: (_) => const MaterialPage(child: AddPostScreen()),
+        RoutePaths.errorScreen: (_) => const MaterialPage(child: ErrorScreen())
   },
 );

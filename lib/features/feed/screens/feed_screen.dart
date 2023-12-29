@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/post/controller/post_controller.dart';
@@ -24,6 +23,7 @@ class FeedScreen extends ConsumerWidget {
       return ref.watch(userCommunitiesProvider(user.uid)).when(
             data: (communities) {
               return FirestoreListView(
+                physics: const BouncingScrollPhysics(),
                 pageSize: 5,
                 query: ref.read(userPostsPaginationQueryProvider(communities)),
                 emptyBuilder: (context) => const Text('No data'),
@@ -46,6 +46,7 @@ class FeedScreen extends ConsumerWidget {
     return ref.watch(guestPostsProvider).when(
           data: (posts) {
             return ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: posts.length,
               itemBuilder: (BuildContext context, int index) {
                 final post = posts[index];

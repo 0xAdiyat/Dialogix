@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialogix/core/enums/enums.dart';
+import 'package:dialogix/core/providers/dynamic_link/dynamic_link_parameters_provider.dart';
 import 'package:dialogix/features/auth/controller/auth_controller.dart';
 import 'package:dialogix/features/post/repository/post_repository.dart';
 import 'package:dialogix/features/user_profile/controller/user_profile_controller.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../core/providers/firebase_dynamic_link_repository_provider.dart';
+import '../../../core/providers/dynamic_link/firebase_dynamic_link_repository_provider.dart';
 import '../../../core/providers/storage_repository_provider.dart';
 import '../../../core/utils.dart';
 
@@ -279,13 +280,17 @@ class PostController extends StateNotifier<bool> {
     });
   }
 
-  Future<void> createPostDynamicLink(BuildContext ctx, PostModel post) async {
+  void createPostDynamicLink(BuildContext ctx, PostModel post) async {
     state = true;
     final res = await _ref
-        .read(firebaseDynamicLinkRepositoryProvider(
-            queries: [DynamicLinkQuery(key: "postId", value: post.id)],
-            path: "post",
-            postfixPath: "comments"))
+        .read(
+          firebaseDynamicLinkProvider(
+              parameters: _ref.read(dynamicLinkParametersProvider(
+                  queries: [DynamicLinkQuery(key: "postId", value: post.id)],
+                  path: "post",
+                  postfixPath: "comments",
+                  title: post.title))),
+        )
         .createDynamicLink(true);
 
     state = false;
@@ -297,9 +302,6 @@ class PostController extends StateNotifier<bool> {
       await Clipboard.setData(ClipboardData(text: r));
 
       Routemaster.of(ctx).pop();
-
-      showSnackBar(ctx, "Copied to clipboard");
-
     });
   }
 }
