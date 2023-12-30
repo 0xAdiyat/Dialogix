@@ -34,7 +34,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
   void _onScroll() {
     double currentOffset = _scrollController.offset;
     ref.read(scrollPositionProvider.notifier).state = currentOffset;
-    print("saved offset onscroll: ${ref.read(scrollPositionProvider)}");
   }
 
   @override
@@ -62,7 +61,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
       if (counter == 0) {
         _scrollDown(ref);
       }
-
       counter = 1;
     }
 

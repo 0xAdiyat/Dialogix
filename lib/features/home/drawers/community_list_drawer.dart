@@ -164,7 +164,7 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
           color: Palette.redColor,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Text(
+        child: const Text(
           "D",
           style: TextStyle(
               fontSize: 24,

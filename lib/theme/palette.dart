@@ -16,6 +16,8 @@ class Palette {
   static const whiteColor = Color(0xfff8f8f8);
   // static const redColor = Color(0xffff4500);
   static const redColor = Color(0xffFE1723);
+    // static const redColor = blackColor;
+
   // static const redColor = Color(0xff951758);
 
   static const blueColor = Color(0xff0079d3);
@@ -27,10 +29,10 @@ class Palette {
   static var darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
-    // textButtonTheme: const TextButtonThemeData(
-    //     style: ButtonStyle(
-    //         textStyle: MaterialStatePropertyAll<TextStyle>(
-    //             TextStyle(color: whiteColor)))),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+        style: ButtonStyle(
+            textStyle: MaterialStatePropertyAll<TextStyle>(
+                TextStyle(color: whiteColor)))),
     progressIndicatorTheme: const ProgressIndicatorThemeData(color: whiteColor),
 
     textTheme: GoogleFonts.latoTextTheme()
@@ -55,8 +57,11 @@ class Palette {
         surfaceTintColor: drawerColor, backgroundColor: drawerColor),
     primaryColor: redColor,
     // backgroundColor: blackColor,
-    colorScheme:
-        ColorScheme.fromSeed(seedColor: redColor, brightness: Brightness.dark),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: whiteColor,
+      brightness: Brightness.dark,
+      background: blackColor,
+    ),
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
@@ -64,6 +69,8 @@ class Palette {
     cardColor: greyColor,
     progressIndicatorTheme: const ProgressIndicatorThemeData(color: blackColor),
     textTheme: GoogleFonts.latoTextTheme(),
+
+    // dividerTheme: const DividerThemeData(color: blackColor),
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
       titleTextStyle: TextStyle(
@@ -72,12 +79,7 @@ class Palette {
           fontWeight: FontWeight.w500),
       elevation: 0,
     ),
-    elevatedButtonTheme: const ElevatedButtonThemeData(
-      style: ButtonStyle(
-        surfaceTintColor: MaterialStatePropertyAll<Color>(whiteColor),
-        backgroundColor: MaterialStatePropertyAll<Color>(whiteColor),
-      ),
-    ),
+
     drawerTheme: const DrawerThemeData(
       backgroundColor: whiteColor,
       surfaceTintColor: whiteColor,
@@ -89,7 +91,8 @@ class Palette {
       color: blackColor,
     ),
     // backgroundColor: whiteColor,
-    colorScheme: ColorScheme.fromSeed(seedColor: redColor),
+    colorScheme:
+        ColorScheme.fromSeed(seedColor: redColor, background: whiteColor),
   );
 }
 

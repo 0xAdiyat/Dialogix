@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/core/constants/route_paths.dart';
@@ -18,7 +19,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:routemaster/routemaster.dart';
-
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -70,57 +70,72 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isGuest = !user.isAuthenticated;
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: const Text(
-          'Home',
-        ),
-        centerTitle: false,
-        leading: Builder(
-          builder: (ctx) => IconButton(
-              onPressed: () => displayDrawer(ctx),
-              icon: const Icon(CupertinoIcons.command)),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () => communitySearch(context),
-              icon: SvgPicture.asset(
-                Constants.searchIcon,
-                colorFilter: ColorFilter.mode(
-                    currentTheme.iconTheme.color!, BlendMode.srcIn),
-              )),
-          if (kIsWeb)
-            IconButton(
-                onPressed: () => navigateToAddPostScreen(context),
-                icon: const Icon(Icons.add_outlined)),
-          Builder(
-            builder: (ctx) => IconButton(
-                onPressed: () => displayEndDrawer(ctx),
-                icon: CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(user.profilePic),
-                )),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          if (_page == 0)
-            Column(
-              children: [
-                Gap(4.h),
-                CategoryTabs(currentMode: currentMode),
-                Gap(4.h),
-              ],
+      appBar: _page == 0
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(
+                  kToolbarHeight), // Adjust height as needed
+              child: FadeIn(
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  title: const Text(
+                    'Home',
+                  ),
+                  centerTitle: false,
+                  leading: Builder(
+                    builder: (ctx) => IconButton(
+                        onPressed: () => displayDrawer(ctx),
+                        icon: const Icon(CupertinoIcons.command)),
+                  ),
+                  actions: [
+                    IconButton(
+                        onPressed: () => communitySearch(context),
+                        icon: SvgPicture.asset(
+                          Constants.searchIcon,
+                          colorFilter: ColorFilter.mode(
+                              currentTheme.iconTheme.color!, BlendMode.srcIn),
+                        )),
+                    if (kIsWeb)
+                      IconButton(
+                          onPressed: () => navigateToAddPostScreen(context),
+                          icon: const Icon(Icons.add_outlined)),
+                    Builder(
+                      builder: (ctx) => IconButton(
+                          onPressed: () => displayEndDrawer(ctx),
+                          icon: CircleAvatar(
+                            backgroundImage:
+                                CachedNetworkImageProvider(user.profilePic),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : null,
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (_page == 0)
+              Column(
+                children: [
+                  Gap(4.h),
+                  CategoryTabs(currentMode: currentMode),
+                  Gap(4.h),
+                ],
+              ),
+            Expanded(
+              child: PageView(
+                physics: const BouncingScrollPhysics(),
+                controller: _pageController,
+                onPageChanged: onPageChanged,
+                children: [
+                  SlideInDown(child: const FeedScreen()),
+                  SlideInUp(child: const AddPostScreen())
+                ],
+              ),
             ),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: onPageChanged,
-              children: const [FeedScreen(), AddPostScreen()],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       drawer: const CommunityListDrawer(),
       endDrawer: isGuest ? null : const ProfileDrawer(),
