@@ -21,8 +21,8 @@ class AddPostScreen extends ConsumerWidget {
       Routemaster.of(ctx).push('/add-post/$type');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cardHeightWidth = kIsWeb ? 120.0.w : 120.0;
-    final iconSize = kIsWeb ? 60.0.w : 60.0;
+    // final cardHeightWidth = kIsWeb ? 120.0.w : 120.0;
+    // final iconSize = kIsWeb ? 60.0.w : 60.0;
 
     return Scaffold(
         body: Padding(
