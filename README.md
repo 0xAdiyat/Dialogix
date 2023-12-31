@@ -44,6 +44,15 @@
 </details>
 
 
+> [!IMPORTANT]
+> ## Platform Support
+> - [x] Android
+> - [x] iOS
+> - [x] Web
+> - [ ] Mac
+> - [ ] Windows
+> - [ ] Linux
+
 
 ## Features
 
@@ -188,30 +197,19 @@ main.dart
 router.dart
 ```
 
-## Architecture: Feature-Driven and Controller-Repository Pattern
-
 > [!NOTE]
+> ## Architecture: Feature-Driven and Controller-Repository Pattern
 > ### Overview
 > Dialogix adopts a Feature-Driven Structure, promoting modularity with self-contained features like auth, community, feed. The Controller-Repository Pattern is employed:
 > - **Controllers:** Manage business logic and state, facilitating feature-level interactions.
 > - **Repositories:** Abstract data access logic, interacting with external services or local storage.
 >
 >  The project also uses the Provider Pattern for state management, enhancing reactivity.
-
-> [!NOTE]
 > ### Benefits
 > - **Modularity:** Features operate independently, fostering maintainability and scalability.
 > - **Separation of Concerns:** Controllers manage logic, while repositories handle data access, ensuring code clarity.
 > - **Provider Pattern:** Enables robust state management for reactive application behavior.
 
-## Platform Support
-
-- [x] Android
-- [x] iOS
-- [x] Web
-- [ ] Mac
-- [ ] Windows
-- [ ] Linux
 
 ## Packages
      
