@@ -18,9 +18,9 @@
     <br />
     <a href="https://github.com/0xAdiyat/Dialogix/">View Demo</a>
     ·
-    <a href="https://github.com/0xAdiyat/Dialogix/issues">Report Bug</a>
+    <a href="https://github.com/0xAdiyat/Dialogix/issues/new">Report Bug</a>
     ·
-    <a href="https://github.com/0xAdiyat/Dialogix/issues">Request Feature</a>
+    <a href="https://github.com/0xAdiyat/Dialogix/issues/new">Request Feature</a>
   </p>
 
   
