@@ -16,7 +16,7 @@
     <a href="https://github.com/0xAdiyat/Dialogix/"><strong>EXPLORE ● THE DOCS</strong></a>
     <br />
     <br />
-    <a href="https://github.com/0xAdiyat/Dialogix/">View Demo</a>
+    <a href="https://github.com/0xAdiyat/Dialogix/releases">View Demo</a>
     ·
     <a href="https://github.com/0xAdiyat/Dialogix/issues/new">Report Bug</a>
     ·
