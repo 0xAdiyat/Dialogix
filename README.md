@@ -145,6 +145,15 @@ main.dart
 router.dart
 ```
 
+## Platform Support
+
+- [x] Android
+- [x] iOS
+- [x] Web
+- [ ] Mac
+- [ ] Windows
+- [ ] Linux
+
 ## Packages
      
 | Name                                                             | Usage                                               |
