@@ -147,22 +147,18 @@ router.dart
 
 
 ## Architecture: Flutter MVU (Model-View-Update)
+> [!NOTE]
+> ### Description
+> Dialogix is structured using the Flutter MVU architecture, which stands for Model-View-Update. This architecture separates the application logic into three components:
+> - **Model:** Represents the application state.
+> - **View:** Represents the UI components.
+> - **Update:** Manages the logic for updating the model based on user interactions.
 
-### Description
-
-Dialogix is structured using the Flutter MVU architecture, which stands for Model-View-Update. This architecture separates the application logic into three components:
-
-- **Model:** Represents the application state.
-- **View:** Represents the UI components.
-- **Update:** Manages the logic for updating the model based on user interactions.
-
-### Usage
-
-- **Model (core/models):** Contains data models representing entities in the app, such as users, communities, posts, etc.
-  
-- **View (features):** Organized into feature-specific folders, each containing screens, controllers, and other UI-related components. This separation enables modular development and easy navigation.
-
-- **Update (core/providers):** Providers manage the logic for updating the model. For example, the `AuthRepository` in the `auth` feature handles authentication-related updates.
+> [!NOTE]
+> ### Usage
+> - **Model (core/models):** Contains data models representing entities in the app, such as users, communities, posts, etc.
+> - **View (features):** Organized into feature-specific folders, each containing screens, controllers, and other UI-related components. This separation enables modular development and easy navigation.
+> - **Update (core/providers):** Providers manage the logic for updating the model. For example, the `AuthRepository` in the `auth` feature handles authentication-related updates.
 
 
 ## Platform Support
