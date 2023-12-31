@@ -162,7 +162,7 @@ Dialogix is structured using the Flutter MVU architecture, which stands for Mode
   
 - **View (features):** Organized into feature-specific folders, each containing screens, controllers, and other UI-related components. This separation enables modular development and easy navigation.
 
-- **Update (core/controllers):** Controllers manage the logic for updating the model. For example, the `AuthController` in the `auth` feature handles authentication-related updates.
+- **Update (core/providers):** Providers manage the logic for updating the model. For example, the `AuthRepository` in the `auth` feature handles authentication-related updates.
 
 
 ## Platform Support
