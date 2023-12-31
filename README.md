@@ -215,15 +215,16 @@ Dialogix is structured using the Flutter MVU architecture, which stands for Mode
 1. Clone the repository:
    ```bash
    git clone https://github.com/0xAdiyat/Dialogix.git
+   ```
 2. Install dependencies:
    ```bash
    cd dialogix-mobile-app
    flutter pub get
+   ```
 3. Run the app:
    ```bash
    flutter run
-
-   
+   ```
 ## Contribution
 If you wish to contribute a change to any of the existing features or add new to this repo,
 please feel free to contribute,
