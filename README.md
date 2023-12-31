@@ -23,6 +23,7 @@
     <a href="https://github.com/0xAdiyat/Dialogix/issues/new">Request Feature</a>
   </p>
 
+<br>
   
 <!-- TABLE OF CONTENTS -->
 <details>
