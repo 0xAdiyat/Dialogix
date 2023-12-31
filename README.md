@@ -234,3 +234,6 @@ Dialogix is structured using the Flutter MVU architecture, which stands for Mode
 
 ## Author
 @0xAdiyat
+
+<br>
+<p align="right">● <a href="#Dialogix">back to top</a></p>
