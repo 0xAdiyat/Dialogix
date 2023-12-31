@@ -3,7 +3,7 @@
 <h1 align="center">Dialogix</h1> <br>
 <p align="center">
   <a href="https://github.com/Huss4in007/ToDo-WishFlow/releases/tag/v1.0.2">
-    <img src="https://github.com/0xAdiyat/Dialogix/blob/main/assets/images/native/dialogix_splash_logo.png?raw=true" alt="Dialogix Logo" width="80" height="80">
+    <img src="https://github.com/0xAdiyat/Dialogix/blob/main/assets/images/native/dialogix_splash_logo.png?raw=true" alt="Dialogix Logo" width="120" height="120">
   </a>
 </p>
 
@@ -31,8 +31,8 @@
   <ol>
     <li><a href="#dialogix-top">Dialogix</a></li>
       <ul>
-        <li><a href="##features">Features</a></li>
-        <li><a href="##folder-structure">Folder Structure</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#folder-structure">Folder Structure</a></li>
         <li><a href="#architecture">Architecture: Flutter MVU (Model-View-Update)</a></li>
         <li><a href="#platform-support">Platform Support</a></li>
         <li><a href="#packages">Packages</a></li>
@@ -188,21 +188,21 @@ main.dart
 router.dart
 ```
 
-
-## Architecture: Flutter MVU (Model-View-Update)
-> [!NOTE]
-> ### Description
-> Dialogix is structured using the Flutter MVU architecture, which stands for Model-View-Update. This architecture separates the application logic into three components:
-> - **Model:** Represents the application state.
-> - **View:** Represents the UI components.
-> - **Update:** Manages the logic for updating the model based on user interactions.
+## Architecture: Feature-Driven and Controller-Repository Pattern
 
 > [!NOTE]
-> ### Usage
-> - **Model (core/models):** Contains data models representing entities in the app, such as users, communities, posts, etc.
-> - **View (features):** Organized into feature-specific folders, each containing screens, controllers, and other UI-related components. This separation enables modular development and easy navigation.
-> - **Update (core/providers):** Providers manage the logic for updating the model. For example, the `AuthRepository` in the `auth` feature handles authentication-related updates.
+> ### Overview
+> Dialogix adopts a Feature-Driven Structure, promoting modularity with self-contained features like auth, community, feed. The Controller-Repository Pattern is employed:
+> - **Controllers:** Manage business logic and state, facilitating feature-level interactions.
+> - **Repositories:** Abstract data access logic, interacting with external services or local storage.
+>
+>  The project also uses the Provider Pattern for state management, enhancing reactivity.
 
+> [!NOTE]
+> ### Benefits
+> - **Modularity:** Features operate independently, fostering maintainability and scalability.
+> - **Separation of Concerns:** Controllers manage logic, while repositories handle data access, ensuring code clarity.
+> - **Provider Pattern:** Enables robust state management for reactive application behavior.
 
 ## Platform Support
 
