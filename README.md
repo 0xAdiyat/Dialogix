@@ -255,7 +255,7 @@ router.dart
    ```
 2. Install dependencies:
    ```bash
-   cd dialogix-mobile-app
+   cd dialogix
    flutter pub get
    ```
 3. Run the app:
