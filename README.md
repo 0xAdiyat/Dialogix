@@ -1,4 +1,4 @@
-# Dialogix Mobile App
+# Dialogix
 
 Dialogix is a mobile app that provides a platform for community-driven discussions and content sharing.
 
