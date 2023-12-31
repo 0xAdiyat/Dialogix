@@ -44,7 +44,107 @@ Dialogix is a mobile app that provides a platform for community-driven discussio
 - [x] **Bug Fixes and Optimization:**
   - Fixed post blur visibility issue during scrolling.
   - Optimized code for improved responsiveness and efficiency.
-     
+
+
+## Folder Structure
+
+```
+lib
+|-- core
+|   |-- common
+|   |   |-- widgets
+|   |   |   |-- dialogix_cached_network_image.dart
+|   |   |-- error_text.dart
+|   |   |-- loader.dart
+|   |   |-- post_card.dart
+|   |   |-- sign_in_button.dart
+|   |-- constants
+|   |   |-- constants.dart
+|   |   |-- firebase_constants.dart
+|   |   |-- font_constants.dart
+|   |   |-- route_paths.dart
+|   |-- controller
+|   |   |-- dynamic_link_controller.dart
+|   |-- enums
+|   |-- providers
+|   |   |-- dynamic_link
+|   |   |   |-- dynamic_link_parameters_provider.dart
+|   |   |   |-- firebase_dynamic_link_repository_provider.dart
+|   |   |-- firebase_providers.dart
+|   |   |-- storage_repository_provider.dart
+|   |-- failure.dart
+|   |-- type_defs.dart
+|   |-- utils.dart
+|-- features
+|   |-- auth
+|   |   |-- controller
+|   |   |   |-- auth_controller.dart
+|   |   |-- repository
+|   |   |   |-- auth_repository.dart
+|   |   |-- screens
+|   |   |   |-- login_screen.dart
+|   |-- community
+|   |   |-- controller
+|   |   |   |-- community_controller.dart
+|   |   |-- repository
+|   |   |   |-- community_repository.dart
+|   |   |-- screens
+|   |   |   |-- add_mods_screen.dart
+|   |   |   |-- community_screen.dart
+|   |   |   |-- create_community_screen.dart
+|   |   |   |-- edit_community_screen.dart
+|   |   |   |-- mod_tools_screen.dart
+|   |-- error
+|   |   |-- screens
+|   |   |   |-- error_screen.dart
+|   |-- feed
+|   |   |-- screens
+|   |   |   |-- feed_screen.dart
+|   |   |-- widgets
+|   |   |   |-- category_tabs.dart
+|   |-- home
+|   |   |-- delegates
+|   |   |   |-- search_community_delegate.dart
+|   |   |-- drawers
+|   |   |   |-- community_list_drawer.dart
+|   |   |   |-- profile_drawer.dart
+|   |   |-- screens
+|   |   |   |-- home_screen.dart
+|   |-- post
+|   |   |-- controller
+|   |   |   |-- post_controller.dart
+|   |   |-- repository
+|   |   |   |-- post_repository.dart
+|   |   |-- screens
+|   |   |   |-- add_post_screen.dart
+|   |   |   |-- add_post_type_screen.dart
+|   |   |   |-- comments_screen.dart
+|   |   |-- widgets
+|   |   |   |-- comment_card.dart
+|   |-- user_profile
+|   |   |-- controller
+|   |   |   |-- user_profile_controller.dart
+|   |   |-- repository
+|   |   |   |-- user_profile_repository.dart
+|   |   |-- screens
+|   |   |   |-- edit_profile_screen.dart
+|   |   |   |-- user_profile_screen.dart
+|-- generated
+|-- models
+|   |-- comment_model.dart
+|   |-- community_model.dart
+|   |-- dynamic_link_query_model.dart
+|   |-- post_model.dart
+|   |-- user_model.dart
+|-- responsive
+|   |-- responsive.dart
+|-- theme
+|   |-- palette.dart
+firebase_options.dart
+main.dart
+router.dart
+```
+
 ## Packages
      
 | Name                                                             | Usage                                               |
