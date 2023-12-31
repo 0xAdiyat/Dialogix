@@ -33,7 +33,7 @@
       <ul>
         <li><a href="#features">Features</a></li>
         <li><a href="#folder-structure">Folder Structure</a></li>
-        <li><a href="#architecture">Architecture: Flutter MVU (Model-View-Update)</a></li>
+        <li><a href="#architecture">Architecture: Feature-Driven and Controller-Repository Pattern</a></li>
         <li><a href="#platform-support">Platform Support</a></li>
         <li><a href="#packages">Packages</a></li>
         <li><a href="#getting-started">Getting Started</a></li>
