@@ -1,6 +1,48 @@
-# Dialogix
+<a name="dialogix-top"></a>
 
-Dialogix is a mobile app that provides a platform for community-driven discussions and content sharing.
+<h1 align="center">Dialogix</h1> <br>
+<p align="center">
+  <a href="https://github.com/Huss4in007/ToDo-WishFlow/releases/tag/v1.0.2">
+    <img src="https://github.com/0xAdiyat/Dialogix/blob/main/assets/images/native/dialogix_splash_logo.png?raw=true" alt="Dialogix Logo" width="80" height="80">
+  </a>
+</p>
+
+<p align="center">
+  A flutter-based social app that provides a platform for community-driven discussions and content sharing.
+</p>
+
+ <p align="center">
+<br />
+    <a href="https://github.com/0xAdiyat/Dialogix/"><strong>EXPLORE ● THE DOCS</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/0xAdiyat/Dialogix/">View Demo</a>
+    ·
+    <a href="https://github.com/0xAdiyat/Dialogix/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/0xAdiyat/Dialogix/issues">Request Feature</a>
+  </p>
+
+  
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#dialogix-top">Dialogix</a></li>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#folder-structure">Folder Structure</a></li>
+        <li><a href="#architecture">Architecture: Flutter MVU (Model-View-Update)</a></li>
+        <li><a href="#platform-support">Platform Support</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#contribution">Contribution</a></li>
+        <li><a href="#author">Author</a></li>
+      </ul>
+  </ol>
+</details>
+
+
 
 ## Features
 
@@ -232,4 +274,4 @@ router.dart
 @0xAdiyat
 
 <br>
-<p align="right">● <a href="#Dialogix">back to top</a></p>
+<p align="right">● <a href="#dialogix-top">back to top</a></p>
