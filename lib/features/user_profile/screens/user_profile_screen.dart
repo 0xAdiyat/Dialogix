@@ -85,9 +85,7 @@ class UserProfileScreen extends ConsumerWidget {
                         ),
                       ),
                       Gap(12.h),
-                      const Divider(
-                        thickness: 2,
-                      ),
+                      const Divider(),
                     ]),
                   ),
                 )

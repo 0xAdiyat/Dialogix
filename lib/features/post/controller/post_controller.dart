@@ -193,7 +193,6 @@ class PostController extends StateNotifier<bool> {
 
   Query<PostModel> fetchUserPostsPaginationQuery(
       List<CommunityModel> communities) {
-    // TODO: GOTTA GIVE A CHECK FOR NULL CHECK ERRROR
     // if (communities.isNotEmpty) {
     return _postRepository.fetchUserPostsPaginationQuery(communities);
     // }

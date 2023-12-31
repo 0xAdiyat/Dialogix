@@ -433,7 +433,7 @@ class PostCard extends ConsumerWidget {
                     width: 40.w,
                     margin: const EdgeInsets.only(top: 24, bottom: 16).w,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Palette.glassBlack,
                         borderRadius: BorderRadius.circular(16))),
                 Expanded(
                     child: Column(
@@ -482,7 +482,7 @@ class PostCard extends ConsumerWidget {
                         padding: const EdgeInsets.all(12).w,
                         margin: const EdgeInsets.all(12).w,
                         decoration: BoxDecoration(
-                            color: Colors.black12,
+                            color: Palette.glassBlack,
                             borderRadius: BorderRadius.circular(16)),
                         child: Column(children: [
                           ListTile(
