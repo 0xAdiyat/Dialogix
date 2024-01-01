@@ -1,5 +1,9 @@
 class Constants {
   Constants._();
+
+  static const dialogixLogoPath =
+      'assets/images/native/dialogix_splash_logo.png';
+
   static const logoPath = 'assets/images/logo.png';
   static const loginEmotePath = 'assets/images/loginEmote.png';
   static const googlePath = 'assets/images/google.png';

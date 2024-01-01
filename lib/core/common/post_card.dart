@@ -18,9 +18,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../../features/auth/controller/auth_controller.dart';
+import '../utils.dart';
 
 class PostCard extends ConsumerWidget {
   final PostModel post;
@@ -199,7 +201,7 @@ class PostCard extends ConsumerWidget {
               ],
             ),
             IconButton(
-              onPressed: () => showBottomDrawerMenu(context, ref),
+              onPressed: () => showBottomDrawerMenu(context, ref, post, user),
               icon: SvgPicture.asset(
                 Constants.moreIcon,
                 colorFilter:
@@ -325,7 +327,7 @@ class PostCard extends ConsumerWidget {
             data: (community) {
               if (community.mods.contains(user.uid)) {
                 return IconButton(
-                  onPressed: () => deletePost(ref),
+                  onPressed: () => deletePost(ref, context, true),
                   icon: SvgPicture.asset(
                     Constants.modIcon,
                     colorFilter:
@@ -392,8 +394,8 @@ class PostCard extends ConsumerWidget {
     Routemaster.of(context).push('/post/${post.id}/comments');
   }
 
-  void deletePost(WidgetRef ref) {
-    ref.read(postControllerProvider.notifier).deletePost(post);
+  void deletePost(WidgetRef ref, BuildContext ctx, [bool isAdminDel = true]) {
+    ref.read(postControllerProvider.notifier).deletePost(post, ctx, isAdminDel);
   }
 
   void upvote(WidgetRef ref) {
@@ -408,109 +410,265 @@ class PostCard extends ConsumerWidget {
       .read(postControllerProvider.notifier)
       .awardPost(post: post, award: award, ctx: ctx);
 
-  void createDynamicPostLink(BuildContext ctx, WidgetRef ref) => ref
+  void createAndCopyLink(BuildContext ctx, WidgetRef ref) => ref
       .read(postControllerProvider.notifier)
       .createPostDynamicLink(ctx, post);
 
-  showBottomDrawerMenu(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
+  void showBottomDrawerMenu(
+      BuildContext context, WidgetRef ref, PostModel post, UserModel user) {
+    final themeCtx = Theme.of(context);
+    final screenWidth = ScreenUtil().screenWidth;
+    showCupertinoModalBottomSheet(
+      context: context,
+      expand: true,
+      builder: (BuildContext context) {
+        return Container();
+      },
+    );
+//TODO: Converting image to widget so that user can download it
+    showCupertinoModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      expand: true,
+      builder: (BuildContext context) {
+        Widget buildFlexibleDivider(double dimension, bool isVertical) {
+          final themeCtx = Theme.of(context);
           return Container(
-            height: ScreenUtil().screenHeight * 0.6,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.0),
-                topRight: Radius.circular(12.0),
+            color: themeCtx.colorScheme.background,
+            height: isVertical ? dimension : 1,
+            width: isVertical ? 1 : dimension,
+          );
+        }
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                icon: const Icon(CupertinoIcons.clear),
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+            const Spacer(),
+            Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 20.0)
+                      .w,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: SizedBox(
+                          height: screenWidth * 1.5,
+                          width: screenWidth,
+                          child: CachedNetworkImage(
+                              imageUrl: post.link ?? post.communityProfilePic,
+                              fit: BoxFit.cover)),
+                    ),
+                  ),
+                ),
                 Container(
-                    height: 4,
-                    width: 40.w,
-                    margin: const EdgeInsets.only(top: 24, bottom: 16).w,
-                    decoration: BoxDecoration(
-                        color: Palette.glassBlack,
-                        borderRadius: BorderRadius.circular(16))),
-                Expanded(
-                    child: Column(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12).w,
-                        margin: const EdgeInsets.all(12).w,
-                        decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Column(children: [
-                          ListTile(
-                            title: const Text(
-                              "Edit Post",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            leading: const Icon(
-                              CupertinoIcons.pen,
-                              color: Colors.white,
-                            ),
-                            onTap: () {},
+                  height: screenWidth * 0.95,
+                  width: screenWidth * 0.70,
+                  decoration: BoxDecoration(
+                    color: themeCtx.iconTheme.color,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 16.0)
+                            .w,
+                        child: Text(
+                          formatDateTime(post.createdAt),
+                          style: themeCtx.textTheme.bodySmall!.copyWith(
+                            color: themeCtx.colorScheme.background,
                           ),
-                          ListTile(
-                            title: const Text(
-                              "Bookmark post to profile",
-                              style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      buildFlexibleDivider(screenWidth * 0.70, false),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 200.w,
+                            height: 212.h,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0).w,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    post.title,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:
+                                        themeCtx.textTheme.titleLarge!.copyWith(
+                                      color: themeCtx.colorScheme.background,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  if (post.description != null)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(top: 4.0).w,
+                                      child: Text(
+                                        post.description!,
+                                        style: themeCtx.textTheme.titleSmall!
+                                            .copyWith(
+                                          color:
+                                              themeCtx.colorScheme.background,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                            leading: const Icon(
-                              CupertinoIcons.bookmark,
-                              color: Colors.white,
-                            ),
-                            onTap: () {},
                           ),
-                          ListTile(
-                            title: const Text(
-                              "Move to trash",
-                              style: TextStyle(color: Colors.white),
+                          buildFlexibleDivider(screenWidth * 0.67, true),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, top: 12.0).w,
+                            child: RotatedBox(
+                              quarterTurns: 1,
+                              child: Text(
+                                "d/@${post.communityName}",
+                                style: themeCtx.textTheme.titleSmall!.copyWith(
+                                  color: themeCtx.colorScheme.background,
+                                ),
+                              ),
                             ),
-                            leading: const Icon(
-                              CupertinoIcons.trash,
-                            ),
-                            onTap: () => deletePost(ref),
                           ),
-                        ])),
-                    Container(
-                        padding: const EdgeInsets.all(12).w,
-                        margin: const EdgeInsets.all(12).w,
-                        decoration: BoxDecoration(
-                            color: Palette.glassBlack,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Column(children: [
-                          ListTile(
-                            title: const Text(
-                              "Copy link",
-                              style: TextStyle(color: Colors.white),
+                        ],
+                      ),
+                      buildFlexibleDivider(screenWidth * 0.70, false),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0).w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      user.profilePic),
+                                  radius: 16,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0)
+                                      .copyWith(left: 8)
+                                      .w,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.35,
+                                    child: Text(
+                                      user.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: themeCtx.textTheme.titleSmall!
+                                          .copyWith(
+                                        color: themeCtx.colorScheme.background,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            leading: const Icon(
-                                CupertinoIcons.doc_on_clipboard_fill),
-                            onTap: () => createDynamicPostLink(context, ref),
-                          ),
-                          ListTile(
-                            title: const Text(
-                              "Share post",
-                              style: TextStyle(color: Colors.white),
+                            Image.asset(
+                              Constants.dialogixLogoPath,
+                              height: 34,
+                              width: 34,
+                              fit: BoxFit.cover,
                             ),
-                            leading: const Icon(
-                              CupertinoIcons.share,
-                              color: Colors.white,
-                            ),
-                            onTap: () {},
-                          ),
-                        ])),
-                  ],
-                ))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          );
-        });
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(20.0).copyWith(bottom: 40).w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Column(children: [
+                      const Icon(
+                        CupertinoIcons.pen,
+                        size: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0).w,
+                        child: Text("Edit post",
+                            style: themeCtx.textTheme.bodySmall),
+                      )
+                    ]),
+                  ),
+                  GestureDetector(
+                    onTap: () => deletePost(ref, context),
+                    child: Column(children: [
+                      const Icon(
+                        CupertinoIcons.trash,
+                        size: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0).w,
+                        child:
+                            Text("Delete", style: themeCtx.textTheme.bodySmall),
+                      )
+                    ]),
+                  ),
+                  GestureDetector(
+                    onTap: () => createAndCopyLink(context, ref),
+                    child: Column(children: [
+                      const Icon(
+                        CupertinoIcons.link,
+                        size: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0).w,
+                        child: Text("Copy link",
+                            style: themeCtx.textTheme.bodySmall),
+                      )
+                    ]),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Column(children: [
+                      const Icon(
+                        CupertinoIcons.share,
+                        size: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0).w,
+                        child: Text("Share via...",
+                            style: themeCtx.textTheme.bodySmall),
+                      )
+                    ]),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

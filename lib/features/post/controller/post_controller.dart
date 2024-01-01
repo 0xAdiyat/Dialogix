@@ -201,12 +201,17 @@ class PostController extends StateNotifier<bool> {
   Stream<List<PostModel>> fetchGuestPosts() =>
       _postRepository.fetchGuestPosts();
 
-  void deletePost(PostModel post) async {
+  void deletePost(PostModel post, BuildContext ctx, bool isAdminCallBtn) async {
     final res = await _postRepository.deletePost(post);
     _ref
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.deletePost);
-    res.fold((l) => null, (r) => null);
+    res.fold((l) => null, (r) {
+      if (!isAdminCallBtn) {
+        Navigator.of(ctx).pop();
+        Navigator.of(ctx).pop();
+      }
+    });
   }
 
   void upvote(PostModel post) {
@@ -295,12 +300,15 @@ class PostController extends StateNotifier<bool> {
     state = false;
 
     return res.fold((l) {
-      Routemaster.of(ctx).pop();
+      Navigator.of(ctx).pop();
+      Navigator.of(ctx).pop();
+
       showSnackBar(ctx, l.message);
     }, (r) async {
       await Clipboard.setData(ClipboardData(text: r));
 
-      Routemaster.of(ctx).pop();
+      Navigator.of(ctx).pop();
+      Navigator.of(ctx).pop();
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../theme/palette.dart';
 
@@ -13,3 +14,6 @@ Future<FilePickerResult?> pickImage() async {
   final image = await FilePicker.platform.pickFiles(type: FileType.image);
   return image;
 }
+
+String formatDateTime(DateTime dateTime, {String format = 'd MMMM, yyyy'}) =>
+    DateFormat(format).format(dateTime);

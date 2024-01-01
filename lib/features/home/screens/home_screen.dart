@@ -70,6 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isGuest = !user.isAuthenticated;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: _page == 0
           ? PreferredSize(
               preferredSize: const Size.fromHeight(
