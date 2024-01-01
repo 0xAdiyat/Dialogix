@@ -52,6 +52,7 @@ class PostCard extends ConsumerWidget {
     final mode = ref.watch(themeNotifierProvider.notifier).mode;
     final currentTheme = ref.watch(themeNotifierProvider);
     final isGuest = !user.isAuthenticated;
+    final textTheme = Theme.of(context).textTheme;
 
     return Responsive(
       child: Padding(
@@ -78,7 +79,7 @@ class PostCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildUserInfo(post, user, context, ref),
+                          _buildUserInfo(post, user, context, ref, textTheme),
                           if (post.awards.isNotEmpty) ...[
                             Gap(4.h),
                             SizedBox(
@@ -100,15 +101,13 @@ class PostCard extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(
                                     vertical: kPostPaddingHalfValue)
                                 .w,
-                            child: Text(
-                              post.title,
-                              style: TextStyle(
-                                fontSize: kFontSizeValue.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: Text(post.title,
+                                style: textTheme.titleLarge!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                )),
                           ),
-                          _buildPostContent(post, mode, currentTheme),
+                          _buildPostContent(
+                              post, mode, currentTheme, textTheme),
                           Gap(kTwelveValue.h),
                           _buildPostActions(post, user, ref, context, isGuest),
                         ],
@@ -162,8 +161,8 @@ class PostCard extends ConsumerWidget {
         : Palette.glassBlack.withOpacity(kCardOpacityAboveBlurredEffect);
   }
 
-  Widget _buildUserInfo(
-      PostModel post, UserModel user, BuildContext context, WidgetRef ref) {
+  Widget _buildUserInfo(PostModel post, UserModel user, BuildContext context,
+      WidgetRef ref, TextTheme textTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,14 +185,13 @@ class PostCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("d/${post.communityName}",
-                          style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                          style: textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          )),
                       GestureDetector(
                         onTap: () => navigateToUser(context),
                         child: Text("u/${post.username}",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                            )),
+                            style: textTheme.bodyMedium),
                       ),
                     ],
                   ),
@@ -214,8 +212,8 @@ class PostCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildPostContent(
-      PostModel post, ThemeMode mode, ThemeData currentTheme) {
+  Widget _buildPostContent(PostModel post, ThemeMode mode,
+      ThemeData currentTheme, TextTheme textTheme) {
     if (post.type == 'image') {
       return ClipRRect(
         borderRadius: BorderRadius.circular(kTwelveValue),
@@ -251,9 +249,7 @@ class PostCard extends ConsumerWidget {
             .w,
         child: Text(
           post.description!,
-          style: const TextStyle(
-            color: Colors.grey,
-          ),
+          style: textTheme.bodyMedium!.copyWith(color: Colors.grey),
         ),
       );
     } else {
@@ -394,7 +390,7 @@ class PostCard extends ConsumerWidget {
     Routemaster.of(context).push('/post/${post.id}/comments');
   }
 
-  void deletePost(WidgetRef ref, BuildContext ctx, [bool isAdminDel = true]) {
+  void deletePost(WidgetRef ref, BuildContext ctx, [bool isAdminDel = false]) {
     ref.read(postControllerProvider.notifier).deletePost(post, ctx, isAdminDel);
   }
 
@@ -416,8 +412,9 @@ class PostCard extends ConsumerWidget {
 
   void showBottomDrawerMenu(
       BuildContext context, WidgetRef ref, PostModel post, UserModel user) {
-    final themeCtx = Theme.of(context);
     final screenWidth = ScreenUtil().screenWidth;
+    final themeCtx = Theme.of(context);
+
     showCupertinoModalBottomSheet(
       context: context,
       expand: true,
@@ -433,7 +430,6 @@ class PostCard extends ConsumerWidget {
       expand: true,
       builder: (BuildContext context) {
         Widget buildFlexibleDivider(double dimension, bool isVertical) {
-          final themeCtx = Theme.of(context);
           return Container(
             color: themeCtx.colorScheme.background,
             height: isVertical ? dimension : 1,

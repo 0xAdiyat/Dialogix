@@ -8,7 +8,6 @@ import 'package:dialogix/features/community/screens/mod_tools_screen.dart';
 import 'package:dialogix/features/error/screens/error_screen.dart';
 import 'package:dialogix/features/home/screens/home_screen.dart';
 import 'package:dialogix/features/post/screens/add_post_screen.dart';
-import 'package:dialogix/features/post/screens/add_post_type_screen.dart';
 import 'package:dialogix/features/post/screens/comments_screen.dart';
 import 'package:dialogix/features/user_profile/screens/edit_profile_screen.dart';
 import 'package:dialogix/features/user_profile/screens/user_profile_screen.dart';
@@ -56,15 +55,11 @@ final loggedInRoute = RouteMap(
             child: EditProfileScreen(
           uid: route.pathParameters['uid']!,
         )),
-    RoutePaths.addPostTypeScreen: (route) => MaterialPage(
-            child: AddPostTypeScreen(
-          type: route.pathParameters['type']!,
-        )),
     RoutePaths.commentsScreen: (route) => MaterialPage(
             child: CommentsScreen(
           postId: route.pathParameters['postId']!,
         )),
     RoutePaths.addPostScreen: (_) => const MaterialPage(child: AddPostScreen()),
-        RoutePaths.errorScreen: (_) => const MaterialPage(child: ErrorScreen())
+    RoutePaths.errorScreen: (_) => const MaterialPage(child: ErrorScreen())
   },
 );
