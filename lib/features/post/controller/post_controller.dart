@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialogix/core/enums/enums.dart';
@@ -301,8 +300,10 @@ class PostController extends StateNotifier<bool> {
     }, (r) async {
       await Clipboard.setData(ClipboardData(text: r));
 
-      Navigator.of(ctx).pop();
-      Navigator.of(ctx).pop();
+      if (mounted) {
+        Navigator.of(ctx).pop();
+        Navigator.of(ctx).pop();
+      }
     });
   }
 }

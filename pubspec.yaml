@@ -61,7 +61,6 @@ dependencies:
   shared_preferences: ^2.2.2
   any_link_preview: ^3.0.1
   intl: ^0.18.1
-  image_picker_plus: ^0.5.9
 
 dependency_overrides:
   modal_bottom_sheet: ^3.0.0-pre
