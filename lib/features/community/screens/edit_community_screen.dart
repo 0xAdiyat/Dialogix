@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class EditCommunityScreen extends ConsumerStatefulWidget {
   final String communityName;
@@ -32,27 +33,27 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
     final res = await pickImage();
     if (res != null) {
       if (kIsWeb) {
-        setState(() {
-          _bannerWebFile = res.files.first.bytes;
+        setState(() async {
+          _bannerWebFile = await res.readAsBytes();
         });
       } else {
         setState(() {
-          _bannerFile = File(res.files.first.path!);
+          _bannerFile = File(res.path);
         });
       }
     }
   }
 
   void selectAvatarImage() async {
-    final res = await pickImage();
+    final res = await pickImage(cropStyle: CropStyle.circle);
     if (res != null) {
       if (kIsWeb) {
-        setState(() {
-          _avatarWebFile = res.files.first.bytes;
+        setState(() async {
+          _avatarWebFile = await res.readAsBytes();
         });
       } else {
         setState(() {
-          _avatarFile = File(res.files.first.path!);
+          _avatarFile = File(res.path);
         });
       }
     }

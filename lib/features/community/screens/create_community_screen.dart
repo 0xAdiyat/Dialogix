@@ -1,6 +1,9 @@
+import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:dialogix/core/common/loader.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
+import 'package:dialogix/features/post/screens/add_post_screen.dart';
 import 'package:dialogix/responsive/responsive.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +17,7 @@ class CreateCommunityScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
-  final communityNameController = TextEditingController();
+  final communityNameController = DetectableTextEditingController();
 
   @override
   void dispose() {
@@ -41,37 +44,28 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
           ? const Loader()
           : Responsive(
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextField(
-                      keyboardType: TextInputType.name,
+                    PostTextFieldWidget(
+                      enableCounter: true,
                       controller: communityNameController,
-                      decoration: InputDecoration(
-                        hintText: "d/community_name",
-                        labelText: "Name",
-                        filled: false,
-                        contentPadding: const EdgeInsets.all(20).w,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      maxLength: 21,
+                      overallStyle: Theme.of(context).textTheme.bodyMedium!,
+                      hintText: "d/community_name",
+                      counterMax: 21,
                     ),
                     Gap(28.h),
-                    ElevatedButton(
-                      onPressed: () => createCommunity(ref, context),
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 56),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          )),
-                      child: Text(
-                        'Create Community',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                        ),
-                      ),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: CupertinoButton(
+                          color: Theme.of(context).iconTheme.color,
+                          onPressed: () => createCommunity(ref, context),
+                          child: Text("Create Community",
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .background))),
                     ),
                   ],
                 ),

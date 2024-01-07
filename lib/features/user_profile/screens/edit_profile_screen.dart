@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import '../../../core/common/widgets/dialogix_cached_network_image.dart';
 import '../../../core/common/loader.dart';
@@ -42,27 +43,27 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
     final res = await pickImage();
     if (res != null) {
       if (kIsWeb) {
-        setState(() {
-          _bannerWebFile = res.files.first.bytes;
+        setState(() async {
+          _bannerWebFile = await res.readAsBytes();
         });
       } else {
         setState(() {
-          _bannerFile = File(res.files.first.path!);
+          _bannerFile = File(res.path);
         });
       }
     }
   }
 
   void selectProfileImage() async {
-    final res = await pickImage();
+    final res = await pickImage(cropStyle: CropStyle.circle);
     if (res != null) {
       if (kIsWeb) {
-        setState(() {
-          _profileWebFile = res.files.first.bytes;
+        setState(() async {
+          _bannerWebFile = await res.readAsBytes();
         });
       } else {
         setState(() {
-          _profileFile = File(res.files.first.path!);
+          _profileFile = File(res.path);
         });
       }
     }

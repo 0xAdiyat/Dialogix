@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/enums/post_type_enums.dart';
 import '../../../core/utils.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 final postTypeControllerProvider =
     ChangeNotifierProvider<PostTypeController>((ref) {
@@ -42,13 +43,11 @@ class PostTypeController extends ChangeNotifier {
 
   void selectBannerImage() async {
     final res = await pickImage();
-    if (res != null) {
-      if (kIsWeb) {
-        _bannerWebFile = res.files.first.bytes;
-      } else {
-        _bannerFile = File(res.files.first.path!);
-      }
-      notifyListeners();
+    if (kIsWeb) {
+      _bannerWebFile = await res!.readAsBytes();
+    } else {
+      _bannerFile = File(res!.path);
     }
+    notifyListeners();
   }
 }

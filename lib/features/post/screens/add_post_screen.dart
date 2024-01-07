@@ -229,11 +229,14 @@ class _AddAllPostScreenState extends ConsumerState<AddAllPostScreen> {
                       onTap: () => postTypeNotifier.selectBannerImage(),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(),
+                          border: Border.all(width: 0.5),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         width: double.infinity,
-                        height: ScreenUtil().screenHeight * 0.20,
+                        constraints: BoxConstraints(
+                          minHeight: ScreenUtil().screenHeight * 0.20,
+                          maxHeight: ScreenUtil().screenHeight * 0.50,
+                        ),
                         child: postController.bannerWebFile != null
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
@@ -313,6 +316,7 @@ class PostTextFieldWidget extends StatelessWidget {
     this.onSubmitted,
     this.keyboardType,
     this.maxLines,
+    this.counterMax = 70,
   })  : _controller = controller,
         _enableCounter = enableCounter,
         _hintText = hintText,
@@ -327,6 +331,7 @@ class PostTextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool _enableClearFunction;
   final int? maxLines;
+  final int counterMax;
   @override
   Widget build(BuildContext context) {
     return DetectableTextField(
@@ -357,7 +362,7 @@ class PostTextFieldWidget extends StatelessWidget {
             ? const EdgeInsets.all(20).copyWith(right: 12).w
             : const EdgeInsets.all(20).w,
       ),
-      maxLength: _enableCounter ? 70 : null,
+      maxLength: _enableCounter ? counterMax : null,
     );
   }
 }

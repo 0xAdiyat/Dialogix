@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final themeNotifierProvider =
-    StateNotifierProvider<ThemeNotifier, ThemeData>((ref) => ThemeNotifier());
+    StateNotifierProvider.autoDispose<ThemeNotifier, ThemeData>(
+        (ref) => ThemeNotifier());
 
 class Palette {
   Palette._();
@@ -16,7 +17,7 @@ class Palette {
   static const whiteColor = Color(0xfff8f8f8);
   // static const redColor = Color(0xffff4500);
   static const redColor = Color(0xffFE1723);
-    // static const redColor = blackColor;
+  // static const redColor = blackColor;
 
   // static const redColor = Color(0xff951758);
 

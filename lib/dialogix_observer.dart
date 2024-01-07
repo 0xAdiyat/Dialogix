@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:developer';
+// import 'dart:developer';
 
 class DialogixObserver extends ProviderObserver {
   @override
@@ -8,7 +8,7 @@ class DialogixObserver extends ProviderObserver {
     Object? value,
     ProviderContainer container,
   ) {
-    log('Provider $provider was initialized with $value');
+    // log('Provider $provider was initialized with $value');
   }
 
   @override
@@ -16,7 +16,7 @@ class DialogixObserver extends ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
-    log('Provider $provider was disposed');
+    // log('Provider $provider was disposed');
   }
 
   @override
@@ -26,7 +26,7 @@ class DialogixObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    log('Provider $provider updated from $previousValue to $newValue');
+    // log('Provider $provider updated from $previousValue to $newValue');
   }
 
   @override
@@ -36,6 +36,6 @@ class DialogixObserver extends ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
-    log('Provider $provider threw $error at $stackTrace');
+    // log('Provider $provider threw $error at $stackTrace');
   }
 }
