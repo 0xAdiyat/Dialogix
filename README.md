@@ -276,7 +276,7 @@ router.dart
 > [!IMPORTANT]  
 > If you wish to contribute a change to any of the existing features or add new to this repo,
 > please feel free to contribute,
-> and send a [pull request](https://github.com/0xAdiyat/Dialogix/pulls). I welcome and encourage all pull requests. It usually takes me within 24-48 hours to respond to any issue > or request.
+> and send a [pull request](https://github.com/0xAdiyat/Dialogix/pulls). I welcome and encourage all pull requests. It usually takes me within 24-48 hours to respond to any issue or request.
 
 
 ## Author
