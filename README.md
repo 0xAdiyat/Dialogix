@@ -53,6 +53,16 @@
 > - [ ] Windows
 > - [ ] Linux
 
+## Screenshots
+
+Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![Feed Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/885baefb-140f-48b9-bec0-7fcb62bb42bd)|![Hub Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/e5b7f00f-7f51-4bf0-b35f-d7e2325c6451)|![Post Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/616223aa-7cd7-417f-9add-535a22a02ea3)|![Share Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/dbf2afb9-09b4-4912-ae27-694c80bca23a)|
+
+
+
+
+
 
 ## Features
 
