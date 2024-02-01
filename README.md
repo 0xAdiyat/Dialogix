@@ -93,7 +93,7 @@ Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
   - Implemented light mode and dark mode functionality.
 
 - [x] **Post Functionalities:**
-  - Added post type screen.
+  - Added post-type screen.
   - Enabled users to post images, links, or text descriptions.
 
 - [x] **Dynamic Text Input:**
@@ -103,10 +103,11 @@ Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
   - Animated bottom navigation bar on click.
   - Added animations during page switch through the bottom navigation bar.
 
-- [x] **Bug Fixes and Optimization:**
-  - Fixed post blur visibility issue during scrolling.
-  - Optimized code for improved responsiveness and efficiency.
+- [x] **Dark and Light mode support**
 
+- [x] **Bug Fixes and Optimization:**
+  - Fixed post-blur visibility issue during scrolling.
+  - Optimized code for improved responsiveness and efficiency.
 
 ## Folder Structure
 
