@@ -24,6 +24,9 @@
   </p>
 
 <br>
+
+![Dialogix Thumbnail](https://github.com/0xAdiyat/Dialogix/assets/67780459/0e88e60f-1d61-4a42-96b3-46b075f3fd09)
+
   
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -58,8 +61,6 @@
 Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 ![Feed Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/885baefb-140f-48b9-bec0-7fcb62bb42bd)|![Hub Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/e5b7f00f-7f51-4bf0-b35f-d7e2325c6451)|![Post Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/616223aa-7cd7-417f-9add-535a22a02ea3)|![Share Screen](https://github.com/0xAdiyat/Dialogix/assets/67780459/dbf2afb9-09b4-4912-ae27-694c80bca23a)|
-
-
 
 
 
@@ -108,6 +109,7 @@ Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
 - [x] **Bug Fixes and Optimization:**
   - Fixed post-blur visibility issue during scrolling.
   - Optimized code for improved responsiveness and efficiency.
+
 
 ## Folder Structure
 
