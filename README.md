@@ -25,7 +25,7 @@
 
 <br>
 
-![Dialogix Thumbnail](https://github.com/0xAdiyat/Dialogix/assets/67780459/0e88e60f-1d61-4a42-96b3-46b075f3fd09)
+![Dialogix Thumbnail](https://github.com/0xAdiyat/Dialogix/assets/67780459/23f6cdb4-81e9-4341-b388-c84b1ca3c004)
 
   
 <!-- TABLE OF CONTENTS -->
