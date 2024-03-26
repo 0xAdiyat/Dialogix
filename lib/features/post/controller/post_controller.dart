@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialogix/core/enums/enums.dart';
@@ -97,8 +96,6 @@ class PostController extends StateNotifier<bool> {
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
-      Navigator.of(ctx).pop();
-      Navigator.of(ctx).pop();
     });
   }
 
@@ -133,8 +130,6 @@ class PostController extends StateNotifier<bool> {
     state = false;
     res.fold((l) => showSnackBar(ctx, l.message), (r) {
       showSnackBar(ctx, "Posted Successfully");
-      Navigator.of(ctx).pop();
-      Navigator.of(ctx).pop();
     });
   }
 
@@ -178,8 +173,6 @@ class PostController extends StateNotifier<bool> {
       state = false;
       res.fold((l) => showSnackBar(ctx, l.message), (r) {
         showSnackBar(ctx, 'Posted successfully!');
-        Navigator.of(ctx).pop();
-        Navigator.of(ctx).pop();
       });
     });
   }
@@ -201,12 +194,17 @@ class PostController extends StateNotifier<bool> {
   Stream<List<PostModel>> fetchGuestPosts() =>
       _postRepository.fetchGuestPosts();
 
-  void deletePost(PostModel post) async {
+  void deletePost(PostModel post, BuildContext ctx, bool isAdminCallBtn) async {
     final res = await _postRepository.deletePost(post);
     _ref
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.deletePost);
-    res.fold((l) => null, (r) => null);
+    res.fold((l) => null, (r) {
+      if (!isAdminCallBtn) {
+        Navigator.of(ctx).pop();
+        Navigator.of(ctx).pop();
+      }
+    });
   }
 
   void upvote(PostModel post) {
@@ -295,12 +293,17 @@ class PostController extends StateNotifier<bool> {
     state = false;
 
     return res.fold((l) {
-      Routemaster.of(ctx).pop();
+      Navigator.of(ctx).pop();
+      Navigator.of(ctx).pop();
+
       showSnackBar(ctx, l.message);
     }, (r) async {
       await Clipboard.setData(ClipboardData(text: r));
 
-      Routemaster.of(ctx).pop();
+      if (mounted) {
+        Navigator.of(ctx).pop();
+        Navigator.of(ctx).pop();
+      }
     });
   }
 }

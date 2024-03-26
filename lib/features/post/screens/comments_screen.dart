@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:dialogix/core/common/error_text.dart';
 import 'package:dialogix/core/common/loader.dart';
@@ -43,44 +42,40 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: ref.watch(getPostByIdProvider(widget.postId)).when(
-            data: (post) => SlideInUp(
-              child: Column(children: [
-                PostCard(post: post),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0).w,
-                    child: Column(
-                      children: [
-                        if (!isGuest)
-                          PostTextFieldWidget(
-                            onSubmitted: (val) => addComment(post),
-                            controller: _commentController,
-                            hintText: "Add a comment",
-                            overallStyle:
-                                Theme.of(context).textTheme.bodyMedium!,
-                          ),
-                        ref.watch(getPostCommentsProvider(widget.postId)).when(
-                              data: (comments) => Expanded(
-                                child: ListView.builder(
-                                  itemCount: comments.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final comment = comments[index];
-                                    return CommentCard(comment: comment);
-                                  },
-                                ),
+            data: (post) => Column(children: [
+              PostCard(post: post),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0).w,
+                  child: Column(
+                    children: [
+                      if (!isGuest)
+                        PostTextFieldWidget(
+                          onSubmitted: (val) => addComment(post),
+                          controller: _commentController,
+                          hintText: "Add a comment",
+                          overallStyle: Theme.of(context).textTheme.bodyMedium!,
+                        ),
+                      ref.watch(getPostCommentsProvider(widget.postId)).when(
+                            data: (comments) => Expanded(
+                              child: ListView.builder(
+                                itemCount: comments.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final comment = comments[index];
+                                  return CommentCard(comment: comment);
+                                },
                               ),
-                              error: (err, stackTrace) => ErrorText(
-                                err.toString(),
-                              ),
-                              loading: () => const Loader(),
                             ),
-                      ],
-                    ),
+                            error: (err, stackTrace) => ErrorText(
+                              err.toString(),
+                            ),
+                            loading: () => const Loader(),
+                          ),
+                    ],
                   ),
-                )
-              ]),
-            ),
+                ),
+              )
+            ]),
             error: (error, stackTrace) => ErrorText(
               error.toString(),
             ),

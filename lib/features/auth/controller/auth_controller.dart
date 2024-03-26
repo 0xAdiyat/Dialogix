@@ -13,7 +13,7 @@ final authControllerProvider =
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
-final userProvider = StateProvider<UserModel?>((ref) => null);
+final userProvider = StateProvider.autoDispose<UserModel?>((ref) => null);
 
 final authStateChangeProvider = StreamProvider.autoDispose<User?>(
     (ref) => ref.watch(authControllerProvider.notifier).authStateChange);
