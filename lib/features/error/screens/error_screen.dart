@@ -10,7 +10,7 @@ class ErrorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title: const Text("Contacts"), //Working on it
+        title: const Text("Contacts"),
       ),
     );
   }
