@@ -473,7 +473,7 @@ class PostCard extends ConsumerWidget {
                   ),
                 ),
                 Container(
-                  height: screenWidth * 0.95,
+                  height: screenWidth * 0.952,
                   width: screenWidth * 0.70,
                   decoration: BoxDecoration(
                     color: themeCtx.iconTheme.color,

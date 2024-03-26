@@ -1,4 +1,6 @@
+import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});
@@ -6,11 +8,10 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Error Screen"),
-        ),
-        body: const Center(
-          child: Text("No such post exist or the post has been deleted"),
-        ));
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        title: const Text("Contacts"), //Working on it
+      ),
+    );
   }
 }

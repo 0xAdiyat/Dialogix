@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/enums/post_type_enums.dart';
 import '../../../core/utils.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 final postTypeControllerProvider =
     ChangeNotifierProvider<PostTypeController>((ref) {

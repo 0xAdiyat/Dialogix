@@ -63,6 +63,11 @@ dependencies:
   intl: ^0.18.1
   image_cropper: ^5.0.1
 
+  # Native
+  flutter_native_splash: ^2.3.8
+  modal_bottom_sheet: ^3.0.0
+
+
 dependency_overrides:
   modal_bottom_sheet: ^3.0.0-pre
 
@@ -79,7 +84,6 @@ dev_dependencies:
 
   # Native
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.8
 
 # Flutter launcher icons config
 flutter_launcher_icons:

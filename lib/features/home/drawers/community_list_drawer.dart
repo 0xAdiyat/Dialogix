@@ -3,6 +3,7 @@ import 'package:dialogix/core/common/sign_in_button.dart';
 import 'package:dialogix/core/constants/constants.dart';
 import 'package:dialogix/core/constants/route_paths.dart';
 import 'package:dialogix/features/community/controller/community_controller.dart';
+import 'package:dialogix/features/error/screens/error_screen.dart';
 import 'package:dialogix/theme/palette.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,15 +57,14 @@ class _CommunityListDrawerState extends ConsumerState<CommunityListDrawer> {
         Gap(iconGap.h),
         IconButton(
           icon: const Icon(CupertinoIcons.arrow_up_bin, size: iconSize),
-          onPressed: () {
-            // Handle onPressed
-          },
+          onPressed: () {},
         ),
         Gap(iconGap.h),
         IconButton(
           icon: const Icon(CupertinoIcons.star, size: iconSize),
           onPressed: () {
-            // Handle onPressed
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ErrorScreen()));
           },
         ),
         Gap(iconGap.h),
