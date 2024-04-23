@@ -281,6 +281,8 @@ router.dart
 > please feel free to contribute,
 > and send a [pull request](https://github.com/0xAdiyat/Dialogix/pulls). I welcome and encourage all pull requests. It usually takes me within 24-48 hours to respond to any issue or request.
 
+## Activities 
+![Alt](https://repobeats.axiom.co/api/embed/50dad4c90fc44445a9eecb2ca49effda9d6e7e14.svg "Repobeats analytics image")
 
 ## Author
 @0xAdiyat
