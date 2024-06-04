@@ -2,7 +2,7 @@
 
 <h1 align="center">Dialogix</h1> <br>
 <p align="center">
-  <a href="https://github.com/Huss4in007/ToDo-WishFlow/releases/tag/v1.0.2">
+  <a href="https://github.com/0xAdiyat/Dialogix/releases/">
     <img src="https://github.com/0xAdiyat/Dialogix/blob/main/assets/images/native/dialogix_splash_logo.png?raw=true" alt="Dialogix Logo" width="120" height="120">
   </a>
 </p>
