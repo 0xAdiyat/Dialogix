@@ -48,7 +48,7 @@
 
 
 > [!IMPORTANT]
-> ## `💻 Platform Support`
+> ## `💻` `Platform Support`
 > - [x] Android
 > - [x] iOS
 > - [x] Web
@@ -56,7 +56,7 @@
 > - [ ] Windows
 > - [ ] Linux
 
-## `📽️ Screenshots`
+## `📽️` `Screenshots`
 
 Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
@@ -65,7 +65,7 @@ Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
 
 
 
-## `⚙️ Features`
+## `⚙️` `Features`
 
 - [x] **Dynamic Links for Posts:**
   - Users can create and share dynamic links for individual posts.
@@ -111,7 +111,7 @@ Feed Screen         |  Hub Screen       |   Post Screen | Share Screen
   - Optimized code for improved responsiveness and efficiency.
 
 
-## `🗂️ Folder Structure`
+## `🗂️` `Folder Structure`
 
 ```
 lib
@@ -211,7 +211,7 @@ router.dart
 ```
 
 > [!NOTE]
-> ## `🏛️ Architecture: Feature-Driven and Controller-Repository Pattern`
+> ## `🏛️` `Architecture: Feature-Driven and Controller-Repository Pattern`
 > ### Overview
 > Dialogix adopts a Feature-Driven Structure, promoting modularity with self-contained features like auth, community, feed. The Controller-Repository Pattern is employed:
 > - **Controllers:** Manage business logic and state, facilitating feature-level interactions.
@@ -224,7 +224,7 @@ router.dart
 > - **Provider Pattern:** Enables robust state management for reactive application behavior.
 
 
-## `📦 Packages`
+## `📦` `Packages`
      
 | Name                                                             | Usage                                               |
 | ---------------------------------------------------------------- | --------------------------------------------------- |
@@ -281,10 +281,10 @@ router.dart
 > please feel free to contribute,
 > and send a [pull request](https://github.com/0xAdiyat/Dialogix/pulls). I welcome and encourage all pull requests. It usually takes me within 24-48 hours to respond to any issue or request.
 
-## `⚡️ Activities`
+## `⚡️` `Activities`
 ![Alt](https://repobeats.axiom.co/api/embed/50dad4c90fc44445a9eecb2ca49effda9d6e7e14.svg "Repobeats analytics image")
 
-## `🧑🏻‍💻 Author`
+## `🧑🏻‍💻` `Author`
 @0xAdiyat
 
 <br>
